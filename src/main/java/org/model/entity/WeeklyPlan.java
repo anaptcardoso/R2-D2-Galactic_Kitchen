@@ -3,11 +3,7 @@ package org.model.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 @Entity
 public class WeeklyPlan {
@@ -16,7 +12,7 @@ public class WeeklyPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManytoOne
+    @ManyToOne
     private UserProfile user;
 
     private LocalDate weekStart;

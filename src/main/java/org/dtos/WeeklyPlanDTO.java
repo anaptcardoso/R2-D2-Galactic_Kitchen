@@ -4,27 +4,27 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-public class PlanDTO {
+public class WeeklyPlanDTO {
     private int id;
     private int userId;
     private LocalDate weekStart;
     private LocalDate weekEnd;
 
-    //Key day of the week
-    // Value list of recipes per day
-    private Map<String, List<RecipeDTO>> meals;
+    // lista de receitas do plano semanal
+    private List<RecipeDTO> recipes;
 
-    // Shopping List render by plan
+    // lista de compras gerada automaticamente
     private List<String> shoppingList;
 
-    public PlanDTO(){}
-    public PlanDTO(int id, int userId, LocalDate weekStart, LocalDate weekEnd,
-                   Map<String, List<RecipeDTO>> meals, List<String> shoppingList) {
+
+    public WeeklyPlanDTO(){}
+    public WeeklyPlanDTO(int id, int userId, LocalDate weekStart, LocalDate weekEnd,
+                         List<RecipeDTO> recipes, List<String> shoppingList) {
         this.id = id;
         this.userId = userId;
         this.weekStart = weekStart;
         this.weekEnd = weekEnd;
-        this.meals = meals;
+        this.recipes = recipes;
         this.shoppingList = shoppingList;
     }
 
@@ -44,8 +44,8 @@ public class PlanDTO {
         return weekEnd;
     }
 
-    public Map<String, List<RecipeDTO>> getMeals() {
-        return meals;
+    public List<RecipeDTO> getMeals() {
+        return recipes;
     }
 
     public List<String> getShoppingList() {
@@ -68,8 +68,8 @@ public class PlanDTO {
         this.weekEnd = weekEnd;
     }
 
-    public void setMeals(Map<String, List<RecipeDTO>> meals) {
-        this.meals = meals;
+    public void setMeals(List<RecipeDTO> recipes) {
+        this.recipes = recipes;
     }
 
     public void setShoppingList(List<String> shoppingList) {
@@ -84,7 +84,7 @@ public class PlanDTO {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof PlanDTO other)) return false;
+        if (!(obj instanceof WeeklyPlanDTO other)) return false;
         return id == other.id;
     }
 

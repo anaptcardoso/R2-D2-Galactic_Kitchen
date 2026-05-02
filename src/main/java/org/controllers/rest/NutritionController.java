@@ -1,7 +1,7 @@
 package org.controllers.rest;
 
 import org.dtos.ChatMessageDTO;
-import org.dtos.UserProfileDTO;
+import org.dtos.NutritionDTO;
 import org.services.NutritionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,25 +18,24 @@ public class NutritionController {
     // GET /api/nutrition/{userId}
     // Devolve perfil nutricional do utilizador
     @GetMapping("/{userId}")
-    public ResponseEntity<UserProfileDTO> getProfile(@PathVariable int userId) {
+    public ResponseEntity<NutritionDTO> getProfile(@PathVariable int userId) {
         return ResponseEntity.ok(nutritionService.findByUser(userId));
-    }
-
-    // POST /api/nutrition/analyse
-    // Analisa os alimentos e devolve valores nutricionais via IA
-    @PostMapping("/analyse")
-    public ResponseEntity<ChatMessageDTO> analyse(@RequestBody ChatMessageDTO message) throws Exception {
-        ChatMessageDTO result = nutritionService.analyse(message);
-        return ResponseEntity.ok(result);
     }
 
     // PUT /api/nutrition/{userId}
     // Atualiza objetivos e preferências nutricionais
     @PutMapping("/{userId}")
-    public ResponseEntity<UserProfileDTO> update(
-            @PathVariable Long userId,
-            @RequestBody UserProfileDTO profileDTO) {
-        return ResponseEntity.ok(nutritionService.update(userId, profileDTO));
+    public ResponseEntity<NutritionDTO> update(
+            @PathVariable int userId,
+            @RequestBody NutritionDTO nutritionDTO) {
+        return ResponseEntity.ok(nutritionService.update(userId, nutritionDTO));
+    }
+
+    // POST /api/nutrition/analyse
+    // Analisa os alimentos via AI e devolve valores nutricionais
+    @PostMapping("/analyse")
+    public ResponseEntity<ChatMessageDTO> analyse(@RequestBody ChatMessageDTO message) throws Exception {
+        return ResponseEntity.ok(nutritionService.analyse(message));
     }
 
 }

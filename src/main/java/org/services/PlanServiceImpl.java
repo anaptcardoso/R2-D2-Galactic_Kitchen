@@ -1,6 +1,6 @@
 package org.services;
 
-import org.dtos.PlanDTO;
+import org.dtos.WeeklyPlanDTO;
 import org.dtos.RecipeDTO;
 import org.model.entity.Recipe;
 import org.model.entity.UserProfile;
@@ -34,7 +34,7 @@ public class PlanServiceImpl implements PlanService {
 
     // findByUser - todos os planos de um utilizador
     @Override
-    public List<PlanDTO> findByUser(int userId) {
+    public List<WeeklyPlanDTO> findByUser(int userId) {
         return weeklyPlanRepository.findByUserId(userId)
                 .stream()
                 .map(this::toDTO)
@@ -43,7 +43,7 @@ public class PlanServiceImpl implements PlanService {
 
     // findByUserAndWeek — plano de uma semana específica
     @Override
-    public PlanDTO findByUserAndWeek(int userId, String weekStart) {
+    public WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart) {
         LocalDate date = LocalDate.parse(weekStart); // "2025-01-06" → LocalDate
         WeeklyPlan plan = weeklyPlanRepository.findByUserIdAndWeekStart(userId, date)
                 .orElseThrow(() -> new RuntimeException("Plan not found for user " + userId));
@@ -53,15 +53,15 @@ public class PlanServiceImpl implements PlanService {
     // create — cria um plano novo
     @Transactional
     @Override
-    public PlanDTO create(PlanDTO planDTO){
+    public WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO){
         //Ver se o user existe
-        UserProfile user = userProfileRepository.findById(planDTO.getUserId())
-                .orElseThrow(()-> new RuntimeException("User not found" + planDTO.getUserId()));
+        UserProfile user = userProfileRepository.findById(weeklyPlanDTO.getUserId())
+                .orElseThrow(()-> new RuntimeException("User not found" + weeklyPlanDTO.getUserId()));
 
         WeeklyPlan plan = new WeeklyPlan();
         plan.setUser(user);
-        plan.setWeekStart(planDTO.getWeekStart());
-        plan.setWeekEnd(planDTO.getWeekEnd());
+        plan.setWeekStart(weeklyPlanDTO.getWeekStart());
+        plan.setWeekEnd(weeklyPlanDTO.getWeekEnd());
         plan.setRecipes(new ArrayList<>()); // começa vazio, receitas adicionam-se depois
 
         WeeklyPlan saved = weeklyPlanRepository.save(plan);
@@ -71,7 +71,7 @@ public class PlanServiceImpl implements PlanService {
     // addRecipe — adiciona uma receita ao plano
     @Transactional
     @Override
-    public PlanDTO addRecipe(int planId, int recipeId){
+    public WeeklyPlanDTO addRecipe(int planId, int recipeId){
         WeeklyPlan plan = weeklyPlanRepository.findById(planId)
                 .orElseThrow(()-> new RuntimeException(("Plan not found" + planId));
 
@@ -86,7 +86,7 @@ public class PlanServiceImpl implements PlanService {
     // removeRecipe — remove uma receita do plano
     @Transactional
     @Override
-    public PlanDTO removeRecipe(int planId, int recipeId) {
+    public WeeklyPlanDTO removeRecipe(int planId, int recipeId) {
         WeeklyPlan plan = weeklyPlanRepository.findById(planId)
                 .orElseThrow(()-> new RuntimeException("Plan not found" + planId));
 
@@ -105,8 +105,8 @@ public class PlanServiceImpl implements PlanService {
         weeklyPlanRepository.deleteById(planId);
     }
 
-    private PlanDTO toDTO(WeeklyPlan plan) {
-        PlanDTO dto = new PlanDTO();
+    private WeeklyPlanDTO toDTO(WeeklyPlan plan) {
+        WeeklyPlanDTO dto = new WeeklyPlanDTO();
         dto.setId(plan.getId());
         dto.setUserId(plan.getUser().getId());
         dto.setWeekStart(plan.getWeekStart());
@@ -156,7 +156,7 @@ public class PlanServiceImpl implements PlanService {
         dto.setId(recipe.getId());
         dto.setName(recipe.getName());
         dto.setDescription(recipe.getDescription());
-        dto.setDurationMinutes(recipe.getPreparationTime());
+        dto.setPreparationTime(recipe.getPreparationTime());
         dto.setDifficulty(recipe.getDifficultyLevel());
         dto.setMealType(recipe.getMealType());
         dto.setIngredients(

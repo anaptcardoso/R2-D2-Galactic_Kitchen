@@ -2,10 +2,8 @@ package org.model.entity;
 
 import org.model.valueObject.NutritionProfile;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -27,27 +25,31 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY = auto increment 1, 2, 3...
     private int id;
 
-
     private String name;
     private String description;
-    
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private List<Ingredient> ingredients = new ArrayList<>();
+    private String category;
+    private int preparationTime; // em minutos
+    private int servings;
+    private int calories;
+    private double protein;
+    private double carbs;
+    private double fat;
 
-    @Enumerated(EnumType.STRING) 
+    @Enumerated(EnumType.STRING)
     private DifficultyLevel difficultyLevel;
 
     @Enumerated(EnumType.STRING)
     private MealType mealType;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<Ingredient> ingredients = new ArrayList<>();
+
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<DietType> dietTypes = new HashSet<>();
 
-    @Embedded
-    private NutritionProfile nutrition;
-
-    private int preparationTime; // em minutos
+    private String steps;
+    private String tip;
 
     // GETTERS AND SETTERS
 
@@ -107,19 +109,75 @@ public class Recipe {
         this.dietTypes = dietTypes;
     }
 
-    public NutritionProfile getNutrition() {
-        return nutrition;
-    }
-
-    public void setNutrition(NutritionProfile nutrition) {
-        this.nutrition = nutrition;
-    }
-
     public int getPreparationTime() {
         return preparationTime;
     }
 
     public void setPreparationTime(int preparationTime) {
         this.preparationTime = preparationTime;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    public double getProtein() {
+        return protein;
+    }
+
+    public void setProtein(double protein) {
+        this.protein = protein;
+    }
+
+    public double getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(double carbs) {
+        this.carbs = carbs;
+    }
+
+    public double getFat() {
+        return fat;
+    }
+
+    public void setFat(double fat) {
+        this.fat = fat;
+    }
+
+    public String getSteps() {
+        return steps;
+    }
+
+    public void setSteps(String steps) {
+        this.steps = steps;
+    }
+
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
     }
 }

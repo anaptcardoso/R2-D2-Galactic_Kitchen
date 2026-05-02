@@ -1,15 +1,9 @@
 package org.model.entity;
 
 
+import jakarta.persistence.*;
 import org.model.enums.DietType;
-
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.model.valueObject.NutritionProfile;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -35,12 +29,18 @@ public class UserProfile {
     private String goal;
     private String activityLevel;
 
+    @Embedded
+    private NutritionProfile nutritionProfile;
+
     // preferências alimentares
+    @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<DietType> dietPreferences;
 
     // nota pessoal
     private String bio;
+
+    // GETTERS / SETTERS
 
     public String getFirstName() {
         return firstName;
@@ -121,17 +121,24 @@ public class UserProfile {
     public void setBio(String bio) {
         this.bio = bio;
     }
-// GETTERS / SETTERS
 
     public int getId() { return id; }
+
     public void setId( int id) { this.id = id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
     public String getGoal() { return goal; }
+
     public void setGoal(String goal) { this.goal = goal; }
 
     public Set<DietType> getDietPreferences() { return dietPreferences; }
+
     public void setDietPreferences(Set<DietType> dietPreferences) { this.dietPreferences = dietPreferences; }
+
+    public NutritionProfile getNutritionProfile() {
+        return nutritionProfile;
+    }
+
+    public void setNutritionProfile(NutritionProfile nutritionProfile) {
+        this.nutritionProfile = nutritionProfile;
+    }
 }
