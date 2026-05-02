@@ -3,11 +3,14 @@ package org.services;
 import org.dtos.UserProfileDTO;
 import org.model.entity.UserProfile;
 import org.repository.UserProfileRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService{
 
     private final UserProfileRepository userProfileRepository;
 
@@ -22,7 +25,7 @@ public class UserServiceImpl {
         // e converte cada UserProfile para UserProfileDTO
         return userProfileRepository.findAll()
                 .stream()
-                .mao(this::toDTO)
+                .map(this::toDTO)
                 .toList();
     }
 

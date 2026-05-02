@@ -32,4 +32,12 @@ public class ChatController {
         ChatMessageDTO response = aiService.suggestRecipes(message);//service
         return ResponseEntity.ok(response);
     }
+
+    // POST /api/chat/planet
+    // Body: {"message": "Tatooine"}
+    @PostMapping("/planet")
+    public ResponseEntity<ChatMessageDTO> recipeFromPlanet(@RequestBody ChatMessageDTO message) throws Exception {
+        ChatMessageDTO response = aiService.recipeFromPlanet(message.getMessage());
+        return ResponseEntity.ok(response);
+    }
 }
