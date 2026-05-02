@@ -1,4 +1,9 @@
 package org.exceptions;
 
-public class RecipeNotFoundException {
+import org.errors.ErrorMessage;
+
+public class RecipeNotFoundException extends R2D2ChefBotException{
+    public RecipeNotFoundException() {
+        super(ErrorMessage.RECIPE_NOT_FOUND);
+    }
 }
