@@ -26,21 +26,21 @@ public class ChatMessageDTO {
         this("user", message, null, LocalDateTime.now());
     }
 
-    // ── Getters ───────────────────────────────────────────────────────────────
+    //  Getters
 
     public String getRole() { return role; }
     public String getMessage() { return message; }
     public String getContext() { return context; }
     public LocalDateTime getTimestamp() { return timestamp; }
 
-    // ── Setters ───────────────────────────────────────────────────────────────
+    //  Setters
 
     public void setRole(String role) { this.role = role; }
     public void setMessage(String message) { this.message = message; }
     public void setContext(String context) { this.context = context; }
     public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
 
-    // ── equals, hashCode, toString ────────────────────────────────────────────
+    // overrides
 
     @Override
     public boolean equals(Object obj) {
