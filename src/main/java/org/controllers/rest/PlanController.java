@@ -1,6 +1,6 @@
 package org.controllers.rest;
 
-import org.dtos.PlanDTO;
+import org.dtos.WeeklyPlanDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,28 +19,28 @@ public class PlanController {
 
     //GET /api/plan/{userId}
     @GetMapping("/{userId}")
-    public ResponseEntity<List<PlanDTO>> getByUser(@PathVariable int userId){
+    public ResponseEntity<List<WeeklyPlanDTO>> getByUser(@PathVariable int userId){
         return ResponseEntity.ok(planService.findByUser(userId));
     }
 
     //GET /api/plan/{userId}/current
     // Devolve o plano da seamana atual
     @GetMapping("/{userId}/current")
-    public ResponseEntity<PlanDTO> getCurrentPlan(@PathVariable int userId){
+    public ResponseEntity<WeeklyPlanDTO> getCurrentPlan(@PathVariable int userId){
         return ResponseEntity.ok(planService.findCurrentPlan(userId));
     }
 
     //POST /api/plan
     @PostMapping
-    public ResponseEntity<PlanDTO> create(@RequestBody PlanDTO planDTO) {
-        PlanDTO created = planService.save(planDTO);
+    public ResponseEntity<WeeklyPlanDTO> create(@RequestBody WeeklyPlanDTO weeklyPlanDTO) {
+        WeeklyPlanDTO created = planService.save(weeklyPlanDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     //PUT /api/plan/{id}
     @PutMapping("/{id}")
-    public ResponseEntity<PlanDTO> update(@PathVariable int id, @RequestBody PlanDTO planDTO){
-        return ResponseEntity.ok(planService.update(id, planDTO));
+    public ResponseEntity<WeeklyPlanDTO> update(@PathVariable int id, @RequestBody WeeklyPlanDTO weeklyPlanDTO){
+        return ResponseEntity.ok(planService.update(id, weeklyPlanDTO));
     }
 
     // DELETE /api/plan/{id}

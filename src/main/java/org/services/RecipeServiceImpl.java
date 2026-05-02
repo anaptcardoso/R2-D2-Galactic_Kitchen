@@ -89,7 +89,7 @@ public class RecipeServiceImpl implements RecipeService {
         // Atualizamos os campos da entidade com os valores do DTO
         existing.setName(recipeDTO.getName());
         existing.setDescription(recipeDTO.getDescription());
-        existing.setPreparationTime(recipeDTO.getDurationMinutes());
+        existing.setPreparationTime(recipeDTO.getPreparationTime());
         existing.setDifficultyLevel(recipeDTO.getDifficulty());
         existing.setMealType(recipeDTO.getMealType());
 
@@ -117,7 +117,7 @@ public class RecipeServiceImpl implements RecipeService {
         dto.setId(recipe.getId());
         dto.setName(recipe.getName());
         dto.setDescription(recipe.getDescription());
-        dto.setDurationMinutes(recipe.getPreparationTime()); // preparationTime = durationMinutes
+        dto.setPreparationTime(recipe.getPreparationTime()); // preparationTime = durationMinutes
         dto.setDifficulty(recipe.getDifficultyLevel());
         dto.setMealType(recipe.getMealType());
         // ingredients no model são objectos Ingredient, no DTO são List<String>
@@ -135,7 +135,7 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = new Recipe();
         recipe.setName(dto.getName());
         recipe.setDescription(dto.getDescription());
-        recipe.setPreparationTime(dto.getDurationMinutes()); // durationMinutes = preparationTime
+        recipe.setPreparationTime(dto.getPreparationTime()); // durationMinutes = preparationTime
         recipe.setDifficultyLevel(dto.getDifficulty());
         recipe.setMealType(dto.getMealType());
         return recipe;

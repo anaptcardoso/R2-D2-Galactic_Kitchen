@@ -3,6 +3,7 @@ package org.services;
 import org.dtos.UserProfileDTO;
 import org.model.entity.UserProfile;
 import org.repository.UserProfileRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

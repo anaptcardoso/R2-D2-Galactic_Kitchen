@@ -1,21 +1,27 @@
 package org.dtos;
 
+import org.model.enums.DietType;
 import org.model.enums.DifficultyLevel;
 import org.model.enums.MealType;
 
 import java.util.List;
+import java.util.Set;
 
 public class RecipeDTO {
     private int id;
     private String name;
     private String description;
     private String category;
-    private int durationMinutes;
+    private int preparationTime;
     private int servings;
     private int calories;
+    private double protein;
+    private double carbs;
+    private double fat;
     private DifficultyLevel difficulty;
     private MealType mealType;
-    private List<String> ingredients;
+    private List<IngredientDTO> ingredient;
+    private Set<DietType> dietTypes;
     private List<String> steps;
     private String tip;
 
@@ -23,123 +29,95 @@ public class RecipeDTO {
 
     public RecipeDTO() {} //cria o objeto sem preencher nenhum campo para JSON e JPA é preenchido com setters
     public RecipeDTO(int id, String name,String description, //Usado por nos no convertor
-                     String category, int durationMinutes,
+                     String category, int preparationTime,
                      int servings, int calories,
-                     DifficultyLevel difficulty,
-                     MealType mealType, List<String> ingredients,
+                     double protein, double carbs, double fat,
+                     DifficultyLevel difficulty, MealType mealType,
+                     List<IngredientDTO> ingredient, Set<DietType> dietTypes,
                      List<String> steps, String tip){
         this.id = id;
         this.name = name;
         this.description = description;
         this.category = category;
-        this.durationMinutes = durationMinutes;
+        this.preparationTime = preparationTime;
         this.servings = servings;
         this.calories = calories;
         this.difficulty = difficulty;
         this.mealType = mealType;
-        this.ingredients = ingredients;
+        this.ingredient = ingredient;
         this.steps = steps;
         this.tip = tip;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.dietTypes = dietTypes;
     }
 
     //Getters and Setters
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return description; }
 
-    public String getCategory() {
-        return category;
-    }
+    public String getCategory() { return category; }
 
-    public int getDurationMinutes() {
-        return durationMinutes;
-    }
+    public int getPreparationTime() { return preparationTime; }
 
-    public int getServings() {
-        return servings;
-    }
+    public int getServings() { return servings; }
 
-    public int getCalories() {
-        return calories;
-    }
+    public int getCalories() { return calories; }
 
-    public DifficultyLevel getDifficulty() {
-        return difficulty;
-    }
+    public double getProtein() { return protein; }
 
-    public MealType getMealType() {
-        return mealType;
-    }
+    public double getCarbs() { return carbs; }
 
-    public List<String> getIngredients() {
-        return ingredients;
-    }
+    public double getFat() { return fat; }
 
-    public List<String> getSteps() {
-        return steps;
-    }
+    public DifficultyLevel getDifficultyLevel() { return difficulty; }
 
-    public String getTip() {
-        return tip;
-    }
+    public MealType getMealType() { return mealType; }
 
+    public List<IngredientDTO> getIngredients() { return ingredient; }
 
+    public Set<DietType> getDietTypes() { return dietTypes; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public List<String> getSteps() { return steps; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getTip() { return tip; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setDurationMinutes(int durationMinutes) {
-        this.durationMinutes = durationMinutes;
-    }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setServings(int servings) {
-        this.servings = servings;
-    }
+    public void setCategory(String category) { this.category = category; }
 
-    public void setCalories(int calories) {
-        this.calories = calories;
-    }
+    public void setPreparationTime(int preparationTime) { this.preparationTime = preparationTime; }
 
-    public void setDifficulty(DifficultyLevel difficulty) {
-        this.difficulty = difficulty;
-    }
+    public void setServings(int servings) { this.servings = servings; }
 
-    public void setMealType(MealType mealType) {
-        this.mealType = mealType;
-    }
+    public void setCalories(int calories) { this.calories = calories; }
 
-    public void setIngredients(List<String> ingredients) {
-        this.ingredients = ingredients;
-    }
+    public void setProtein(double protein) { this.protein = protein; }
 
-    public void setSteps(List<String> steps) {
-        this.steps = steps;
-    }
+    public void setCarbs(double carbs) { this.carbs = carbs; }
 
-    public void setTip(String tip) {
-        this.tip = tip;
-    }
+    public void setFat(double fat) { this.fat = fat; }
+
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) { this.difficulty = difficultyLevel; }
+
+    public void setMealType(MealType mealType) { this.mealType = mealType; }
+
+    public void setIngredients(List<IngredientDTO> ingredients) { this.ingredient = ingredient; }
+
+    public void setDietTypes(Set<DietType> dietTypes) { this.dietTypes = dietTypes; }
+
+    public void setSteps(List<String> steps) { this.steps = steps; }
+
+    public void setTip(String tip) { this.tip = tip; }
+
 
     //overrides
 
@@ -161,8 +139,9 @@ public class RecipeDTO {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
-                ", durationMinutes=" + durationMinutes +
-                ", difficulty=" + difficulty +
+                ", preparationTime=" + preparationTime +
+                ", difficultyLevel=" + difficulty +
                 '}';
     }
+
 }

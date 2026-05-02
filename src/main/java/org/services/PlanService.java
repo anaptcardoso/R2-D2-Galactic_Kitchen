@@ -1,25 +1,25 @@
 package org.services;
 
-import org.dtos.PlanDTO;
+import org.dtos.WeeklyPlanDTO;
 
 import java.util.List;
 
 public interface PlanService {
 
     // Busca todos os planos de um utilizador
-    List<PlanDTO> findByUser(int userId);
+    List<WeeklyPlanDTO> findByUser(int userId);
 
     // Busca o plano de uma semana específica
-    PlanDTO findByUserAndWeek(int userId, String weekStart);
+    WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart);
 
     // Cria um plano novo
-    PlanDTO create(PlanDTO planDTO);
+    WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO);
 
     // Adiciona uma receita ao plano
-    PlanDTO addRecipe(int planId, int recipeId);
+    WeeklyPlanDTO addRecipe(int planId, int recipeId);
 
     // Remove uma receita do plano
-    PlanDTO removeRecipe(int planId, int recipeId);
+    WeeklyPlanDTO removeRecipe(int planId, int recipeId);
 
     // Apaga um plano
     void delete(int planId);
