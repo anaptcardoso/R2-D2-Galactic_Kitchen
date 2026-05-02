@@ -24,8 +24,8 @@ import java.util.*;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY = auto increment 1, 2, 3...
+    private int id;
 
 
     private String name;
@@ -51,11 +51,11 @@ public class Recipe {
 
     // GETTERS AND SETTERS
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

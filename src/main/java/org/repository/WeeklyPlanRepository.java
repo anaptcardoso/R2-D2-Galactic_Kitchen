@@ -2,6 +2,14 @@ package org.repository;
 
 import org.model.entity.WeeklyPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
-public interface WeeklyPlanRepository extends JpaRepository<WeeklyPlan, String> {
+@Repository
+public interface WeeklyPlanRepository extends JpaRepository<WeeklyPlan, Integer> {
+
+    List<WeeklyPlan> findByUserId(int userId);
+    Optional<WeeklyPlan> findByUserIdAndWeekStart(int userId, LocalDate weekStart);
 }
