@@ -1,5 +1,6 @@
 package org.controllers.rest;
 
+import org.dtos.NutritionDTO;
 import org.dtos.UserProfileDTO;
 import org.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,24 @@ public class UserController {
     // Atualiza dados pessoais do perfil
     @PutMapping("/{id}")
     public ResponseEntity<UserProfileDTO> update(
-            @PathVariable Long id,
+            @PathVariable int id,
             @RequestBody UserProfileDTO userProfileDTO) {
         return ResponseEntity.ok(userService.update(id, userProfileDTO));
+    }
+
+    // PUT /api/users/{id}/nutrition
+    // Atualiza apenas os dados nutricionais
+    @PutMapping("/{id}/nutrition")
+    public ResponseEntity<NutritionDTO> updateNutrition(@PathVariable int id,
+                                                        @RequestBody NutritionDTO nutritionDTO) {
+        return ResponseEntity.ok(userService.updateNutrition(id, nutritionDTO));
+    }
+
+    // GET /api/users/{id}/nutrition
+    // Devolve apenas os dados nutricionais
+    @GetMapping("/{id}/nutrition")
+    public ResponseEntity<NutritionDTO> getNutrition(@PathVariable int id) {
+        return ResponseEntity.ok(userService.getNutrition(id));
     }
 
     // DELETE /api/users/{id}

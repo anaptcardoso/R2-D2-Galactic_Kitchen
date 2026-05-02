@@ -1,50 +1,73 @@
 package org.dtos;
 
+import org.model.enums.DietType;
+
+import java.util.Set;
+
 public class NutritionDTO {
 
-    private String recipeName; // para saber a que receita pertence
-    private int calories;
-    private double protein;
-    private double carbs;
-    private double fat;
+    private Double weight;
+    private Double height;
+    private String goal;
+    private String activityLevel;
+    private Set<DietType> dietPreferences;
+    private String allergies;
 
-    public String getRecipeName() {
-        return recipeName;
+    public NutritionDTO() {}
+
+    public NutritionDTO(Double weight, Double height, String goal,
+                        String activityLevel, Set<DietType> dietPreferences,
+                        String allergies) {
+        this.weight = weight;
+        this.height = height;
+        this.goal = goal;
+        this.activityLevel = activityLevel;
+        this.dietPreferences = dietPreferences;
+        this.allergies = allergies;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
+    // Getters
+
+    public Double getWeight() { return weight; }
+    public Double getHeight() { return height; }
+    public String getGoal() { return goal; }
+    public String getActivityLevel() { return activityLevel; }
+    public Set<DietType> getDietPreferences() { return dietPreferences; }
+    public String getAllergies() { return allergies; }
+
+    // Setters
+
+    public void setWeight(Double weight) { this.weight = weight; }
+    public void setHeight(Double height) { this.height = height; }
+    public void setGoal(String goal) { this.goal = goal; }
+    public void setActivityLevel(String activityLevel) { this.activityLevel = activityLevel; }
+    public void setDietPreferences(Set<DietType> dietPreferences) { this.dietPreferences = dietPreferences; }
+    public void setAllergies(String allergies) { this.allergies = allergies; }
+
+    //  Overrides
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NutritionDTO other)) return false;
+        return java.util.Objects.equals(weight, other.weight) &&
+                java.util.Objects.equals(height, other.height) &&
+                java.util.Objects.equals(goal, other.goal);
     }
 
-    public double getFat() {
-        return fat;
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(weight, height, goal);
     }
 
-    public void setFat(double fat) {
-        this.fat = fat;
+    @Override
+    public String toString() {
+        return "NutritionDTO{" +
+                "goal='" + goal + '\'' +
+                ", activityLevel='" + activityLevel + '\'' +
+                ", weight=" + weight +
+                ", height=" + height +
+                '}';
     }
 
-    public double getCarbs() {
-        return carbs;
-    }
-
-    public void setCarbs(double carbs) {
-        this.carbs = carbs;
-    }
-
-    public double getProtein() {
-        return protein;
-    }
-
-    public void setProtein(double protein) {
-        this.protein = protein;
-    }
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public void setCalories(int calories) {
-        this.calories = calories;
-    }
 }
