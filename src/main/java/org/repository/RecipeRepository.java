@@ -2,16 +2,28 @@ package org.repository;
 
 import org.model.entity.Recipe;
 import org.model.enums.DietType;
+import org.model.enums.DifficultyLevel;
+import org.model.enums.MealType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
+@Repository
 public interface RecipeRepository extends JpaRepository<Recipe, String> {
 
-    List<Recipe> findByMealType(String mealType);
+    // Buscar receitas por tipo de refeição (ex: BREAKFAST, LUNCH, DINNER)
+    List<Recipe> findByMealType(MealType mealType);
 
-    List<Recipe> findByDifficultyLevel(String difficultyLevel);
+    // Buscar receitas por nível de dificuldade
+    List<Recipe> findByDifficultyLevel(DifficultyLevel difficultyLevel);
 
+    // Buscar receitas por nome (ignora maiúsculas/minúsculas)
+    List<Recipe> findByNameContainingIgnoreCase(String name);
+
+    // Buscar receitas por tipo de dieta
     List<Recipe> findByDietTypesContaining(DietType dietType);
+
+    // Buscar receitas com tempo de preparação menor ou igual ao indicado
+    List<Recipe> findByPreparationTimeLessThanEqual(int maxTime);
 }
