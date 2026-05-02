@@ -1,5 +1,6 @@
 package org.model.entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -12,22 +13,42 @@ import jakarta.persistence.ManyToMany;
 public class WeeklyPlan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ManytoOne
+    private UserProfile user;
+
+    private LocalDate weekStart;
+    private LocalDate weekEnd;
 
     @ManyToMany
     private List<Recipe> recipes;
 
-     // GETTERS / SETTERS
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+// GETTERS / SETTERS
 
-    public int getWeekNumber() { return weekNumber; }
-    public void setWeekNumber(int weekNumber) { this.weekNumber = weekNumber; }
+    public int getId() { return id; }
+    public void setId( int id) { this.id = id; }
 
     public UserProfile getUser() { return user; }
     public void setUser(UserProfile user) { this.user = user; }
+
+    public LocalDate getWeekStart() {
+        return weekStart;
+    }
+
+    public void setWeekStart(LocalDate weekStart) {
+        this.weekStart = weekStart;
+    }
+
+    public LocalDate getWeekEnd() {
+        return weekEnd;
+    }
+
+    public void setWeekEnd(LocalDate weekEnd) {
+        this.weekEnd = weekEnd;
+    }
 
     public List<Recipe> getRecipes() { return recipes; }
     public void setRecipes(List<Recipe> recipes) { this.recipes = recipes; }
