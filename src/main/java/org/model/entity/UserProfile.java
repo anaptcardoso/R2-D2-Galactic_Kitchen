@@ -6,6 +6,7 @@ import org.model.enums.DietType;
 import org.model.valueObject.NutritionProfile;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,14 +29,17 @@ public class UserProfile {
     private Double height;
     private String goal;
     private String activityLevel;
+    private int dailyCalories;
 
     @Embedded
     private NutritionProfile nutritionProfile;
 
     // preferências alimentares
-    @ElementCollection
     @Enumerated(EnumType.STRING)
-    private Set<DietType> dietPreferences;
+    private DietType dietType;
+
+    @ElementCollection
+    private List<String> allergies;
 
     // nota pessoal
     private String bio;
@@ -126,19 +130,27 @@ public class UserProfile {
 
     public void setId( int id) { this.id = id; }
 
+    public DietType getDietType() {
+        return dietType;
+    }
+
+    public void setDietType(DietType dietType) {
+        this.dietType = dietType;
+    }
+
     public String getGoal() { return goal; }
 
     public void setGoal(String goal) { this.goal = goal; }
 
-    public Set<DietType> getDietPreferences() { return dietPreferences; }
-
-    public void setDietPreferences(Set<DietType> dietPreferences) { this.dietPreferences = dietPreferences; }
-
-    public NutritionProfile getNutritionProfile() {
-        return nutritionProfile;
+    public List<String> getAllergies() {
+        return allergies;
     }
 
-    public void setNutritionProfile(NutritionProfile nutritionProfile) {
-        this.nutritionProfile = nutritionProfile;
+    public void setAllergies(List<String> allergies) {
+        this.allergies = allergies;
     }
+
+    public int getDailyCalories() { return dailyCalories; }
+    public void setDailyCalories(int dailyCalories) { this.dailyCalories = dailyCalories; }
+
 }

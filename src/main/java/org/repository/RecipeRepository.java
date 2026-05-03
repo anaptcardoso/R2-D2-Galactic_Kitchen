@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<Recipe, String> {
+public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
     // Buscar receitas por tipo de refeição (ex: BREAKFAST, LUNCH, DINNER)
     List<Recipe> findByMealType(MealType mealType);
