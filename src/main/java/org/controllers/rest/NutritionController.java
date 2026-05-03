@@ -1,7 +1,7 @@
 package org.controllers.rest;
 
 import org.dtos.ChatMessageDTO;
-import org.dtos.NutritionDTO;
+import org.dtos.RecipeDTO;
 import org.services.NutritionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/nutrition")
 public class NutritionController {
+
     private final NutritionService nutritionService;
 
     public NutritionController(NutritionService nutritionService) {
@@ -18,17 +19,17 @@ public class NutritionController {
     // GET /api/nutrition/{userId}
     // Devolve perfil nutricional do utilizador
     @GetMapping("/{userId}")
-    public ResponseEntity<NutritionDTO> getProfile(@PathVariable int userId) {
+    public ResponseEntity<RecipeDTO> getProfile(@PathVariable int userId) {
         return ResponseEntity.ok(nutritionService.findByUser(userId));
     }
 
     // PUT /api/nutrition/{userId}
-    // Atualiza objetivos e preferências nutricionais
+    // Atualiza objetivos nutricionais
     @PutMapping("/{userId}")
-    public ResponseEntity<NutritionDTO> update(
+    public ResponseEntity<RecipeDTO> update(
             @PathVariable int userId,
-            @RequestBody NutritionDTO nutritionDTO) {
-        return ResponseEntity.ok(nutritionService.update(userId, nutritionDTO));
+            @RequestBody RecipeDTO recipeDTO) {
+        return ResponseEntity.ok(nutritionService.update(userId, recipeDTO));
     }
 
     // POST /api/nutrition/analyse
@@ -37,5 +38,4 @@ public class NutritionController {
     public ResponseEntity<ChatMessageDTO> analyse(@RequestBody ChatMessageDTO message) throws Exception {
         return ResponseEntity.ok(nutritionService.analyse(message));
     }
-
 }

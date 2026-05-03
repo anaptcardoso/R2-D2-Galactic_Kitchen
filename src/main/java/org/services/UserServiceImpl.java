@@ -1,4 +1,3 @@
-
 package org.services;
 
 import org.converters.UserToDTO;
@@ -19,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserProfileRepository userProfileRepository;
 
+    // Usamos o converter para transformar UserProfile → UserProfileDTO
     @Autowired
     private UserToDTO userToDTO;
 
@@ -26,13 +26,15 @@ public class UserServiceImpl implements UserService {
         this.userProfileRepository = userProfileRepository;
     }
 
+
     // findAll — devolve todos os utilizadores
     @Override
     public List<UserProfileDTO> findAll() {
         return userToDTO.convert(userProfileRepository.findAll());
     }
 
-    // findById — procura um utilizador por ID
+
+    // findById — busca um utilizador por ID
     @Override
     public UserProfileDTO findById(int id) throws UserNotFoundException {
         UserProfile user = userProfileRepository.findById(id)
@@ -40,7 +42,8 @@ public class UserServiceImpl implements UserService {
         return userToDTO.convert(user);
     }
 
-    // searchByName — procura por primeiro e último nome
+
+    // searchByName — busca por primeiro e último nome
     @Override
     public List<UserProfileDTO> searchByName(String firstName, String lastName) throws UserNotFoundException {
         List<UserProfile> users = userProfileRepository
@@ -48,23 +51,28 @@ public class UserServiceImpl implements UserService {
         return userToDTO.convert(users);
     }
 
+
     // save — cria um utilizador novo
     @Transactional
     @Override
     public UserProfileDTO save(UserProfileDTO dto) throws UserNotFoundException {
+        // Converte o DTO para entidade para guardar na BD
         UserProfile user = toEntity(dto);
+        // Guarda na BD e devolve a entidade com ID gerado
         UserProfile saved = userProfileRepository.save(user);
+        // Converte de volta para DTO para devolver ao frontend
         return userToDTO.convert(saved);
     }
 
-    // update — atualiza dados pessoais de um utilizador existente
+    // update — atualiza dados pessoais de um utilizador
     @Transactional
     @Override
     public UserProfileDTO update(int id, UserProfileDTO dto) throws UserNotFoundException {
+        // Verificamos se o utilizador existe antes de atualizar
         UserProfile existing = userProfileRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
-        // atualiza dados pessoais
+        // Atualizamos só os dados pessoais
         existing.setFirstName(dto.getFirstName());
         existing.setLastName(dto.getLastName());
         existing.setEmail(dto.getEmail());
@@ -77,6 +85,7 @@ public class UserServiceImpl implements UserService {
         return userToDTO.convert(updated);
     }
 
+
     // delete — apaga um utilizador
     @Transactional
     @Override
@@ -87,13 +96,26 @@ public class UserServiceImpl implements UserService {
         userProfileRepository.deleteById(id);
     }
 
+
     // getNutrition — devolve os dados nutricionais do utilizador
     @Override
     public NutritionDTO getNutrition(int id) throws UserNotFoundException {
         UserProfile user = userProfileRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
+        // Se o NutritionProfile for null, devolvemos um DTO vazio
+        // em vez de dar NullPointerException!
         NutritionProfile nutrition = user.getNutritionProfile();
+        if (nutrition == null) {
+            return new NutritionDTO(
+                    user.getWeight(),
+                    user.getHeight(),
+                    user.getGoal(),
+                    user.getActivityLevel(),
+                    null,
+                    null
+            );
+        }
 
         return new NutritionDTO(
                 nutrition.getWeight(),
@@ -105,15 +127,22 @@ public class UserServiceImpl implements UserService {
         );
     }
 
-    // updateNutrition — atualiza os dados nutricionais do utilizador
+
+    // updateNutrition — atualiza os dados nutricionais
     @Transactional
     @Override
     public NutritionDTO updateNutrition(int id, NutritionDTO nutritionDTO) throws UserNotFoundException {
         UserProfile user = userProfileRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
-        // acede ao NutritionProfile embeddable e atualiza os campos
+        // Se não tiver NutritionProfile, criamos um novo
         NutritionProfile nutrition = user.getNutritionProfile();
+        if (nutrition == null) {
+            nutrition = new NutritionProfile();
+            user.setNutritionProfile(nutrition);
+        }
+
+        // Atualizamos os campos nutricionais
         nutrition.setWeight(nutritionDTO.getWeight());
         nutrition.setHeight(nutritionDTO.getHeight());
         nutrition.setGoal(nutritionDTO.getGoal());
@@ -125,8 +154,10 @@ public class UserServiceImpl implements UserService {
         return nutritionDTO;
     }
 
-    // ── Método privado de conversão DTO → entidade ────────────────────────────
 
+    // MÉTODO PRIVADO DE CONVERSÃO DTO → ENTIDADE
+
+    // Converte UserProfileDTO → entidade UserProfile (para guardar na BD)
     private UserProfile toEntity(UserProfileDTO dto) {
         UserProfile user = new UserProfile();
         user.setFirstName(dto.getFirstName());
@@ -136,19 +167,24 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(dto.getDateOfBirth());
         user.setCountry(dto.getCountry());
         user.setBio(dto.getBio());
+        user.setWeight(dto.getWeight());
+        user.setHeight(dto.getHeight());
+        user.setGoal(dto.getGoal());
+        user.setActivityLevel(dto.getActivityLevel());
+        user.setDailyCalories(dto.getDailyCalories());
+        user.setDietType(dto.getDietType());
+        user.setAllergies(dto.getAllergies());
 
-        // converte NutritionDTO → NutritionProfile embeddable
-        if (dto.getNutritionDTO() != null) {
-            NutritionProfile nutrition = new NutritionProfile(
-                    dto.getNutritionDTO().getWeight(),
-                    dto.getNutritionDTO().getHeight(),
-                    dto.getNutritionDTO().getGoal(),
-                    dto.getNutritionDTO().getActivityLevel(),
-                    dto.getNutritionDTO().getDietPreferences(),
-                    dto.getNutritionDTO().getAllergies()
-            );
-            user.setNutritionProfile(nutrition);
-        }
+        // Cria o NutritionProfile com os dados nutricionais
+        NutritionProfile nutrition = new NutritionProfile(
+                dto.getWeight(),
+                dto.getHeight(),
+                dto.getGoal(),
+                dto.getActivityLevel(),
+                null, // dietPreferences — não temos no DTO actual
+                null  // allergies — guardamos separadamente
+        );
+        user.setNutritionProfile(nutrition);
 
         return user;
     }

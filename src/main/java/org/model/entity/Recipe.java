@@ -1,7 +1,5 @@
 package org.model.entity;
 
-import org.model.valueObject.NutritionProfile;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
