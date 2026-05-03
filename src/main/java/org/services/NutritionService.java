@@ -1,17 +1,27 @@
 package org.services;
 
-import org.dtos.NutritionDTO;
+import org.dtos.RecipeDTO;
+import org.dtos.ChatMessageDTO;
 
 import java.util.List;
 
 public interface NutritionService {
 
     // Devolve a info nutricional de uma receita específica
-    NutritionDTO getNutritionByRecipe(int recipeId);
+    RecipeDTO getNutritionByRecipe(int recipeId);
 
-    // Calcula o total nutricional de várias receitas (ex: plano semanal)
-    NutritionDTO getTotalNutrition(List<Integer> recipeIds);
+    // Calcula o total de calorias/macros de várias receitas
+    RecipeDTO getTotalNutrition(List<Integer> recipeIds);
 
-    // Filtra receitas que tenham menos do que X calorias
-    List<NutritionDTO> getRecipesBelowCalories(int maxCalories);
+    // Filtra receitas abaixo de X calorias
+    List<RecipeDTO> getRecipesBelowCalories(int maxCalories);
+
+    // Analisa alimentos via AI — usado pelo NutritionController
+    ChatMessageDTO analyse(ChatMessageDTO message) throws Exception;
+
+    // Devolve perfil nutricional do utilizador — usado pelo NutritionController
+    RecipeDTO findByUser(int userId);
+
+    // Atualiza perfil nutricional do utilizador — usado pelo NutritionController
+    RecipeDTO update(int userId, RecipeDTO recipeDTO);
 }

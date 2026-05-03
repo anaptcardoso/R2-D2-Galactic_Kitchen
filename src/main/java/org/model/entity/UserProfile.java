@@ -153,4 +153,11 @@ public class UserProfile {
     public int getDailyCalories() { return dailyCalories; }
     public void setDailyCalories(int dailyCalories) { this.dailyCalories = dailyCalories; }
 
+    public NutritionProfile getNutritionProfile() {
+        return nutritionProfile;
+    }
+
+    public void setNutritionProfile(NutritionProfile nutritionProfile) {
+        this.nutritionProfile = nutritionProfile;
+    }
 }
