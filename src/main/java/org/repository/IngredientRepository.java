@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IngredientRepository extends JpaRepository<Ingredient, String> {
+public interface IngredientRepository extends JpaRepository<Ingredient, Integer> {
 
     // Buscar ingredientes de uma receita específica
-    List<Ingredient> findByRecipeId(String recipeId);
+    List<Ingredient> findByRecipeId(int recipeId);
 
     // Buscar ingredientes por nome
     List<Ingredient> findByNameContainingIgnoreCase(String name);

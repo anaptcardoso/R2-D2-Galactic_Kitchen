@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserProfileRepository extends JpaRepository<UserProfile, String> {
+public interface UserProfileRepository extends JpaRepository<UserProfile, Integer> {
 
     // Buscar utilizador por nome
-    Optional<UserProfile> findByName(String name);
+    Optional<UserProfile> findByFirstNameOrLastName(String firstName, String lastName);
 
     // Buscar utilizadores por preferência de dieta
-    List<UserProfile> findByDietPreferencesContaining(DietType dietType);
+    List<UserProfile> findByDietType(DietType dietType);
 }

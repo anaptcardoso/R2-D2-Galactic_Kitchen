@@ -5,8 +5,6 @@ import org.model.entity.UserProfile;
 import org.repository.UserProfileRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.List;
 
 @Service
@@ -41,7 +39,7 @@ public class UserServiceImpl implements UserService{
     // findByName — busca por primeiro ou último nome
     @Override
     public UserProfileDTO findByName(String name){
-        UserProfile user = userProfileRepository.findByName(name)
+        UserProfile user = userProfileRepository.findByFirstNameOrLastName(name, name)
                 .orElseThrow(()-> new RuntimeException("User not found" +name));
         return toDTO(user);
     }
@@ -117,6 +115,7 @@ public class UserServiceImpl implements UserService{
         dto.setActivityLevel(user.getActivityLevel());
         dto.setDietType(user.getDietType());
         dto.setAllergies(user.getAllergies());
+        dto.setDailyCalories(user.getDailyCalories());
         dto.setBio(user.getBio());
         return dto;
     }
@@ -136,6 +135,7 @@ public class UserServiceImpl implements UserService{
         user.setActivityLevel(dto.getActivityLevel());
         user.setDietType(dto.getDietType());
         user.setAllergies(dto.getAllergies());
+        user.setDailyCalories(dto.getDailyCalories());
         user.setBio(dto.getBio());
         return user;
     }
