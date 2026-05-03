@@ -1,7 +1,9 @@
 package org.services;
 
+import org.dtos.NutritionDTO;
 import org.dtos.RecipeDTO;
 import org.dtos.ChatMessageDTO;
+import org.exceptions.UserNotFoundException;
 
 import java.util.List;
 
@@ -20,8 +22,8 @@ public interface NutritionService {
     ChatMessageDTO analyse(ChatMessageDTO message) throws Exception;
 
     // Devolve perfil nutricional do utilizador — usado pelo NutritionController
-    RecipeDTO findByUser(int userId);
+    NutritionDTO findByUser(int userId) throws UserNotFoundException;
 
     // Atualiza perfil nutricional do utilizador — usado pelo NutritionController
-    RecipeDTO update(int userId, RecipeDTO recipeDTO);
+    NutritionDTO update(int userId, NutritionDTO nutritionDTO) throws UserNotFoundException;
 }

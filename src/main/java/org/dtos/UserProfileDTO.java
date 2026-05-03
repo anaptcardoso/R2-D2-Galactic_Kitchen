@@ -17,27 +17,17 @@ public class UserProfileDTO {
     private String country;
 
     // dados nutricionais
-    private Double weight;
-    private Double height;
-    private String goal;
-    private String activityLevel;
-    private int dailyCalories;
+    private NutritionDTO nutritionDTO;
 
     //personal note
     private String bio;
-
-    // preferências alimentares
-    private DietType dietType;
-    private List<String> allergies;
 
 
     public UserProfileDTO(){}
 
     public UserProfileDTO(int id, String firstName, String lastName,
                           String email, String phone, LocalDate dateOfBirth,
-                          String country, Double weight, Double height,
-                          String goal, String activityLevel, int dailyCalories,
-                          DietType dietType, List<String> allergies, String bio) {
+                          String country, String bio, NutritionDTO nutritionDTO) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,14 +35,8 @@ public class UserProfileDTO {
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
         this.country = country;
-        this.weight = weight;
-        this.height = height;
-        this.goal = goal;
-        this.activityLevel = activityLevel;
-        this.dailyCalories = dailyCalories;
-        this.dietType = dietType;
-        this.allergies = allergies;
         this.bio = bio;
+        this.nutritionDTO = nutritionDTO;
     }
 
     public int getId() {
@@ -111,68 +95,20 @@ public class UserProfileDTO {
         this.country = country;
     }
 
+    public NutritionDTO getNutritionDTO() {
+        return nutritionDTO;
+    }
+
+    public void setNutritionDTO(NutritionDTO nutritionDTO) {
+        this.nutritionDTO = nutritionDTO;
+    }
+
     public String getBio() {
         return bio;
     }
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public Double getHeight() {
-        return height;
-    }
-
-    public void setHeight(Double height) {
-        this.height = height;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public String getGoal() {
-        return goal;
-    }
-
-    public void setGoal(String goal) {
-        this.goal = goal;
-    }
-
-    public String getActivityLevel() {
-        return activityLevel;
-    }
-
-    public void setActivityLevel(String activityLevel) {
-        this.activityLevel = activityLevel;
-    }
-
-    public int getDailyCalories() {
-        return dailyCalories;
-    }
-
-    public void setDailyCalories(int dailyCalories) {
-        this.dailyCalories = dailyCalories;
-    }
-
-    public DietType getDietType() {
-        return dietType;
-    }
-
-    public void setDietType(DietType dietType) {
-        this.dietType = dietType;
-    }
-
-    public List<String> getAllergies() {
-        return allergies;
-    }
-
-    public void setAllergies(List<String> allergies) {
-        this.allergies = allergies;
     }
 
     @Override
@@ -194,8 +130,6 @@ public class UserProfileDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", goal='" + goal + '\'' +
-                ", dietType=" + dietType +
                 '}';
     }
 

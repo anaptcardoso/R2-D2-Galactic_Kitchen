@@ -108,10 +108,10 @@ public class UserServiceImpl implements UserService {
         NutritionProfile nutrition = user.getNutritionProfile();
         if (nutrition == null) {
             return new NutritionDTO(
-                    user.getWeight(),
-                    user.getHeight(),
-                    user.getGoal(),
-                    user.getActivityLevel(),
+                    null,
+                    null,
+                    null,
+                    null,
                     null,
                     null
             );
@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    // MÉTODO PRIVADO DE CONVERSÃO DTO → ENTIDADE
+    // METODO PRIVADO DE CONVERSÃO DTO → ENTIDADE
 
     // Converte UserProfileDTO → entidade UserProfile (para guardar na BD)
     private UserProfile toEntity(UserProfileDTO dto) {
@@ -167,22 +167,16 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(dto.getDateOfBirth());
         user.setCountry(dto.getCountry());
         user.setBio(dto.getBio());
-        user.setWeight(dto.getWeight());
-        user.setHeight(dto.getHeight());
-        user.setGoal(dto.getGoal());
-        user.setActivityLevel(dto.getActivityLevel());
-        user.setDailyCalories(dto.getDailyCalories());
-        user.setDietType(dto.getDietType());
-        user.setAllergies(dto.getAllergies());
 
         // Cria o NutritionProfile com os dados nutricionais
+        if(dto.getNutritionDTO() != null){
         NutritionProfile nutrition = new NutritionProfile(
-                dto.getWeight(),
-                dto.getHeight(),
-                dto.getGoal(),
-                dto.getActivityLevel(),
-                null, // dietPreferences — não temos no DTO actual
-                null  // allergies — guardamos separadamente
+                dto.getNutritionDTO().getWeight(),
+                dto.getNutritionDTO().getHeight(),
+                dto.getNutritionDTO().getGoal(),
+                dto.getNutritionDTO().getActivityLevel(),
+                dto.getNutritionDTO().getDietPreferences(), // dietPreferences — não temos no DTO actual
+                dto.getNutritionDTO().getAllergies()  // allergies — guardamos separadamente
         );
         user.setNutritionProfile(nutrition);
 

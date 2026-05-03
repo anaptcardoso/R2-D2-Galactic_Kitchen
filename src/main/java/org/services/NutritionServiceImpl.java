@@ -2,9 +2,12 @@ package org.services;
 
 import org.dtos.ChatMessageDTO;
 import org.dtos.IngredientDTO;
+import org.dtos.NutritionDTO;
 import org.dtos.RecipeDTO;
+import org.exceptions.UserNotFoundException;
 import org.model.entity.Recipe;
 import org.model.entity.UserProfile;
+import org.model.valueObject.NutritionProfile;
 import org.persistence.daos.RecipeRepository;
 import org.persistence.daos.UserProfileRepository;
 import org.springframework.stereotype.Service;
@@ -101,34 +104,52 @@ public class NutritionServiceImpl implements NutritionService {
     }
 
 
-    // findByUser — devolve receitas recomendadas para o utilizador
-    // com base no seu tipo de dieta
+    // findByUser — devolve o perfil nutricional do utilizador
     @Override
-    public RecipeDTO findByUser(int userId) {
+    public NutritionDTO findByUser(int userId) throws UserNotFoundException {
         UserProfile user = userProfileRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+                .orElseThrow(UserNotFoundException::new);
 
-        // Devolvemos um RecipeDTO com o perfil nutricional do utilizador
-        RecipeDTO dto = new RecipeDTO();
-        dto.setName(user.getFirstName() + " " + user.getLastName());
-        dto.setCalories(user.getDailyCalories());
-        dto.setCategory(user.getDietType() != null ? user.getDietType().name() : "");
-        return dto;
+        NutritionProfile nutrition = user.getNutritionProfile();
+        if (nutrition == null) {
+            return new NutritionDTO(null, null, null, null, null, null);
+        }
+
+        return new NutritionDTO(
+                nutrition.getWeight(),
+                nutrition.getHeight(),
+                nutrition.getGoal(),
+                nutrition.getActivityLevel(),
+                nutrition.getDietPreferences(),
+                nutrition.getAllergies()
+        );
+
     }
 
 
     // update — actualiza o perfil nutricional do utilizador
 
     @Override
-    public RecipeDTO update(int userId, RecipeDTO recipeDTO) {
+    public NutritionDTO update(int userId, NutritionDTO nutritionDTO) throws UserNotFoundException {
         UserProfile user = userProfileRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+                .orElseThrow(UserNotFoundException::new);
 
-        // Actualizamos as calorias diárias do utilizador
-        user.setDailyCalories(recipeDTO.getCalories());
+        NutritionProfile nutrition = user.getNutritionProfile();
+        if (nutrition == null) {
+            nutrition = new NutritionProfile();
+            user.setNutritionProfile(nutrition);
+        }
+
+        nutrition.setWeight(nutritionDTO.getWeight());
+        nutrition.setHeight(nutritionDTO.getHeight());
+        nutrition.setGoal(nutritionDTO.getGoal());
+        nutrition.setActivityLevel(nutritionDTO.getActivityLevel());
+        nutrition.setDietPreferences(nutritionDTO.getDietPreferences());
+        nutrition.setAllergies(nutritionDTO.getAllergies());
+
         userProfileRepository.save(user);
+        return nutritionDTO;
 
-        return recipeDTO;
     }
 
 

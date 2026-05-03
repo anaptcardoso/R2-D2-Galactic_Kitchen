@@ -1,4 +1,3 @@
-
 package org.factories;
 
 import org.model.entity.Recipe;
