@@ -2,9 +2,11 @@ package org.factories;
 
 import org.model.entity.UserProfile;
 import org.model.enums.DietType;
+import org.model.valueObject.NutritionProfile;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public class UserFactory {
 
@@ -29,13 +31,9 @@ public class UserFactory {
         user.setPhone("123456789");
         user.setDateOfBirth(LocalDate.of(19, 5, 25));
         user.setCountry("Tatooine");
-        user.setWeight(75.0);
-        user.setHeight(1.72);
-        user.setGoal("Become a Jedi Master");
-        user.setActivityLevel("very active");
-        user.setDailyCalories(2800);
-        user.setDietType(DietType.OMNIVORE);
-        user.setAllergies(List.of());
+        user.setNutritionProfile(new NutritionProfile(
+                75.0, 172.0, "Become a Jedi Master", "very active",
+                Set.of(DietType.OMNIVORE), null));
         user.setBio("I am a Jedi, like my father before me.");
         return user;
     }
@@ -51,13 +49,9 @@ public class UserFactory {
         user.setPhone("987654321");
         user.setDateOfBirth(LocalDate.of(19, 5, 25));
         user.setCountry("Alderaan");
-        user.setWeight(58.0);
-        user.setHeight(1.50);
-        user.setGoal("Maintain fitness for the Rebellion");
-        user.setActivityLevel("active");
-        user.setDailyCalories(2000);
-        user.setDietType(DietType.VEGETARIAN);
-        user.setAllergies(List.of("gluten"));
+        user.setNutritionProfile(new NutritionProfile(
+                58.0, 150.0, "Maintain fitness for the Rebellion", "active",
+                Set.of(DietType.VEGETARIAN), "gluten"));
         user.setBio("Help me, Obi-Wan Kenobi. You're my only hope.");
         return user;
     }
@@ -73,13 +67,9 @@ public class UserFactory {
         user.setPhone("555123456");
         user.setDateOfBirth(LocalDate.of(29, 7, 13));
         user.setCountry("Corellia");
-        user.setWeight(85.0);
-        user.setHeight(1.80);
-        user.setGoal("Survive another day");
-        user.setActivityLevel("moderate");
-        user.setDailyCalories(2500);
-        user.setDietType(DietType.OMNIVORE);
-        user.setAllergies(List.of());
+        user.setNutritionProfile(new NutritionProfile(
+                85.0, 180.0, "Survive another day", "moderate",
+                Set.of(DietType.OMNIVORE), null));
         user.setBio("Never tell me the odds!");
         return user;
     }

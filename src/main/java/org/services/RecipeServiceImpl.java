@@ -43,12 +43,10 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
 
-    // findByCategory — filtra por tipo de dieta
+    // findByCategory — filtra por categoria, massa, arroz, ...
     @Override
     public List<RecipeDTO> findByCategory(String category) {
-        // Converte a String "VEGAN" para o enum DietType.VEGAN
-        DietType dietType = DietType.valueOf(category.toUpperCase());
-        return recipeRepository.findByDietTypesContaining(dietType)
+        return recipeRepository.findByCategory(category)
                 .stream()
                 .map(this::toDTO)
                 .toList();
