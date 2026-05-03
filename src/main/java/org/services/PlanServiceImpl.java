@@ -1,21 +1,26 @@
 package org.services;
 
-import org.dtos.WeeklyPlanDTO;
+import org.dtos.IngredientDTO;
 import org.dtos.RecipeDTO;
+import org.dtos.WeeklyPlanDTO;
+import org.exceptions.PlanNotFoundException;
+import org.exceptions.RecipeNotFoundException;
+import org.exceptions.UserNotFoundException;
 import org.model.entity.Recipe;
 import org.model.entity.UserProfile;
 import org.model.entity.WeeklyPlan;
-import org.repository.RecipeRepository;
-import org.repository.UserProfileRepository;
-import org.repository.WeeklyPlanRepository;
+import org.persistence.daos.RecipeRepository;
+import org.persistence.daos.UserProfileRepository;
+import org.persistence.daos.WeeklyPlanRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -32,10 +37,12 @@ public class PlanServiceImpl implements PlanService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    // findByUser - todos os planos de um utilizador
+    // findByUser — todos os planos de um utilizador
     @Override
-    public List<WeeklyPlanDTO> findByUser(int userId) {
-        return weeklyPlanRepository.findByUserId(userId)
+    public List<WeeklyPlanDTO> findByUser(int userId) throws PlanNotFoundException, UserNotFoundException {
+        UserProfile user = userProfileRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        return weeklyPlanRepository.findByUser(user)
                 .stream()
                 .map(this::toDTO)
                 .toList();
@@ -43,26 +50,27 @@ public class PlanServiceImpl implements PlanService {
 
     // findByUserAndWeek — plano de uma semana específica
     @Override
-    public WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart) {
-        LocalDate date = LocalDate.parse(weekStart); // "2025-01-06" → LocalDate
-        WeeklyPlan plan = weeklyPlanRepository.findByUserIdAndWeekStart(userId, date)
-                .orElseThrow(() -> new RuntimeException("Plan not found for user " + userId));
+    public WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart) throws PlanNotFoundException, UserNotFoundException {
+        UserProfile user = userProfileRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        LocalDate date = LocalDate.parse(weekStart);
+        WeeklyPlan plan = weeklyPlanRepository.findByUserAndWeekStart(user, date)
+                .orElseThrow(PlanNotFoundException::new);
         return toDTO(plan);
     }
 
     // create — cria um plano novo
     @Transactional
     @Override
-    public WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO){
-        //Ver se o user existe
+    public WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO) throws PlanNotFoundException, UserNotFoundException {
         UserProfile user = userProfileRepository.findById(weeklyPlanDTO.getUserId())
-                .orElseThrow(()-> new RuntimeException("User not found" + weeklyPlanDTO.getUserId()));
+                .orElseThrow(UserNotFoundException::new);
 
         WeeklyPlan plan = new WeeklyPlan();
         plan.setUser(user);
         plan.setWeekStart(weeklyPlanDTO.getWeekStart());
         plan.setWeekEnd(weeklyPlanDTO.getWeekEnd());
-        plan.setRecipes(new ArrayList<>()); // começa vazio, receitas adicionam-se depois
+        plan.setRecipes(new ArrayList<>());
 
         WeeklyPlan saved = weeklyPlanRepository.save(plan);
         return toDTO(saved);
@@ -71,12 +79,12 @@ public class PlanServiceImpl implements PlanService {
     // addRecipe — adiciona uma receita ao plano
     @Transactional
     @Override
-    public WeeklyPlanDTO addRecipe(int planId, int recipeId){
+    public WeeklyPlanDTO addRecipe(int planId, int recipeId) throws PlanNotFoundException, RecipeNotFoundException {
         WeeklyPlan plan = weeklyPlanRepository.findById(planId)
-                .orElseThrow(()-> new RuntimeException(("Plan not found" + planId));
+                .orElseThrow(PlanNotFoundException::new);
 
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(()-> new RuntimeException("Recipe not found" + recipeId));
+                .orElseThrow(RecipeNotFoundException::new);
 
         plan.getRecipes().add(recipe);
         WeeklyPlan updated = weeklyPlanRepository.save(plan);
@@ -86,11 +94,11 @@ public class PlanServiceImpl implements PlanService {
     // removeRecipe — remove uma receita do plano
     @Transactional
     @Override
-    public WeeklyPlanDTO removeRecipe(int planId, int recipeId) {
+    public WeeklyPlanDTO removeRecipe(int planId, int recipeId) throws PlanNotFoundException {
         WeeklyPlan plan = weeklyPlanRepository.findById(planId)
-                .orElseThrow(()-> new RuntimeException("Plan not found" + planId));
+                .orElseThrow(PlanNotFoundException::new);
 
-        plan.getRecipes().removeIf(r-> r.getId() == recipeId);
+        plan.getRecipes().removeIf(r -> r.getId() == recipeId);
         WeeklyPlan updated = weeklyPlanRepository.save(plan);
         return toDTO(updated);
     }
@@ -98,12 +106,14 @@ public class PlanServiceImpl implements PlanService {
     // delete — apaga um plano
     @Transactional
     @Override
-    public void delete(int planId){
-        if(!weeklyPlanRepository.existsById(planId)){
-            throw  new RuntimeException("Plan not found" + planId);
+    public void delete(int planId) throws PlanNotFoundException {
+        if (!weeklyPlanRepository.existsById(planId)) {
+            throw new PlanNotFoundException();
         }
         weeklyPlanRepository.deleteById(planId);
     }
+
+    // ── Métodos privados ──────────────────────────────────────────────────────
 
     private WeeklyPlanDTO toDTO(WeeklyPlan plan) {
         WeeklyPlanDTO dto = new WeeklyPlanDTO();
@@ -111,24 +121,9 @@ public class PlanServiceImpl implements PlanService {
         dto.setUserId(plan.getUser().getId());
         dto.setWeekStart(plan.getWeekStart());
         dto.setWeekEnd(plan.getWeekEnd());
-
-        // Organiza as receitas por dia da semana num Map
-        // Chave: "MONDAY", "TUESDAY", etc.
-        // Valor: lista de RecipeDTOs desse dia
-        Map<String, List<RecipeDTO>> meals = new LinkedHashMap<>();
-        String[] days = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
-
-        for (String day : days) {
-            meals.put(day, new ArrayList<>()); // começa vazio para cada dia
-        }
-
-        // Distribui as receitas pelos dias (uma por dia, por ordem)
-        List<Recipe> recipes = plan.getRecipes();
-        for (int i = 0; i < recipes.size() && i < days.length; i++) {
-            meals.get(days[i]).add(recipeToDTO(recipes.get(i)));
-        }
-
-        dto.setMeals(meals);
+        dto.setRecipes(plan.getRecipes().stream()
+                .map(this::recipeToDTO)
+                .toList());
         dto.setShoppingList(generateShoppingList(plan.getRecipes()));
         return dto;
     }
@@ -144,27 +139,38 @@ public class PlanServiceImpl implements PlanService {
             });
         }
 
-        // Converte o Map para List<String> — ex: "flour (g): 350.0"
+        // converte o Map para List<String> — ex: "Farinha (g): 350.0"
         return aggregated.entrySet().stream()
                 .map(e -> e.getKey() + ": " + e.getValue())
                 .toList();
     }
 
-    // Converte Recipe → RecipeDTO (reutiliza a lógica do RecipeService)
+    // Converte Recipe → RecipeDTO
     private RecipeDTO recipeToDTO(Recipe recipe) {
         RecipeDTO dto = new RecipeDTO();
         dto.setId(recipe.getId());
         dto.setName(recipe.getName());
         dto.setDescription(recipe.getDescription());
+        dto.setCategory(recipe.getCategory());
         dto.setPreparationTime(recipe.getPreparationTime());
-        dto.setDifficulty(recipe.getDifficultyLevel());
+        dto.setServings(recipe.getServings());
+        dto.setCalories(recipe.getCalories());
+        dto.setProtein(recipe.getProtein());
+        dto.setCarbs(recipe.getCarbs());
+        dto.setFat(recipe.getFat());
+        dto.setDifficultyLevel(recipe.getDifficultyLevel());
         dto.setMealType(recipe.getMealType());
-        dto.setIngredients(
-                recipe.getIngredients()
-                        .stream()
-                        .map(i -> i.getName())
-                        .toList()
-        );
+        dto.setDietTypes(recipe.getDietTypes());
+        dto.setTip(recipe.getTip());
+
+        // steps — converte String para List<String> se necessário
+        if (recipe.getSteps() != null) {
+            dto.setSteps(Arrays.asList(recipe.getSteps().split("\n")));
+        }
+
+        dto.setIngredients(recipe.getIngredients().stream()
+                .map(i -> new IngredientDTO(i.getId(), i.getName(), i.getQuantity(), i.getUnit()))
+                .toList());
         return dto;
     }
 }

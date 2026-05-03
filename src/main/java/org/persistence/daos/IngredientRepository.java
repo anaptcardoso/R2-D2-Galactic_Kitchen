@@ -1,4 +1,4 @@
-package org.repository;
+package org.persistence.daos;
 
 import org.model.entity.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;

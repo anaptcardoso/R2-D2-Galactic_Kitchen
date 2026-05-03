@@ -2,7 +2,6 @@ package org.dtos;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 public class WeeklyPlanDTO {
     private int id;
@@ -44,7 +43,7 @@ public class WeeklyPlanDTO {
         return weekEnd;
     }
 
-    public List<RecipeDTO> getMeals() {
+    public List<RecipeDTO> getRecipes() {
         return recipes;
     }
 
@@ -68,7 +67,7 @@ public class WeeklyPlanDTO {
         this.weekEnd = weekEnd;
     }
 
-    public void setMeals(List<RecipeDTO> recipes) {
+    public void setRecipes(List<RecipeDTO> recipes) {
         this.recipes = recipes;
     }
 

@@ -3,8 +3,7 @@ package org.services;
 import org.dtos.NutritionDTO;
 import org.model.entity.Recipe;
 import org.model.valueObject.NutritionProfile;
-import org.repository.RecipeRepository;
-import org.services.NutritionService;
+import org.persistence.daos.RecipeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
