@@ -1,26 +1,32 @@
+
 package org.services;
 
 import org.dtos.WeeklyPlanDTO;
+import org.exceptions.PlanNotFoundException;
+import org.exceptions.RecipeNotFoundException;
+import org.exceptions.UserNotFoundException;
 
 import java.util.List;
 
 public interface PlanService {
 
     // Busca todos os planos de um utilizador
-    List<WeeklyPlanDTO> findByUser(int userId);
+    List<WeeklyPlanDTO> findByUser(int userId) throws PlanNotFoundException, UserNotFoundException;
 
     // Busca o plano de uma semana específica
-    WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart);
+    WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart) throws PlanNotFoundException, UserNotFoundException;
 
     // Cria um plano novo
-    WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO);
+    WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO) throws PlanNotFoundException, UserNotFoundException;
 
     // Adiciona uma receita ao plano
-    WeeklyPlanDTO addRecipe(int planId, int recipeId);
+    WeeklyPlanDTO addRecipe(int planId, int recipeId) throws PlanNotFoundException, RecipeNotFoundException;
 
     // Remove uma receita do plano
-    WeeklyPlanDTO removeRecipe(int planId, int recipeId);
+    WeeklyPlanDTO removeRecipe(int planId, int recipeId) throws PlanNotFoundException;
 
     // Apaga um plano
-    void delete(int planId);
+    void delete(int planId) throws PlanNotFoundException;
 }
+
+

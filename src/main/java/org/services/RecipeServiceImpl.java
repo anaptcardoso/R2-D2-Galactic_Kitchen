@@ -3,7 +3,7 @@ package org.services;
 import org.dtos.RecipeDTO;
 import org.model.entity.Recipe;
 import org.model.enums.DietType;
-import org.repository.RecipeRepository;
+import org.persistence.daos.RecipeRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
