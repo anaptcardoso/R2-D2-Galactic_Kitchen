@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>R2-CHEF</title>
+  <link rel="stylesheet" href="css/style.css"/> 
+</head>
+
+<body>
+    
+  <nav>
+   
+    <div class="logo">R2-CHEF</div>
+
+    <ul class="nav-links">
+      <li><a href="#home" onclick="navigate('home')">Home</a></li>
+      <li><a href="#recipes" onclick="navigate('recipes')">Recipes</a></li>
+      <li><a href="#plan" onclick="navigate('plan')">Weekly Plan</a></li>
+      <li><a href="#chat" onclick="navigate('chat')">R2-Chat</a></li>
+      <li><a href="#profile" onclick="navigate('profile')">Profile</a></li>
+    </ul>  
+
+  </nav>
+
+  <div id="app"> </div>
+
+
+ <script src="js/data/recipes.js"></script>
+  <script src="js/pages/home.js"></script>
+  <script src="js/pages/recipes.js"></script>
+  <script src="js/pages/detail.js"></script>
+  <script src="js/pages/plan.js"></script>
+  <script src="js/pages/chat.js"></script>
+  <script src="js/pages/profile.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
