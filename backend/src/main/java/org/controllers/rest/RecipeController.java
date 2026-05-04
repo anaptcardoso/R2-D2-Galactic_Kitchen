@@ -1,6 +1,7 @@
 package org.controllers.rest;
 
 import org.dtos.RecipeDTO;
+import org.exceptions.RecipeNotFoundException;
 import org.services.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class RecipeController {
 
     //GET /api/recipes/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeDTO> getById(@PathVariable int id) { //dependente da dto
+    public ResponseEntity<RecipeDTO> getById(@PathVariable int id) throws RecipeNotFoundException { //dependente da dto
         return ResponseEntity.ok(recipeService.findById(id)); //serviços
     }
 
@@ -43,22 +44,21 @@ public class RecipeController {
 
     //POST /api/recipes
     @PostMapping
-    public ResponseEntity<RecipeDTO> create(@RequestBody RecipeDTO recipeDTO){
+    public ResponseEntity<RecipeDTO> create(@RequestBody RecipeDTO recipeDTO) throws RecipeNotFoundException  {
         RecipeDTO created = recipeService.save(recipeDTO);//serviços
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     //PUT /api/recipes/{id}
     @PutMapping("/{id}")
-    public ResponseEntity<RecipeDTO> update(@PathVariable int id, @RequestBody RecipeDTO recipeDTO){
+    public ResponseEntity<RecipeDTO> update(@PathVariable int id, @RequestBody RecipeDTO recipeDTO) throws RecipeNotFoundException {
         return ResponseEntity.ok(recipeService.update(id, recipeDTO));//serviços
     }
 
     //DELETE /api/recipes/{id}
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id){
+    public ResponseEntity<Void> delete(@PathVariable int id) throws RecipeNotFoundException {
         recipeService.delete(id);//serviços
         return ResponseEntity.noContent().build();
     }
-
 }
