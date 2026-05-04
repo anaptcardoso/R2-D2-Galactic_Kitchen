@@ -23,7 +23,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
 
-    // findById — busca uma receita por ID
+    // findById — procura uma receita por ID
     @Override
     public RecipeDTO findById(int id) {
         // Se não existir, lança excepção com mensagem clara

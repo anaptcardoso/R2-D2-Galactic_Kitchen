@@ -18,8 +18,8 @@ import java.util.List;
 @Service
 public class NutritionServiceImpl implements NutritionService {
 
-    // Precisamos do RecipeRepository para buscar receitas
-    // e do UserProfileRepository para buscar utilizadores
+    // Precisamos do RecipeRepository para Procurar receitas
+    // e do UserProfileRepository para Procurar utilizadores
     private final RecipeRepository recipeRepository;
     private final UserProfileRepository userProfileRepository;
     private final AIService aiService;
@@ -36,7 +36,7 @@ public class NutritionServiceImpl implements NutritionService {
     // getNutritionByRecipe — info nutricional de uma receita
     @Override
     public RecipeDTO getNutritionByRecipe(int recipeId) {
-        // Buscamos a receita pelo ID
+        // Procuramos a receita pelo ID
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new RuntimeException("Recipe not found: " + recipeId));
         // Devolvemos o RecipeDTO completo — já tem calories, protein, carbs, fat
@@ -47,7 +47,7 @@ public class NutritionServiceImpl implements NutritionService {
     // getTotalNutrition — soma os macros de várias receitas
     @Override
     public RecipeDTO getTotalNutrition(List<Integer> recipeIds) {
-        // Buscamos todas as receitas de uma vez — 1 query à BD
+        // Procuramos todas as receitas de uma vez — 1 query à BD
         List<Recipe> recipes = recipeRepository.findAllById(recipeIds);
 
         // Somamos os valores nutricionais de todas as receitas

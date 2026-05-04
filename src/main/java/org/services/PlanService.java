@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface PlanService {
 
-    // Busca todos os planos de um utilizador
+    // Procura todos os planos de um utilizador
     List<WeeklyPlanDTO> findByUser(int userId) throws PlanNotFoundException, UserNotFoundException;
 
-    // Busca o plano de uma semana específica
+    // Procura o plano de uma semana específica
     WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart) throws PlanNotFoundException, UserNotFoundException;
 
     // Cria um plano novo

@@ -8,12 +8,12 @@ import java.util.List;
 public interface RecipeService {
 
 
-    // Busca uma receita pelo ID e devolve um DTO para o frontend
+    // Procura uma receita pelo ID e devolve um DTO para o frontend
     RecipeDTO findById(int id) throws RecipeNotFoundException;
 
     List<RecipeDTO> findAll();
 
-    // Busca todas as receitas de uma categoria (ex: "VEGAN", "KETO")
+    // Procura todas as receitas de uma categoria (ex: "VEGAN", "KETO")
     List<RecipeDTO> findByCategory(String category);
 
     // Pesquisa receitas pelo nome (ex: "pasta")

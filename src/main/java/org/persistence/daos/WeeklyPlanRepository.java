@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 public interface WeeklyPlanRepository extends JpaRepository<WeeklyPlan, Integer> {
 
-    // Buscar planos de um utilizador específico
+    // Procurar planos de um utilizador específico
     List<WeeklyPlan> findByUser(UserProfile userProfile);
 
-    // Buscar plano atual de um utilizador por número de semanas
+    // Procurar plano atual de um utilizador por número de semanas
     Optional<WeeklyPlan> findByUserAndWeekStart(UserProfile userProfile, LocalDate weekStart);
 }
