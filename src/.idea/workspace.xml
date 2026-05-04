@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5a641ac4-d2bf-4d43-b9c2-dbc656c72756" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main/java/org/services/PlanService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/java/org/services/PlanServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/model/entity/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/model/entity/Ingredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/model/entity/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/model/entity/Recipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/model/entity/UserProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/model/entity/UserProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/model/entity/WeeklyPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/model/entity/WeeklyPlan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/repository/WeeklyPlanRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/repository/WeeklyPlanRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/services/NutritionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/services/NutritionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/services/NutritionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/services/NutritionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/services/RecipeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/services/RecipeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/org/services/RecipeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/org/services/RecipeServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "inesazevedo23"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:anaptcardoso/R2-D2-Galactic_Kitchen.git",
+    "accountId": "881fbba1-5ef3-49f2-972d-75db81f9cb93"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="3DAsay5XZSv5ymeMqhaQYCLr5ci" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "ines",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5a641ac4-d2bf-4d43-b9c2-dbc656c72756" name="Changes" comment="" />
+      <created>1777736276070</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1777736276070</updated>
+      <workItem from="1777736277079" duration="4279000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

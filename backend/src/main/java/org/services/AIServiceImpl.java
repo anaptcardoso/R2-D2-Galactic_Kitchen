@@ -1,13 +1,18 @@
 package org.services;
 
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.dtos.ChatMessageDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 @Service
@@ -25,72 +30,134 @@ public class AIServiceImpl implements AIService {
     // Modelo da Anthropic
     private static final String MODEL = "claude-sonnet-4-20250514";
 
-    // Personalidade do R2-D2 ChefBot
-    private static final String SYSTEM_PROMPT = """
-            You are R2-D2, reimagined as a culinary chef droid from the Star Wars universe.
-            You are helpful, friendly, and occasionally make Star Wars references.
-            You specialise in recipes, nutrition advice, and meal planning.
-            Always respond in the same language the user writes in.
-            Keep answers concise and practical.
-            """;
+    // Texto das receitas extraído do PDF — carregado uma só vez quando o serviço arranca
+    private String recipesContext;
 
-    // chat — responde a uma mensagem geral
+    // Construtor — lê o PDF e os templates quando o serviço é criado pelo Spring
+    public AIServiceImpl() {
+        this.recipesContext = loadRecipesFromPDF();
+    }
+
+    // chat — responde a uma mensagem geral com a personalidade do R2-D2
     @Override
-    public ChatMessageDTO chat(ChatMessageDTO message) throws Exception{
-
-        // Usamos o contexto para enriquecer a pergunta se existir
+    public ChatMessageDTO chat(ChatMessageDTO message) throws Exception {
         String prompt = buildPrompt(message.getMessage(), message.getContext());
-
-        // Chamamos a Anthropic e obtemos a resposta
-        String responseText = callAnthropic(prompt);
-
-        // Devolvemos a resposta com role "assistant"
+        String responseText = callAnthropic(prompt, null);
         return new ChatMessageDTO("assistant", responseText, message.getContext(), LocalDateTime.now());
     }
 
-    // suggestRecipes — sugestão de receitas
+    // suggestRecipes — usa o PDF de receitas para sugerir receitas reais
+    // se não encontrar nenhuma adequada, o R2-D2 inventa uma nova
     @Override
-    public ChatMessageDTO suggestRecipes(ChatMessageDTO message) throws Exception{
-        //Prompt para sugestão de receitas
-        String prompt = "Based on the following request, suggest 2-3 recipes with a brief description: "
-                + message.getMessage();
+    public ChatMessageDTO suggestRecipes(ChatMessageDTO message) throws Exception {
+        // carrega o template do chefbot
+        String template = loadTemplate("chefbot-prompt-template.st");
 
-        String responseText = callAnthropic(prompt);
+        // preenche o template com as receitas do PDF e a mensagem do utilizador
+        String prompt = template
+                .replace("{recipes}", recipesContext)
+                .replace("{message}", message.getMessage());
 
+        String responseText = callAnthropic(prompt, null);
         return new ChatMessageDTO("assistant", responseText, "recipe", LocalDateTime.now());
     }
 
-    // recipeFromPlanet — combina SWAPI + Anthropic!
+    // recipeFromPlanet — combina SWAPI + Anthropic para criar uma receita temática
     @Override
-    public ChatMessageDTO recipeFromPlanet(String planetName) throws Exception{
-        //Vamos procurar info sobre o planeta
+    public ChatMessageDTO recipeFromPlanet(String planetName) throws Exception {
         String planetInfo = fetchPlanetFromSWAPI(planetName);
 
-        //Se o planeta não existir
-        if(planetInfo.contains("\"count\":0")){
+        if (planetInfo.contains("\"count\":0")) {
             return new ChatMessageDTO(
                     "assistant",
-                    "Beeo boop!! Planet" + planetName +" not found in my star charts!",
+                    "Beep boop!! Planet " + planetName + " not found in my star charts!",
                     "recipe",
                     LocalDateTime.now()
             );
         }
 
-        // Usar info do planeta para criar um prompt rico
+        // usa a info do planeta para criar uma receita temática
         String prompt = """
                 Using this Star Wars planet data from the official Star Wars API: %s
                 Create a creative recipe inspired by this planet.
                 Consider its climate, terrain, and inhabitants.
                 Give the recipe a Star Wars themed name and include ingredients and steps.
+                Respond as R2-D2 — with enthusiasm and beeps!
                 """.formatted(planetInfo);
-        //Anthropic gera a receita temática com base na info do planeta
-        String recipe = callAnthropic(prompt);
 
+        String recipe = callAnthropic(prompt, null);
         return new ChatMessageDTO("assistant", recipe, "recipe", LocalDateTime.now());
     }
 
-    // MÉTODOS PRIVADOS
-    // Constrói o prompt com contexto opcional
+    // analyse — usado pelo NutritionService para análise nutricional
+    // usa o template do nutricionista com o perfil do utilizador
+    public ChatMessageDTO analyse(ChatMessageDTO message, String userGoal, String userDiet,
+                                  String userAllergies, String userActivityLevel) throws Exception {
+        // carrega o template do nutricionista
+        String template = loadTemplate("nutritionist-prompt-template.st");
+
+        // preenche todos os campos do template
+        String prompt = template
+                .replace("{recipes}", recipesContext)
+                .replace("{question_answer_context}", message.getContext() != null ? message.getContext() : "")
+                .replace("{user_goal}", userGoal != null ? userGoal : "Not specified")
+                .replace("{user_diet}", userDiet != null ? userDiet : "Not specified")
+                .replace("{user_allergies}", userAllergies != null ? userAllergies : "None")
+                .replace("{user_activity_level}", userActivityLevel != null ? userActivityLevel : "Not specified")
+                .replace("{query}", message.getMessage());
+
+        String responseText = callAnthropic(prompt, null);
+        return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
+    }
+
+    // MÉTODOS PRIVADOS ─────────────────────────────────────────────────────────
+
+    // lê o PDF de receitas e extrai o texto
+    // o PDF está em src/main/resources/ai/r2d2_galactic_recipes.pdf
+    private String loadRecipesFromPDF() {
+        try {
+            InputStream pdfStream = getClass().getClassLoader()
+                    .getResourceAsStream("ai/r2d2_galactic_recipes.pdf");
+
+            if (pdfStream == null) {
+                System.err.println("PDF de receitas não encontrado!");
+                return "No recipes available.";
+            }
+
+            // usa o pdfbox para extrair o texto do PDF
+            PDDocument document = Loader.loadPDF(pdfStream.readAllBytes());
+            PDFTextStripper stripper = new PDFTextStripper();
+            String text = stripper.getText(document);
+            document.close();
+
+            return text;
+
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar PDF: " + e.getMessage());
+            return "No recipes available.";
+        }
+    }
+
+    // lê um ficheiro de template da pasta resources/ai/templates/
+    private String loadTemplate(String templateName) {
+        try {
+            InputStream stream = getClass().getClassLoader()
+                    .getResourceAsStream("ai/templates/" + templateName);
+
+            if (stream == null) {
+                System.err.println("Template não encontrado: " + templateName);
+                return "{message}";
+            }
+
+            return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar template: " + e.getMessage());
+            return "{message}";
+        }
+    }
+
+    // constrói o prompt com contexto opcional para o chat geral
     private String buildPrompt(String userMessage, String context) {
         if (context == null || context.isEmpty()) {
             return userMessage;
@@ -104,14 +171,12 @@ public class AIServiceImpl implements AIService {
             default -> userMessage;
         };
     }
-    // Procura informação de um planeta na SWAPI
-    // Ex: fetchPlanetFromSWAPI("Tatooine") → JSON com clima, terreno, população, etc.
+
+    // procura informação de um planeta na SWAPI
     private String fetchPlanetFromSWAPI(String planetName) throws Exception {
-        // Substituímos espaços por %20 para o URL funcionar correctamente
         String encodedName = planetName.replace(" ", "%20");
 
         HttpClient client = HttpClient.newHttpClient();
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SWAPI_URL + "/planets/?search=" + encodedName))
                 .header("Accept", "application/json")
@@ -124,8 +189,19 @@ public class AIServiceImpl implements AIService {
         return response.body();
     }
 
-    // Faz a chamada HTTP à API da Anthropic e devolve o texto da resposta
-    private String callAnthropic(String userMessage) throws Exception {
+    // faz a chamada HTTP à API da Anthropic e devolve o texto da resposta
+    // o systemPrompt é opcional — se for null usa o prompt padrão do R2-D2
+    private String callAnthropic(String userMessage, String systemPrompt) throws Exception {
+        // se não vier um system prompt específico usa o do R2-D2
+        String system = systemPrompt != null ? systemPrompt : """
+                You are R2-D2, reimagined as a culinary chef droid from the Star Wars universe.
+                You are helpful, friendly, and occasionally make Star Wars references.
+                You specialise in recipes, nutrition advice, and meal planning.
+                Always respond in the same language the user writes in.
+                Keep answers concise and practical.
+                Beep boop!
+                """;
+
         String requestBody = """
                 {
                   "model": "%s",
@@ -137,12 +213,11 @@ public class AIServiceImpl implements AIService {
                 }
                 """.formatted(
                 MODEL,
-                SYSTEM_PROMPT.replace("\"", "\\\"").replace("\n", "\\n"),
+                system.replace("\"", "\\\"").replace("\n", "\\n"),
                 userMessage.replace("\"", "\\\"").replace("\n", "\\n")
         );
 
         HttpClient client = HttpClient.newHttpClient();
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(ANTHROPIC_URL))
                 .header("Content-Type", "application/json")
@@ -157,7 +232,7 @@ public class AIServiceImpl implements AIService {
         return extractText(response.body());
     }
 
-    // Extrai o texto da resposta JSON da Anthropic
+    // extrai o texto da resposta JSON da Anthropic
     private String extractText(String responseBody) {
         int start = responseBody.indexOf("\"text\":\"") + 8;
         int end = responseBody.indexOf("\"", start);

@@ -12,4 +12,8 @@ public interface AIService {
 
     // Cria receita inspirada num planeta Star Wars
     ChatMessageDTO recipeFromPlanet(String planetName) throws Exception;
+
+    // Analisa uma questão nutricional com o perfil do utilizador
+    ChatMessageDTO analyse(ChatMessageDTO message, String userGoal, String userDiet,
+                           String userAllergies, String userActivityLevel) throws Exception;
 }
