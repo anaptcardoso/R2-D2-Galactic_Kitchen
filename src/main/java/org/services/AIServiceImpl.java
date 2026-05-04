@@ -63,7 +63,7 @@ public class AIServiceImpl implements AIService {
     // recipeFromPlanet — combina SWAPI + Anthropic!
     @Override
     public ChatMessageDTO recipeFromPlanet(String planetName) throws Exception{
-        //Vamos buscar info sobre o planeta
+        //Vamos procurar info sobre o planeta
         String planetInfo = fetchPlanetFromSWAPI(planetName);
 
         //Se o planeta não existir
@@ -104,7 +104,7 @@ public class AIServiceImpl implements AIService {
             default -> userMessage;
         };
     }
-    // Busca informação de um planeta na SWAPI
+    // Procura informação de um planeta na SWAPI
     // Ex: fetchPlanetFromSWAPI("Tatooine") → JSON com clima, terreno, população, etc.
     private String fetchPlanetFromSWAPI(String planetName) throws Exception {
         // Substituímos espaços por %20 para o URL funcionar correctamente

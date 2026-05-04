@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    // findById — busca um utilizador por ID
+    // findById — procura um utilizador por ID
     @Override
     public UserProfileDTO findById(int id) throws UserNotFoundException {
         UserProfile user = userProfileRepository.findById(id)
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    // searchByName — busca por primeiro e último nome
+    // searchByName — procura por primeiro e último nome
     @Override
     public List<UserProfileDTO> searchByName(String firstName, String lastName) throws UserNotFoundException {
         List<UserProfile> users = userProfileRepository
@@ -170,16 +170,16 @@ public class UserServiceImpl implements UserService {
 
         // Cria o NutritionProfile com os dados nutricionais
         if(dto.getNutritionDTO() != null){
-        NutritionProfile nutrition = new NutritionProfile(
+            NutritionProfile nutrition = new NutritionProfile(
                 dto.getNutritionDTO().getWeight(),
                 dto.getNutritionDTO().getHeight(),
                 dto.getNutritionDTO().getGoal(),
                 dto.getNutritionDTO().getActivityLevel(),
                 dto.getNutritionDTO().getDietPreferences(), // dietPreferences — não temos no DTO actual
                 dto.getNutritionDTO().getAllergies()  // allergies — guardamos separadamente
-        );
-        user.setNutritionProfile(nutrition);
-
+            );
+            user.setNutritionProfile(nutrition);
+        }
         return user;
     }
 }

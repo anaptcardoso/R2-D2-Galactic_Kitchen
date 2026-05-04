@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface UserService {
 
-    // Busca todos os utilizadores
+    // Procura todos os utilizadores
     List<UserProfileDTO> findAll();
 
-    // Busca por ID
+    // Procura por ID
     UserProfileDTO findById(int id) throws UserNotFoundException;
 
-    // Busca por primeiro e último nome
+    // Procura por primeiro e último nome
     List<UserProfileDTO> searchByName(String firstName, String lastName) throws UserNotFoundException;
 
     // Cria um utilizador novo
