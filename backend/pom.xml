@@ -221,7 +221,7 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>tomcat</server>
-                    <path>/r2d2GalaticKitchen</path>
+                    <path>/r2d2GalacticKitchen</path>
                 </configuration>
             </plugin>
         </plugins>
