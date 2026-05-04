@@ -3,36 +3,107 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>R2-CHEF</title>
+  <title>R2-D2 Galactic Kitchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- fonte futurista vai buscar ao googlefonts-->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet"> <!-- acesso á fonte-->
   <link rel="stylesheet" href="css/style.css"/> 
 </head>
-
 <body>
-    
-  <nav>
-   
-    <div class="logo">R2-CHEF</div>
 
-    <ul class="nav-links">
-      <li><a href="#home" onclick="navigate('home')">Home</a></li>
-      <li><a href="#recipes" onclick="navigate('recipes')">Recipes</a></li>
-      <li><a href="#plan" onclick="navigate('plan')">Weekly Plan</a></li>
-      <li><a href="#chat" onclick="navigate('chat')">R2-Chat</a></li>
-      <li><a href="#profile" onclick="navigate('profile')">Profile</a></li>
-    </ul>  
+  <!-- Efeitos de fundo -->  
+  <div class="scanlines"></div>
+  <div class="grid-bg"></div>
 
-  </nav>
+  <!-- Topbar --> 
+  <header class="topbar">
+    <div class="logo" onclick="navigate('home')">
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C8 2 5 6 5 10c0 3 1.5 5.5 4 7v3h6v-3c2.5-1.5 4-4 4-7 0-4-3-8-7-8z" fill="#00D4FF"/>
+          <rect x="9" y="20" width="6" height="2" rx="1" fill="#00D4FF"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">R2-D2</span>
+        <span class="logo-sub">GALACTIC KITCHEN</span>
+      </div>
+    </div>
 
-  <div id="app"> </div>
+    <nav class="nav">
+      <a data-page="home" href="/home">HOME</a>
+      <a data-page="recipes" href="/home">RECIPES</a>
+      <a data-page="plan" href="/home">PLAN</a>
+      <a data-page="nutritionist" href="/nutritionist">NUTRITIONIST</a>
+      <a data-page="profiles" href="/profiles">PROFILES</a>
+    </nav>
 
+    <div class="topbar-right">
+      <div class="status-dot"></div>
+      <span class="status-text">ONLINE</span>
+      <div class="avatar"></div>
+    </div>
+  </header>
 
- <script src="js/data/recipes.js"></script>
-  <script src="js/pages/home.js"></script>
+  <!-- Conteúdo principal -->
+  <main id="main-content"></main>
+
+  <!-- Chat widget R2-D2 -->
+  <div id="chat-widget">
+    <div id="chat-window">
+      <div class="chat-header">
+        <div class="chat-av">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2C8 2 5 6 5 10c0 3 1.5 5.5 4 7v3h6v-3c2.5-1.5 4-4 4-7 0-4-3-8-7-8z" fill="#00D4FF"/>
+          </svg>
+        </div>
+        <div>
+          <p class="chat-title">R2-D2 CHEFBOT</p>
+          <p class="chat-sub">Active System</p>
+        </div>
+        <button id="chat-close">X</button>
+      </div>
+      <div id="chat-messages">
+        <div class="chat-msg assistant">
+          <div class="chat-msg-av">R2</div>
+          <div class="chat-msg-bubble">
+              BEEP BOOP! I'm R2-D2 ChefBot. Active galactic culinary system. Recipes, plans, nutrition — transmit your coordinates! 
+          </div>
+        </div>
+      </div>
+      <div class="chat-bottom">
+        <input type="text" id="chat-input" placeholder="Convey Message...">
+        <button class="chat-send-btn" id="chat-send"></button>
+      </div>
+    </div>
+    <button id="chat-fab">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" fill="white"/>
+      </svg>
+    </button>    
+  </div>
+
+  <!-- Modal -->  
+  <div id="modal">
+    <div id="modal-inner">
+      <button id="modal-close" onclick="closeModal()">X Close</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Scripts --> 
+  <script src="js/api.js"></script> <!-- API calls -->
+  
+  <script src="js/components/helpers.js"></script>
+  <script src="js/components/chat.js"></script>
+  <script src="js/components/modals.js"></script>
+
+  <script src="js/pages/home.js"></script>   
   <script src="js/pages/recipes.js"></script>
-  <script src="js/pages/detail.js"></script>
   <script src="js/pages/plan.js"></script>
-  <script src="js/pages/chat.js"></script>
-  <script src="js/pages/profile.js"></script>
+  <script src="js/pages/nutritionist.js"></script>
+  <script src="js/pages/profiles.js"></script>
+  <script src="js/pages/profile.js"></script>  
+  
   <script src="js/app.js"></script>
 
 </body>
