@@ -23,6 +23,11 @@ function navigate(page) {
     app.innerHTML = renderHome();
     initHome();
    }
+
+  if (page === 'profile') {
+    app.innerHTML = renderProfile();
+    initProfile();
+  }
   
 }
 
