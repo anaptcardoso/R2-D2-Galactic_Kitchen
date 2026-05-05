@@ -42,6 +42,15 @@ function getAvatarBorder(name) {
     return colors[(name || 'A').charCodeAt(0) % colors.length];
 }
 
+// Returns the initials of the currently active user from App.currentUser
+function getUserInitials() {
+    if (!App.currentUser) return '?';
+    const first = App.currentUser.firstName?.[0] || '';
+    const last  = App.currentUser.lastName?.[0]  || '';
+    return (first + last).toUpperCase();
+}
+
+
 // Converts a difficulty level enum value to a readable label
 function formatDifficulty(level) {
     return { EASY: 'Easy', MEDIUM: 'Medium', HARD: 'Hard' }[level] || level || '—';
