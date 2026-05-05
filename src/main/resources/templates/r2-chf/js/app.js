@@ -28,6 +28,17 @@ function navigate(page) {
     app.innerHTML = renderProfile();
     initProfile();
   }
+
+   if (page === 'recipes') {
+    app.innerHTML = renderRecipes();
+    initRecipes();
+  }
+
+   if (page === 'Plan') {
+    app.innerHTML = renderWeeklyPlan();
+    initPlan();
+  }
+
   
 }
 
