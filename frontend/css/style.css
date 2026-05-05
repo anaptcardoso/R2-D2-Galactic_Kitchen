@@ -40,12 +40,12 @@ nav {
   padding: 0 2.5rem;
   background: rgba(6, 16, 30, 0.85);
   backdrop-filter: blur(16px);
-  border_bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   z-index: 100;
 }
 
 .nav-logo {
-  font-family: var(--font-display);
+  font-family: sans-serif;
   font-size: 1.1rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -55,8 +55,8 @@ nav {
 
 .nav-links {
   display: flex;
-  gep: 0.25rem;
-  listed-style: none;
+  gap: 0.25rem;
+  list-style: none;
 }
 
 .nav-links a {
