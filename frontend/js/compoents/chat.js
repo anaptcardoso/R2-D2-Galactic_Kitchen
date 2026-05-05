@@ -50,8 +50,11 @@ function addChatMsg(text, role) {
 
     container.innerHTML += `
         <div class="chat-msg ${isAssistant ? 'assistant' : 'user'}">
-            ${isAssistant ? '<div class="chat-msg-av">R2</div>' : ''}
+            ${isAssistant ? '<div class="chat-msg-av">R2</div>'
+                : `<div class="chat-msg-av" style="background:${getAvatarBg(App.currentUser?.firstName || 'A')};border-color:${getAvatarBorder(App.currentUser?.firstName || 'A')}">${getUserInitials()}</div>`
+            }
             <div class="chat-msg-bubble">${text}</div>
+            
         </div>
     `;
 
