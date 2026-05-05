@@ -8,54 +8,54 @@ function renderNutritionist(params = {}) {
 
     app.innerHTML = `
         <div class="hero">
-            <h1>🥗 Nutricionista R2-D2</h1>
-            <p>O teu assistente de nutrição personalizado</p>
+            <h1>Nutritionist R2-D2</h1>
+            <p>Your personalized nutrition assistant</p>
         </div>
 
         <div class="nutrition-tabs">
-            <button class="tab-btn active" data-tab="consult">Consulta</button>
-            <button class="tab-btn" data-tab="analyse">Analisar Alimento</button>
-            <button class="tab-btn" data-tab="mealplan">Plano Alimentar</button>
+            <button class="tab-btn active" data-tab="consult">Consult</button>
+            <button class="tab-btn" data-tab="analyse">Analyze Food</button>
+            <button class="tab-btn" data-tab="mealplan">Meal Plan</button>
         </div>
 
-        <!-- TAB: Consulta -->
+        <!-- TAB: Consult -->
         <div class="tab-content" id="tab-consult">
             <div class="chat-messages" id="chat-messages">
                 <div class="chat-msg bot">
                     Olá${App.currentUser ? ', ' + App.currentUser.firstName : ''}! 
-                    Sou o nutricionista R2-D2. Como te posso ajudar? 🤖
+                    I'm nutritionist R2-D2. How can I help you?
                 </div>
             </div>
             <div class="chat-input-area">
                 <input type="text" id="consult-input" 
-                    placeholder="Ex: Quantas proteínas devo comer por dia?" />
-                <button id="consult-send">Enviar</button>
+                    placeholder="Ex: How much protein shoul I eat per day?" />
+                <button id="consult-send">Send</button>
             </div>
         </div>
 
-        <!-- TAB: Analisar Alimento -->
+        <!-- TAB: Analyze Food -->
         <div class="tab-content hidden" id="tab-analyse">
             <div class="nutrition-form">
                 <input type="text" id="food-input" 
-                    placeholder="Ex: 100g de frango grelhado" />
-                <button id="food-send">Analisar</button>
+                    placeholder="Ex: 100g grilled chicken" />
+                <button id="food-send">Analyze</button>
             </div>
             <div id="food-result" class="result-box hidden"></div>
         </div>
 
-        <!-- TAB: Plano Alimentar -->
+        <!-- TAB: Diet Plan -->
         <div class="tab-content hidden" id="tab-mealplan">
             <div class="nutrition-form">
                 <input type="number" id="calories-input" 
-                    placeholder="Calorias diárias (ex: 2000)" />
+                    placeholder="Daily calories (ex: 2000)" />
                 <select id="diet-select">
-                    <option value="">Tipo de dieta</option>
+                    <option value="">Type of diet</option>
                     <option value="VEGAN">Vegan</option>
-                    <option value="VEGETARIAN">Vegetariano</option>
-                    <option value="GLUTEN_FREE">Sem Glúten</option>
-                    <option value="HIGH_PROTEIN">Alto Proteína</option>
+                    <option value="VEGETARIAN">Vegetarian</option>
+                    <option value="GLUTEN_FREE">Gluten Free</option>
+                    <option value="HIGH_PROTEIN">High Protein</option>
                 </select>
-                <button id="mealplan-send">Gerar Plano</button>
+                <button id="mealplan-send">Generate Plan</button>
             </div>
             <div id="mealplan-result" class="result-box hidden"></div>
         </div>
@@ -72,16 +72,16 @@ function initNutritionistEvents() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn')
-                .forEach(b => b.classList.remove('active'));
+                .forEach(button => button.classList.remove('active'));
             document.querySelectorAll('.tab-content')
-                .forEach(c => c.classList.add('hidden'));
+                .forEach(content => content.classList.add('hidden'));
             btn.classList.add('active');
             document.getElementById(`tab-${btn.dataset.tab}`)
                 .classList.remove('hidden');
         });
     });
 
-    // ── Tab 1: Consulta ───────────────────────────────────────
+    // ── Tab 1: Consult ───────────────────────────────────────
     const messages     = document.getElementById('chat-messages');
     const consultInput = document.getElementById('consult-input');
 
@@ -91,65 +91,65 @@ function initNutritionistEvents() {
 
         appendMessage(messages, 'user', question);
         consultInput.value = '';
-        appendMessage(messages, 'bot', 'A pensar... 🤖', 'loading-msg');
+        appendMessage(messages, 'bot', 'Thinking...', 'loading-msg');
 
         try {
             const userId = App.currentUser?.id || 1;
             const res = await NutritionistAPI.consult(userId, { message: question });
             document.getElementById('loading-msg')?.remove();
-            appendMessage(messages, 'bot', res.answer || res.message || JSON.stringify(res));
-        } catch (e) {
+            appendMessage(messages, 'bot', response.answer || response.message || JSON.stringify(response));
+        } catch (error) {
             document.getElementById('loading-msg')?.remove();
-            appendMessage(messages, 'bot', `Erro: ${e.message}`);
+            appendMessage(messages, 'bot', `Erro: ${error.message}`);
         }
     }
 
     document.getElementById('consult-send')
         .addEventListener('click', sendConsult);
-    consultInput.addEventListener('keypress', e => {
-        if (e.key === 'Enter') sendConsult();
+    consultInput.addEventListener('keypress', event => {
+        if (event.key === 'Enter') sendConsult();
     });
 
-    // ── Tab 2: Analisar Alimento ──────────────────────────────
+    // ── Tab 2: Analyze Food ──────────────────────────────
     document.getElementById('food-send').addEventListener('click', async () => {
         const food   = document.getElementById('food-input').value.trim();
         const result = document.getElementById('food-result');
         if (!food) return;
 
-        result.textContent = 'A analisar... 🔍';
+        result.textContent = 'Analyzing...';
         result.classList.remove('hidden');
 
         try {
-            const res = await NutritionistAPI.analyseFood({ food });
+            const response = await NutritionistAPI.analyseFood({ food });
             result.innerHTML = `
                 <strong>${food}</strong><br><br>
-                ${res.analysis || res.message || JSON.stringify(res)}
+                ${response.analysis || response.message || JSON.stringify(response)}
             `;
-        } catch (e) {
-            result.textContent = `Erro: ${e.message}`;
+        } catch (error) {
+            result.textContent = `Erro: ${error.message}`;
         }
     });
 
-    // ── Tab 3: Plano Alimentar ────────────────────────────────
+    // ── Tab 3: Food Plan ────────────────────────────────
     document.getElementById('mealplan-send').addEventListener('click', async () => {
         const calories = document.getElementById('calories-input').value;
         const diet     = document.getElementById('diet-select').value;
         const result   = document.getElementById('mealplan-result');
 
-        result.textContent = 'A gerar plano... 🗓️';
+        result.textContent = 'Generating plan...';
         result.classList.remove('hidden');
 
         try {
-            const res = await NutritionistAPI.suggestMealPlan({
+            const response = await NutritionistAPI.suggestMealPlan({
                 calories: Number(calories),
                 dietType: diet
             });
             result.innerHTML = `
-                <strong>O teu plano alimentar:</strong><br><br>
-                ${res.plan || res.message || JSON.stringify(res)}
+                <strong>Your eating plan:</strong><br><br>
+                ${response.plan || response.message || JSON.stringify(response)}
             `;
-        } catch (e) {
-            result.textContent = `Erro: ${e.message}`;
+        } catch (error) {
+            result.textContent = `Erro: ${error.message}`;
         }
     });
 }
