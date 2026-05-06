@@ -3,7 +3,7 @@
 // Points to the Spring MVC backend running on Tomcat
 // ============================================================
 
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = 'http://localhost:8080/R2-D2-Galactic_Kitchen/api';
 
 // ── Generic request helper ────────────────────────────────────────────────────
 
