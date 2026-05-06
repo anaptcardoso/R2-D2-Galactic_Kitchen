@@ -7,25 +7,49 @@
 
     <persistence-unit name="r2d2Kitchen" transaction-type="RESOURCE_LOCAL">
 
-        <!-- Classes entidade -->
+        <!-- Hibernate as JPA provider -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- JPA entities -->
         <class>org.model.entity.Recipe</class>
         <class>org.model.entity.Ingredient</class>
         <class>org.model.entity.UserProfile</class>
         <class>org.model.entity.WeeklyPlan</class>
-        <class>org.model.valueObject.NutritionProfile</class>
 
         <properties>
-            <!-- PostgreSQL -->
-            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/r2d2_kitchen"/>
-            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
-            <property name="jakarta.persistence.jdbc.password" value="password"/>
+
+            <!-- H2 in-memory database for development — no PostgreSQL needed -->
+            <property name="jakarta.persistence.jdbc.driver"
+                      value="org.h2.Driver"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:mem:chefbot;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"/>
+            <property name="jakarta.persistence.jdbc.user"
+                      value="sa"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value=""/>
 
             <!-- Hibernate -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.H2Dialect"/>
+
+            <!-- create-drop — creates tables on startup, drops on shutdown -->
+            <property name="hibernate.hbm2ddl.auto"
+                      value="create-drop"/>
+
+            <!-- Show generated SQL in console -->
+            <property name="hibernate.show_sql"
+                      value="true"/>
+            <property name="hibernate.format_sql"
+                      value="true"/>
+
+            <!-- Disable lazy loading outside transactions -->
+            <property name="hibernate.enable_lazy_load_no_trans"
+                      value="true"/>
+
+            <property name="hibernate.enhance.enable_lazy_initialization" value="false"/>
+            <property name="hibernate.enhance.enable_dirty_tracking" value="false"/>
+            <property name="hibernate.enhance.enable_association_management" value="false"/>
+
         </properties>
 
     </persistence-unit>

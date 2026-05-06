@@ -51,7 +51,7 @@ public class AIServiceImpl implements AIService {
     @Override
     public ChatMessageDTO suggestRecipes(ChatMessageDTO message) throws Exception {
         // carrega o template do chefbot
-        String template = loadTemplate("chefbot-prompt-template.st");
+        String template = loadTemplate("ai/chefbot-prompt-template.st");
 
         // preenche o template com as receitas do PDF e a mensagem do utilizador
         String prompt = template
