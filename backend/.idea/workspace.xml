@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4eb1314c-ce7e-40ca-8691-49992be22593" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/entity/UserProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/model/entity/UserProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/IngredientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/IngredientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/UserProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/UserProfileRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/WeeklyPlanRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/WeeklyPlanRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/services/AIServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/AIServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/services/NutritionistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/NutritionistServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/templates/chefbot-prompt-template.st" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ai/chefbot-prompt-template.st" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/templates/nutritionist-promp-template.st" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ai/nutritionist-promp-template.st" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/templates/r2d2_galactic_recipes.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/r2d2_seeds.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/r2d2_seeds.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/data/recipes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/chat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/detail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/home.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/plan.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/profile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/recipes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/ai.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/ai.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/persistance.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/presentation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/presentation.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/spring-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/spring-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3DJYlUVLDIP14AaTFZ4IUV4qnwr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "ana",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/anacardoso11/Documents/Assignments/R2-D2-Galactic_Kitchen/backend/src/main/resources/ai",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/ai" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/ai" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="backend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4eb1314c-ce7e-40ca-8691-49992be22593" name="Changes" comment="" />
+      <created>1778001791518</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778001791518</updated>
+      <workItem from="1778001793035" duration="10114000" />
+      <workItem from="1778027666452" duration="1992000" />
+      <workItem from="1778077796280" duration="10136000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -24,22 +24,8 @@ public class UserProfile {
     private LocalDate dateOfBirth;
     private String country;
 
-    // dados nutricionais
-    private Double weight;
-    private Double height;
-    private String goal;
-    private String activityLevel;
-    private int dailyCalories;
-
     @Embedded
     private NutritionProfile nutritionProfile;
-
-    // preferências alimentares
-    @Enumerated(EnumType.STRING)
-    private DietType dietType;
-
-    @ElementCollection
-    private List<String> allergies;
 
     // nota pessoal
     private String bio;
@@ -52,30 +38,6 @@ public class UserProfile {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getActivityLevel() {
-        return activityLevel;
-    }
-
-    public void setActivityLevel(String activityLevel) {
-        this.activityLevel = activityLevel;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Double getHeight() {
-        return height;
-    }
-
-    public void setHeight(Double height) {
-        this.height = height;
     }
 
     public String getCountry() {
@@ -129,29 +91,6 @@ public class UserProfile {
     public int getId() { return id; }
 
     public void setId( int id) { this.id = id; }
-
-    public DietType getDietType() {
-        return dietType;
-    }
-
-    public void setDietType(DietType dietType) {
-        this.dietType = dietType;
-    }
-
-    public String getGoal() { return goal; }
-
-    public void setGoal(String goal) { this.goal = goal; }
-
-    public List<String> getAllergies() {
-        return allergies;
-    }
-
-    public void setAllergies(List<String> allergies) {
-        this.allergies = allergies;
-    }
-
-    public int getDailyCalories() { return dailyCalories; }
-    public void setDailyCalories(int dailyCalories) { this.dailyCalories = dailyCalories; }
 
     public NutritionProfile getNutritionProfile() {
         return nutritionProfile;
