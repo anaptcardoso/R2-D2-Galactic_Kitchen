@@ -119,6 +119,7 @@ async function renderProfile(params = {}) {
                 <button onclick="navigate('profiles')">Back to profiles</button>
             </div>
         `;
+
     }
 }
 

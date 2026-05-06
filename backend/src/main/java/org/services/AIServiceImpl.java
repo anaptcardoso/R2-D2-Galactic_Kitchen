@@ -18,51 +18,52 @@ import java.time.LocalDateTime;
 @Service
 public class AIServiceImpl implements AIService {
 
-    @Value("${anthropic.api.key}")
+    @Value("${groq.api.key}")
     private String apiKey;
 
-    // URL da API da Anthropic
-    private static final String ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
+    // Groq API URL — compatível com o formato OpenAI
+    private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
-    // URL da SWAPI
+    // SWAPI URL
     private static final String SWAPI_URL = "https://swapi.dev/api";
 
-    // Modelo da Anthropic
-    private static final String MODEL = "claude-sonnet-4-20250514";
+    // Modelo Groq — gratuito e rápido
+    private static final String MODEL = "llama-3.1-8b-instant";
 
-    // Texto das receitas extraído do PDF — carregado uma só vez quando o serviço arranca
+    // System prompt do R2-D2
+    private static final String R2D2_SYSTEM = """
+            You are R2-D2, reimagined as a culinary chef droid from the Star Wars universe.
+            You are helpful, friendly, and occasionally make Star Wars references.
+            You specialise in recipes, nutrition advice, and meal planning.
+            Always respond in the same language the user writes in.
+            Keep answers concise and practical.
+            Beep boop!
+            """;
+
+    // Texto das receitas extraído do PDF — carregado uma vez ao arrancar
     private String recipesContext;
 
-    // Construtor — lê o PDF e os templates quando o serviço é criado pelo Spring
     public AIServiceImpl() {
         this.recipesContext = loadRecipesFromPDF();
     }
 
-    // chat — responde a uma mensagem geral com a personalidade do R2-D2
     @Override
     public ChatMessageDTO chat(ChatMessageDTO message) throws Exception {
         String prompt = buildPrompt(message.getMessage(), message.getContext());
-        String responseText = callAnthropic(prompt, null);
+        String responseText = callGroq(prompt, R2D2_SYSTEM);
         return new ChatMessageDTO("assistant", responseText, message.getContext(), LocalDateTime.now());
     }
 
-    // suggestRecipes — usa o PDF de receitas para sugerir receitas reais
-    // se não encontrar nenhuma adequada, o R2-D2 inventa uma nova
     @Override
     public ChatMessageDTO suggestRecipes(ChatMessageDTO message) throws Exception {
-        // carrega o template do chefbot
         String template = loadTemplate("ai/chefbot-prompt-template.st");
-
-        // preenche o template com as receitas do PDF e a mensagem do utilizador
         String prompt = template
                 .replace("{recipes}", recipesContext)
                 .replace("{message}", message.getMessage());
-
-        String responseText = callAnthropic(prompt, null);
+        String responseText = callGroq(prompt, R2D2_SYSTEM);
         return new ChatMessageDTO("assistant", responseText, "recipe", LocalDateTime.now());
     }
 
-    // recipeFromPlanet — combina SWAPI + Anthropic para criar uma receita temática
     @Override
     public ChatMessageDTO recipeFromPlanet(String planetName) throws Exception {
         String planetInfo = fetchPlanetFromSWAPI(planetName);
@@ -76,7 +77,6 @@ public class AIServiceImpl implements AIService {
             );
         }
 
-        // usa a info do planeta para criar uma receita temática
         String prompt = """
                 Using this Star Wars planet data from the official Star Wars API: %s
                 Create a creative recipe inspired by this planet.
@@ -85,18 +85,13 @@ public class AIServiceImpl implements AIService {
                 Respond as R2-D2 — with enthusiasm and beeps!
                 """.formatted(planetInfo);
 
-        String recipe = callAnthropic(prompt, null);
+        String recipe = callGroq(prompt, R2D2_SYSTEM);
         return new ChatMessageDTO("assistant", recipe, "recipe", LocalDateTime.now());
     }
 
-    // analyse — usado pelo NutritionService para análise nutricional
-    // usa o template do nutricionista com o perfil do utilizador
     public ChatMessageDTO analyse(ChatMessageDTO message, String userGoal, String userDiet,
                                   String userAllergies, String userActivityLevel) throws Exception {
-        // carrega o template do nutricionista
         String template = loadTemplate("nutritionist-prompt-template.st");
-
-        // preenche todos os campos do template
         String prompt = template
                 .replace("{recipes}", recipesContext)
                 .replace("{question_answer_context}", message.getContext() != null ? message.getContext() : "")
@@ -106,14 +101,12 @@ public class AIServiceImpl implements AIService {
                 .replace("{user_activity_level}", userActivityLevel != null ? userActivityLevel : "Not specified")
                 .replace("{query}", message.getMessage());
 
-        String responseText = callAnthropic(prompt, null);
+        String responseText = callGroq(prompt, R2D2_SYSTEM);
         return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
     }
 
-    // MÉTODOS PRIVADOS ─────────────────────────────────────────────────────────
+    // ── Private methods ────────────────────────────────────────────────────────
 
-    // lê o PDF de receitas e extrai o texto
-    // o PDF está em src/main/resources/ai/r2d2_galactic_recipes.pdf
     private String loadRecipesFromPDF() {
         try {
             InputStream pdfStream = getClass().getClassLoader()
@@ -124,12 +117,10 @@ public class AIServiceImpl implements AIService {
                 return "No recipes available.";
             }
 
-            // usa o pdfbox para extrair o texto do PDF
             PDDocument document = Loader.loadPDF(pdfStream.readAllBytes());
             PDFTextStripper stripper = new PDFTextStripper();
             String text = stripper.getText(document);
             document.close();
-
             return text;
 
         } catch (Exception e) {
@@ -138,7 +129,6 @@ public class AIServiceImpl implements AIService {
         }
     }
 
-    // lê um ficheiro de template da pasta resources/ai/templates/
     private String loadTemplate(String templateName) {
         try {
             InputStream stream = getClass().getClassLoader()
@@ -157,90 +147,78 @@ public class AIServiceImpl implements AIService {
         }
     }
 
-    // constrói o prompt com contexto opcional para o chat geral
     private String buildPrompt(String userMessage, String context) {
-        if (context == null || context.isEmpty()) {
-            return userMessage;
-        }
-
+        if (context == null || context.isEmpty()) return userMessage;
         return switch (context.toLowerCase()) {
             case "nutrition" -> "Focus on nutritional information. " + userMessage;
-            case "recipe" -> "Suggest or explain a recipe for: " + userMessage;
-            case "plan" -> "Help with weekly meal planning for: " + userMessage;
-            case "planet" -> "Create a Star Wars themed recipe inspired by: " + userMessage;
-            default -> userMessage;
+            case "recipe"    -> "Suggest or explain a recipe for: " + userMessage;
+            case "plan"      -> "Help with weekly meal planning for: " + userMessage;
+            case "planet"    -> "Create a Star Wars themed recipe inspired by: " + userMessage;
+            default          -> userMessage;
         };
     }
 
-    // procura informação de um planeta na SWAPI
     private String fetchPlanetFromSWAPI(String planetName) throws Exception {
         String encodedName = planetName.replace(" ", "%20");
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SWAPI_URL + "/planets/?search=" + encodedName))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
 
-    // faz a chamada HTTP à API da Anthropic e devolve o texto da resposta
-    // o systemPrompt é opcional — se for null usa o prompt padrão do R2-D2
-    private String callAnthropic(String userMessage, String systemPrompt) throws Exception {
-        // se não vier um system prompt específico usa o do R2-D2
-        String system = systemPrompt != null ? systemPrompt : """
-                You are R2-D2, reimagined as a culinary chef droid from the Star Wars universe.
-                You are helpful, friendly, and occasionally make Star Wars references.
-                You specialise in recipes, nutrition advice, and meal planning.
-                Always respond in the same language the user writes in.
-                Keep answers concise and practical.
-                Beep boop!
-                """;
+    // Chama a API do Groq — formato OpenAI Chat Completions
+    private String callGroq(String userMessage, String systemPrompt) throws Exception {
+        String safeSystem = systemPrompt.replace("\"", "\\\"").replace("\n", "\\n");
+        String safeMessage = userMessage.replace("\"", "\\\"").replace("\n", "\\n");
 
         String requestBody = """
                 {
                   "model": "%s",
-                  "max_tokens": 1024,
-                  "system": "%s",
                   "messages": [
-                    {"role": "user", "content": "%s"}
-                  ]
+                    {"role": "system", "content": "%s"},
+                    {"role": "user",   "content": "%s"}
+                  ],
+                  "max_tokens": 1024,
+                  "temperature": 0.7
                 }
-                """.formatted(
-                MODEL,
-                system.replace("\"", "\\\"").replace("\n", "\\n"),
-                userMessage.replace("\"", "\\\"").replace("\n", "\\n")
-        );
+                """.formatted(MODEL, safeSystem, safeMessage);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(ANTHROPIC_URL))
+                .uri(URI.create(GROQ_URL))
                 .header("Content-Type", "application/json")
-                .header("x-api-key", apiKey)
-                .header("anthropic-version", "2023-06-01")
+                .header("Authorization", "Bearer " + apiKey)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
 
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("GROQ RESPONSE: " + response.body());
 
         return extractText(response.body());
     }
 
-    // extrai o texto da resposta JSON da Anthropic
+    // Extrai o texto da resposta JSON do Groq (formato OpenAI)
+    // choices[0].message.content
     private String extractText(String responseBody) {
-        int start = responseBody.indexOf("\"text\":\"") + 8;
-        int end = responseBody.indexOf("\"", start);
-
-        if (start < 8 || end < 0) {
+        try {
+            int contentStart = responseBody.indexOf("\"content\":\"") + 11;
+            if (contentStart < 11) {
+                System.err.println("Groq response: " + responseBody);
+                return "Beep boop... R2-D2 short-circuited! Please try again.";
+            }
+            int contentEnd = responseBody.indexOf("\",", contentStart);
+            if (contentEnd < 0) contentEnd = responseBody.indexOf("\"}", contentStart);
+            if (contentEnd < 0) return "Beep boop... R2-D2 short-circuited! Please try again.";
+            return responseBody.substring(contentStart, contentEnd)
+                    .replace("\\n", "\n")
+                    .replace("\\\"", "\"");
+        } catch (Exception e) {
+            System.err.println("Erro a extrair texto: " + e.getMessage());
             return "Beep boop... R2-D2 short-circuited! Please try again.";
         }
-
-        return responseBody.substring(start, end).replace("\\n", "\n");
     }
 }

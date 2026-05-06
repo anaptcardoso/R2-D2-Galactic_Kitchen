@@ -13,12 +13,12 @@ const App = {
 
 // ── Route map ─────────────────────────────────────────────────────────────────
 const routes = {
-    'home':         renderHome,
-    'recipes':      renderRecipes,
-    'plan':         renderPlan,
-    'nutritionist': renderNutritionist,
-    'profiles':     renderProfiles,
-    'profile':      renderProfile,
+    'home':         (p) => renderHome(p),
+    'recipes':      (p) => renderRecipes(p),
+    'plan':         (p) => renderPlan(p),
+    'nutritionist': (p) => renderNutritionist(p),
+    'profiles':     (p) => renderProfiles(p),
+    'profile':      (p) => renderProfile(p),
 };
 
 // ── navigate() ────────────────────────────────────────────────────────────────

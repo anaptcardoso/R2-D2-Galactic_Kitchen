@@ -14,6 +14,10 @@
     <!-- Activates @Service, @Repository, @Transactional, etc. -->
     <context:component-scan base-package="org"/>
 
+    <context:property-placeholder
+            location="classpath:config.properties"
+            ignore-unresolvable="true"/>
+
     <!-- EntityManagerFactory — connects to Hibernate via persistence.xml -->
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
