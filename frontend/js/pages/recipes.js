@@ -1,8 +1,9 @@
 // recipes.js — Renderiza a página de receitas
 
 async function renderRecipes(params = {}) {
-    const app = document.getElementById('app');
 
+    const app = document.getElementById('main-content');
+    
     app.innerHTML = `
         <section class="recipes-header">
             <h1>Galactic Catalogue</h1>

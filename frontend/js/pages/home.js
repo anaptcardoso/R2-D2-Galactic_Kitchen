@@ -1,7 +1,7 @@
 // home.js — Renderiza a página inicial
 
 async function renderHome() {
-    const app = document.getElementById('app');
+    const app = document.getElementById('main-content');
 
     app.innerHTML = `
         <section class="hero">
@@ -48,7 +48,9 @@ async function renderHome() {
 function initHome() {
     document.getElementById('card-recipes').addEventListener('click', () => navigate('recipes'));
     document.getElementById('card-plan').addEventListener('click', () => navigate('plan'));
-    document.getElementById('card-chat').addEventListener('click', () => navigate('chat'));
+
+    document.getElementById('card-chat').addEventListener('click', () => {
+        document.getElementById('chat-window').classList.add('open');});   
     document.getElementById('card-profile').addEventListener('click', () => navigate('profile'));
 }
 

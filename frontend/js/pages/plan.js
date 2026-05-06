@@ -4,7 +4,7 @@
 // ============================================================
 
 // Gera o HTML da página e inicializa os eventos
-function renderWeeklyPlan(params = {}) {
+function renderPlan(params = {}) {
   const app = document.getElementById('app');
   app.innerHTML = `
         <div class="hero">

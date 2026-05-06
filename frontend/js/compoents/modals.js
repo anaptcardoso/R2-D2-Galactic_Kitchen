@@ -94,7 +94,7 @@ async function generatePlanetRecipe(planet) {
         const response = await ChatAPI.chat({ role: 'user', message: planet, context: 'planet' });
         document.getElementById('planet-loading').style.display = 'none';
         document.getElementById('planet-result').innerHTML =
-            `<div class="planet-recipe-result">${r.message}</div>`;
+            `<div class="planet-recipe-result">${response.message}</div>`;
     } catch (error) {
         document.getElementById('planet-loading').style.display = 'none';
         document.getElementById('planet-result').innerHTML =
