@@ -4,7 +4,7 @@
 function renderProfile() {
   return `
     <div class="profile">
-     <h2>My Profile</h2>
+    <h2>My Profile</h2>
     
     <div class="profile-form">
       <div class="form-group">
@@ -30,7 +30,7 @@ function renderProfile() {
     </div>
 
     <button id="btn-save">Save</button>
-   </div>
+  </div>
   </div>
   `;
 }

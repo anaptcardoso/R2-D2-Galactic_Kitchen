@@ -19,17 +19,17 @@ import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 
 @Service
-public class NutritionistServiceImpl implements NutritionistService{
+public class NutritionistServiceImpl implements NutritionistService {
 
-    @Value("${anthropic.api.key}")
+    @Value("${groq.api.key}")
     private String apiKey;
 
     private final UserProfileRepository userProfileRepository;
     private final RecipeRepository recipeRepository;
 
-    // URL e modelo Anthropic
-    private static final String ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
-    private static final String MODEL = "claude-sonnet-4-20250514";
+    // Groq API URL — formato OpenAI
+    private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+    private static final String MODEL = "llama-3.1-8b-instant";
 
     // Personalidade do nutricionista
     private static final String SYSTEM_PROMPT = """
@@ -47,24 +47,14 @@ public class NutritionistServiceImpl implements NutritionistService{
         this.recipeRepository = recipeRepository;
     }
 
-    // consult — consulta personalizada com perfil do utilizador
     @Override
     public ChatMessageDTO consult(ChatMessageDTO message, int userId) throws Exception {
-
-        //Procura o perfil nutricional do utilizador para personalizar a resposta
         String userContext = buildUserContext(userId);
-
-        // Constrói o prompt com o contexto do utilizador
         String prompt = userContext + "\n\nUser question: " + message.getMessage();
-
-        String responseText = callAnthropic(prompt);
-
-
+        String responseText = callGroq(prompt);
         return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
     }
 
-
-    // analyseFood — analisa valores nutricionais de alimentos
     @Override
     public ChatMessageDTO analyseFood(ChatMessageDTO message) throws Exception {
         String prompt = """
@@ -78,13 +68,10 @@ public class NutritionistServiceImpl implements NutritionistService{
                 - Any nutritional concerns
                 """.formatted(message.getMessage());
 
-        String responseText = callAnthropic(prompt);
-
+        String responseText = callGroq(prompt);
         return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
-
     }
 
-    // suggestMealPlan — plano alimentar personalizado
     @Override
     public ChatMessageDTO suggestMealPlan(NutritionDTO nutritionProfile) throws Exception {
         String prompt = """
@@ -107,21 +94,15 @@ public class NutritionistServiceImpl implements NutritionistService{
                 nutritionProfile.getHeight()
         );
 
-        String responseText = callAnthropic(prompt);
-
+        String responseText = callGroq(prompt);
         return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
-
     }
 
-    // evaluateRecipe — avalia se uma receita é adequada para o utilizador
     @Override
     public ChatMessageDTO evaluateRecipe(int recipeId, int userId) throws Exception {
-
-        //Procura a receita
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(RecipeNotFoundException::new);
 
-        //Procura o perfil do utilizador
         String userContext = buildUserContext(userId);
 
         String prompt = """
@@ -151,13 +132,12 @@ public class NutritionistServiceImpl implements NutritionistService{
                 recipe.getDietTypes() != null ? recipe.getDietTypes().toString() : "Not specified"
         );
 
-        String responseText = callAnthropic(prompt);
-
+        String responseText = callGroq(prompt);
         return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
-
     }
 
-    // Constrói o contexto do utilizador para personalizar as respostas
+    // ── Private methods ────────────────────────────────────────────────────────
+
     private String buildUserContext(int userId) {
         try {
             UserProfile user = userProfileRepository.findById(userId)
@@ -194,49 +174,56 @@ public class NutritionistServiceImpl implements NutritionistService{
         }
     }
 
-    // Chamada HTTP à API da Anthropic
-    private String callAnthropic(String userMessage) throws Exception {
+    // Chama a API do Groq — formato OpenAI Chat Completions
+    private String callGroq(String userMessage) throws Exception {
+        System.out.println("API KEY: [" + apiKey + "]");
+        String safeSystem = SYSTEM_PROMPT.replace("\"", "\\\"").replace("\n", "\\n");
+        String safeMessage = userMessage.replace("\"", "\\\"").replace("\n", "\\n");
+
         String requestBody = """
                 {
                   "model": "%s",
-                  "max_tokens": 1024,
-                  "system": "%s",
                   "messages": [
-                    {"role": "user", "content": "%s"}
-                  ]
+                    {"role": "system", "content": "%s"},
+                    {"role": "user",   "content": "%s"}
+                  ],
+                  "max_tokens": 1024,
+                  "temperature": 0.7
                 }
-                """.formatted(
-                MODEL,
-                SYSTEM_PROMPT.replace("\"", "\\\"").replace("\n", "\\n"),
-                userMessage.replace("\"", "\\\"").replace("\n", "\\n")
-        );
+                """.formatted(MODEL, safeSystem, safeMessage);
 
         HttpClient client = HttpClient.newHttpClient();
-
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(ANTHROPIC_URL))
+                .uri(URI.create(GROQ_URL))
                 .header("Content-Type", "application/json")
-                .header("x-api-key", apiKey)
-                .header("anthropic-version", "2023-06-01")
+                .header("Authorization", "Bearer " + apiKey)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
 
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("GROQ RESPONSE: " + response.body());
 
         return extractText(response.body());
     }
 
-    // Extrai o texto da resposta JSON da Anthropic
+    // Extrai o texto da resposta JSON do Groq (formato OpenAI)
     private String extractText(String responseBody) {
-        int start = responseBody.indexOf("\"text\":\"") + 8;
-        int end = responseBody.indexOf("\"", start);
-
-        if (start < 8 || end < 0) {
+        try {
+            int contentStart = responseBody.indexOf("\"content\":\"") + 11;
+            if (contentStart < 11) {
+                System.err.println("Groq response: " + responseBody);
+                return "I'm sorry, I was unable to process your request. Please try again.";
+            }
+            int contentEnd = responseBody.indexOf("\",", contentStart);
+            if (contentEnd < 0) contentEnd = responseBody.indexOf("\"}", contentStart);
+            if (contentEnd < 0) return "I'm sorry, I was unable to process your request. Please try again.";
+            return responseBody.substring(contentStart, contentEnd)
+                    .replace("\\n", "\n")
+                    .replace("\\\"", "\"");
+        } catch (Exception e) {
+            System.err.println("Erro a extrair texto: " + e.getMessage());
             return "I'm sorry, I was unable to process your request. Please try again.";
         }
-
-        return responseBody.substring(start, end).replace("\\n", "\n");
     }
-
 }

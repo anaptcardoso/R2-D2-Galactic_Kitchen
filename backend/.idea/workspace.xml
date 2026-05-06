@@ -5,34 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4eb1314c-ce7e-40ca-8691-49992be22593" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/entity/UserProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/model/entity/UserProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/IngredientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/IngredientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/UserProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/UserProfileRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/WeeklyPlanRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/WeeklyPlanRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/services/AIServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/AIServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/services/NutritionistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/NutritionistServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/templates/chefbot-prompt-template.st" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ai/chefbot-prompt-template.st" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/templates/nutritionist-promp-template.st" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ai/nutritionist-promp-template.st" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/templates/r2d2_galactic_recipes.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/r2d2_seeds.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/r2d2_seeds.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/data/recipes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/chat.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/detail.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/home.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/plan.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/profile.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/r2-chf/js/pages/recipes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/ai.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/ai.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/persistance.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/presentation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/presentation.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/spring-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/spring-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/compoents/chat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/compoents/helpers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/compoents/modals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/pages/profile.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,27 +42,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "ana",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/anacardoso11/Documents/Assignments/R2-D2-Galactic_Kitchen/backend/src/main/resources/ai",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ana&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/anacardoso11/Documents/Assignments/R2-D2-Galactic_Kitchen/backend/src/main/resources/ai&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/ai" />
@@ -109,7 +93,7 @@
       <updated>1778001791518</updated>
       <workItem from="1778001793035" duration="10114000" />
       <workItem from="1778027666452" duration="1992000" />
-      <workItem from="1778077796280" duration="10136000" />
+      <workItem from="1778077796280" duration="16455000" />
     </task>
     <servers />
   </component>
