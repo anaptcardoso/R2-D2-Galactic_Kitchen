@@ -5,7 +5,7 @@
 
 // Renders the nutritionist page with three tabs: Consult, Analyse Food, Meal Plan
 async function renderNutritionist(params = {}) {
-    const userId = App.currentUser?.id || 1;
+    const userId    = App.currentUser?.id || 1;
     const firstName = App.currentUser?.firstName || '';
 
     setContent(`
@@ -13,71 +13,72 @@ async function renderNutritionist(params = {}) {
             <h2>Nutritional Consult</h2>
         </div>
 
-        <!-- Tab buttons --> 
-        <div class="nutrition-tabs">
-            <button class="tab-btn active" data-tab="consult">Consult</button>
-            <button class="tab-btn" data-tab="analyse">Analyze Food</button>
-            <button class="tab-btn" data-tab="mealplan">Meal Plan</button>
-        </div>
+        <!-- Tab buttons -->
+        <nav class="nutrition-tabs" role="tablist">
+            <button class="tab-btn active" data-tab="consult" role="tab">Consult</button>
+            <button class="tab-btn" data-tab="analyse" role="tab">Analyze Food</button>
+            <button class="tab-btn" data-tab="mealplan" role="tab">Meal Plan</button>
+        </nav>
 
-        <!-- TAB: Consult  --> 
-        <div class="tab-content" id="tab-consult">
+        <!-- TAB: Consult -->
+        <section class="tab-content" id="tab-consult" role="tabpanel">
             <div class="nutritionist-layout">
-                    <div class="nutri-sidebar">
-                        <!-- User nutritional profile -->
-                        <div class="nutri-profile-card">
-                            <p class="section-label">User Profile</p>
-                            <div id="nutri-profile-data">
-                                <p class="loading-text">Loading...</p>
-                            </div>
+                <aside class="nutri-sidebar">
+
+                    <!-- Perfil nutricional do utilizador -->
+                    <div class="nutri-profile-card">
+                        <p class="section-label">User Profile</p>
+                        <div id="nutri-profile-data">
+                            <p class="loading-text">Loading...</p>
                         </div>
-                        <!-- Quick action buttons -->
-                        <div class="quick-actions">
-                            <p class="section-label">Quick actions</p>
-                            <button class="quick-btn" data-quick="Analyze my food this week">
-                                Weekly analysis
-                            </button>
-                            <button class="quick-btn" data-quick="Create a personalized meal plan for me">
-                                Meal Plan
-                            </button>
-                            <button class="quick-btn" data-quick="Calculate my ideal macros">
-                                Calculate Macros
-                            </button>
-                            <button class="quick-btn" data-quick="Which recipes are best suited to my profile">
-                                Evaluate Recipes
-                            </button>
-                        </div>              
                     </div>
 
-                    <!-- Chat area -->
-                    <div class="nutri-chat">
-                        <div class="chat-messages-area" id="chat-messages">
-                            <div class="msg>
-                                <div class="msg-av nutri-av">NI</div>
-                                <div class="msg-bubble nutri-bubble">
+                    <!-- Botões de ação rápida -->
+                    <div class="quick-actions">
+                        <p class="section-label">Quick actions</p>
+                        <button class="quick-btn" data-quick="Analyze my food this week">
+                            Weekly analysis
+                        </button>
+                        <button class="quick-btn" data-quick="Create a personalized meal plan for me">
+                            Meal Plan
+                        </button>
+                        <button class="quick-btn" data-quick="Calculate my ideal macros">
+                            Calculate Macros
+                        </button>
+                        <button class="quick-btn" data-quick="Which recipes are best suited to my profile">
+                            Evaluate Recipes
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Área de chat com o nutricionista IA -->
+                <div class="nutri-chat">
+                    <section class="chat-messages-area" id="chat-messages" aria-live="polite">
+                        <article class="msg">
+                            <div class="msg-av nutri-av">NI</div>
+                            <div class="msg-bubble nutri-bubble">
                                 Active nutritional system.
                                 ${firstName ? 'Hello, ' + firstName + '!' : 'Hello!'}
-                                Based on your galactic profile.I will provide personalized recommendations.
+                                Based on your galactic profile, I will provide personalized recommendations.
                                 How can I help you today, Padawan?
                             </div>
-                        </div>
-                    </div>
+                        </article>
+                    </section>
                     <div class="chat-input-area">
                         <textarea id="consult-input" class="chat-textarea"
-                            placeholder="Submit question to the nutririonist..."></textarea>
+                            placeholder="Submit question to the nutritionist..."></textarea>
                         <button class="btn-green" id="consult-send">Send</button>
                     </div>
                 </div>
             </div>
-        </div>
-
+        </section>
 
         <!-- TAB: Analyze Food -->
-        <div class="tab-content hidden" id="tab-analyse">
+        <section class="tab-content hidden" id="tab-analyse" role="tabpanel">
             <div class="holo-card" style="padding:1.5rem;max-width:600px;margin:0 auto">
                 <p class="section-label">Nutritional analysis of foods</p>
                 <p style="font-size:12px;color:var(--text-dim);margin-bottom:1rem">
-                    Describes the food or meal to obtain estimated nutrirional values.
+                    Describe the food or meal to obtain estimated nutritional values.
                 </p>
                 <div style="display:flex;gap:8px;margin-bottom:1rem">
                     <input type="text" id="food-input" class="search-input" style="flex:1;width:auto"
@@ -85,23 +86,24 @@ async function renderNutritionist(params = {}) {
                     <button class="btn-cyan" id="food-send">Analyze</button>
                 </div>
                 <div id="food-result" class="result-box hidden"></div>
-            </div>            
-        </div>
+            </div>
+        </section>
 
         <!-- TAB: Meal Plan -->
-        <div class="tab-content hidden" id="tab-mealplan">
+        <section class="tab-content hidden" id="tab-mealplan" role="tabpanel">
             <div class="holo-card" style="padding:1.5rem;max-width:600px;margin:0 auto">
                 <p class="section-label">Generate meal plan</p>
                 <p style="font-size:12px;color:var(--text-dim);margin-bottom:1rem">
                     Generate a personalized meal plan based on your preferences and goals.
-                </p> 
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">             
+                </p>
+                <form onsubmit="return false;"
+                    style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">
                     <div class="field">
-                        <label=Daily calories</label>
-                        <input type="number" id="calories-input" placeholder=" (ex: 2000)">
+                        <label for="calories-input">Daily calories</label>
+                        <input type="number" id="calories-input" placeholder="Ex: 2000">
                     </div>
                     <div class="field">
-                        <label="Type of diet"</label>
+                        <label for="diet-select">Type of diet</label>
                         <select id="diet-select">
                             <option value="">No preference</option>
                             <option value="VEGAN">Vegan</option>
@@ -113,78 +115,82 @@ async function renderNutritionist(params = {}) {
                         </select>
                     </div>
                     <div class="field">
-                        <label>Purpose</label>
+                        <label for="goal-input">Purpose</label>
                         <input type="text" id="goal-input" placeholder="Ex: Lose weight">
                     </div>
                     <div class="field">
-                        <label>Activity Level</label>
-                            <select id="activity-select">
-                                <option value="sedentary">Sedentary</option>
-                                <option value="light">Light</option>
-                                <option value="moderate" selected>Moderate</option>
-                                <option value="active">Active</option>
-                                <option value="very active">Very active</option>
-                            </select>
+                        <label for="activity-select">Activity Level</label>
+                        <select id="activity-select">
+                            <option value="sedentary">Sedentary</option>
+                            <option value="light">Light</option>
+                            <option value="moderate" selected>Moderate</option>
+                            <option value="active">Active</option>
+                            <option value="very active">Very active</option>
+                        </select>
                     </div>
-                </div> 
-                <button class="btn-cyan" id="mealplan-send" style="width:100%">
-                    Generate Plan
-                </button>            
+                    <button class="btn-cyan" id="mealplan-send" style="width:100%;grid-column:span 2">
+                        Generate Plan
+                    </button>
+                </form>
                 <div id="mealplan-result" class="result-box hidden"></div>
             </div>
-        </div>
+        </section>
     `);
 
-    // load the user's nutritional profile and populate the sidebar
+    // carrega o perfil nutricional do utilizador na sidebar
     loadNutritionProfile(userId);
 
-    // initialise all event listeners
+    // inicializa todos os event listeners
     initNutritionistEvents(userId);
 }
 
-// Fetches the user's nutritional profile and populates the sidebar
+// Busca o perfil nutricional do utilizador e popula a sidebar
 async function loadNutritionProfile(userId) {
     try {
         const nutrition = await UserAPI.getNutrition(userId);
         document.getElementById('nutri-profile-data').innerHTML = `
-            <div class="stat-row"><span>Weight</span><strong>${nutrition.weight || '—'} KG</strong></div>
-            <div class="stat-row"><span>Height</span><strong>${nutrition.height || '—'} CM</strong></div>
-            <div class="stat-row"><span>Purpose</span>
-                <strong style="font-size:10px">${nutrition.goal || '—'}</strong>
-            </div>
-            <div class="stat-row"><span>Activity</span>
-                <strong style="font-size:10px">${nutrition.activityLevel || '—'}</strong>
-            </div>
+            <dl class="stat-list">
+                <div class="stat-row">
+                    <dt>Weight</dt><dd>${nutrition.weight || '—'} KG</dd>
+                </div>
+                <div class="stat-row">
+                    <dt>Height</dt><dd>${nutrition.height || '—'} CM</dd>
+                </div>
+                <div class="stat-row">
+                    <dt>Purpose</dt><dd style="font-size:10px">${nutrition.goal || '—'}</dd>
+                </div>
+                <div class="stat-row">
+                    <dt>Activity</dt><dd style="font-size:10px">${nutrition.activityLevel || '—'}</dd>
+                </div>
+            </dl>
         `;
     } catch (error) {
         document.getElementById('nutri-profile-data').innerHTML =
-            '<p class="error-inline">Data unavavailable</p>';
+            '<p class="error-inline">Data unavailable</p>';
     }
 }
 
-
 // ── Event listeners ───────────────────────────────────────────────────────────
 
-// Sets up all tab switching, chat and form event listeners
+// Configura todos os listeners de tabs, chat e formulários
 function initNutritionistEvents(userId) {
 
-    // ── Tabs ─────────────────────────────────────────────────
+    // ── Navegação entre tabs ──────────────────────────────────
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            // deactivate all tabs
+            // desativa todas as tabs
             document.querySelectorAll('.tab-btn')
                 .forEach(button => button.classList.remove('active'));
             document.querySelectorAll('.tab-content')
                 .forEach(content => content.classList.add('hidden'));
-            // activate the clicked tab
+            // ativa a tab clicada
             btn.classList.add('active');
             document.getElementById(`tab-${btn.dataset.tab}`)
                 .classList.remove('hidden');
         });
     });
 
-    // ── Quick action buttons ──────────────────────────────────────────────────
-
+    // ── Botões de ação rápida ─────────────────────────────────
     document.querySelectorAll('.quick-btn[data-quick]').forEach(btn => {
         btn.addEventListener('click', () => {
             const input = document.getElementById('consult-input');
@@ -195,25 +201,22 @@ function initNutritionistEvents(userId) {
         });
     });
 
-
-    // ── Tab 1: Consult ───────────────────────────────────────
-    
+    // ── Tab 1: Consult ────────────────────────────────────────
     const consultInput = document.getElementById('consult-input');
 
-    // send on button click
+    // envia ao clicar no botão
     document.getElementById('consult-send')
         .addEventListener('click', () => sendConsultMessage(userId));
 
-    // send on Enter key (without Shift)
+    // envia ao pressionar Enter (sem Shift)
     consultInput.addEventListener('keydown', event => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             sendConsultMessage(userId);
         }
     });
-    
 
-    // ── Tab 2: Analyze Food ──────────────────────────────
+    // ── Tab 2: Analyze Food ───────────────────────────────────
     document.getElementById('food-send').addEventListener('click', async () => {
         const food   = document.getElementById('food-input').value.trim();
         const result = document.getElementById('food-result');
@@ -223,39 +226,38 @@ function initNutritionistEvents(userId) {
         result.classList.remove('hidden');
 
         try {
-            // send as a ChatMessageDTO — the backend expects this format
-            const response = await NutritionistAPI.analyseFood({ 
-                role: 'user',
+            // envia como ChatMessageDTO — formato esperado pelo backend
+            const response = await NutritionistAPI.analyseFood({
+                role:    'user',
                 message: food,
-                context:'nutrition'
+                context: 'nutrition'
             });
             result.innerHTML = `
                 <strong style="color:var(--cyan)">${food}</strong><br><br>
                 ${response.message || JSON.stringify(response)}
-
             `;
         } catch (error) {
             result.textContent = `Error: ${error.message}`;
         }
     });
 
-    // ── Tab 3: Meal Plan ────────────────────────────────
+    // ── Tab 3: Meal Plan ──────────────────────────────────────
     document.getElementById('mealplan-send').addEventListener('click', async () => {
-        
-        const result   = document.getElementById('mealplan-result');
+        const result = document.getElementById('mealplan-result');
 
         result.textContent = 'Generating plan...';
         result.classList.remove('hidden');
 
         try {
-            // build a NutritionDTO with the form values
-            const response = await NutritionistAPI.suggestMealPlan({
-                weight: null,
-                height: null,
-                goal: document.getElementById('goal-input').value || null,
-                activityLevel: document.getElementById('activity-select').value || null,
-                dietPreferences: document.getElementById('diet-select').value?[document.getElementById('diet-select').value]:[],
-                allergies: null
+            // constrói um NutritionDTO com os valores do formulário
+            const dietValue = document.getElementById('diet-select').value;
+            const response  = await NutritionistAPI.suggestMealPlan({
+                weight:          null,
+                height:          null,
+                goal:            document.getElementById('goal-input').value || null,
+                activityLevel:   document.getElementById('activity-select').value || null,
+                dietPreferences: dietValue ? [dietValue] : [],
+                allergies:       null
             });
             result.innerHTML = `
                 <strong style="color:var(--cyan)">Your eating plan:</strong><br><br>
@@ -267,29 +269,29 @@ function initNutritionistEvents(userId) {
     });
 }
 
-// ── Chat Helpers ─────────────────────────────────────────────────────────────────
+// ── Chat Helpers ──────────────────────────────────────────────────────────────
 
-// Sends the consult message to the nutritionist API and displays the response
+// Envia a mensagem de consulta à API do nutricionista e mostra a resposta
 async function sendConsultMessage(userId) {
     const input    = document.getElementById('consult-input');
     const messages = document.getElementById('chat-messages');
     const message  = input.value.trim();
     if (!message) return;
 
-    // display the user's message
+    // mostra a mensagem do utilizador
     appendNutriMessage(messages, 'user', message);
     input.value = '';
 
-    // show a loading indicator while waiting for the response
+    // mostra indicador de loading enquanto aguarda resposta
     appendNutriMessage(messages, 'nutri', 'Processing transmission...', 'nutri-loading');
 
     try {
         const response = await NutritionistAPI.consult(userId, {
-            role: 'user',
+            role:    'user',
             message,
             context: 'nutrition'
         });
-        // remove the loading indicator and show the real response
+        // remove o loading e mostra a resposta real
         document.getElementById('nutri-loading')?.remove();
         appendNutriMessage(messages, 'nutri', response.message || JSON.stringify(response));
     } catch (error) {
@@ -298,29 +300,27 @@ async function sendConsultMessage(userId) {
     }
 }
 
-// Appends a styled message bubble to the chat area
+// Adiciona uma bolha de mensagem estilizada à área de chat
 function appendNutriMessage(container, type, text, id = '') {
-    const isNutri = type === 'nutri';
-    // generate user initials dynamically from the active user
+    const isNutri      = type === 'nutri';
     const userInitials = getUserInitials();
     const userBg       = getAvatarBg(App.currentUser?.firstName || 'A');
-    const userBorder   = getAvatarBorder(App.currentUser?.firstName || 'A')
-    const div = document.createElement('div');
-    div.className = `msg ${isNutri ? '' : 'user-msg'}`;
-    if (id) div.id = id;
-    div.innerHTML = `
-                <div class="msg-av ${isNutri ? 'nutri-av' : 'user-av'}"
+    const userBorder   = getAvatarBorder(App.currentUser?.firstName || 'A');
+
+    const article = document.createElement('article');
+    article.className = `msg ${isNutri ? '' : 'user-msg'}`;
+    if (id) article.id = id;
+    article.innerHTML = `
+        <div class="msg-av ${isNutri ? 'nutri-av' : 'user-av'}"
             ${!isNutri ? `style="background:${userBg};border-color:${userBorder}"` : ''}>
             ${isNutri ? 'NI' : userInitials}
         </div>
-
         <div class="msg-bubble ${isNutri ? 'nutri-bubble' : 'user-bubble'}">${text}</div>
     `;
-    container.appendChild(div);
-    // scroll to the latest message
+    container.appendChild(article);
+
+    // scroll automático para a última mensagem
     container.scrollTop = container.scrollHeight;
 }
-
-
 
 
