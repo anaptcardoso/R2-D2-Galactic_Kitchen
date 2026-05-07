@@ -1,153 +1,394 @@
-// profiles.js — Renderiza a lista de perfis de utilizadores
+// profiles.js — Renders the user profiles page of the SPA
 
+/**
+ * Renders the profiles list page.
+ * This function is called by the router when the user navigates to "profiles".
+ *
+ * @param {Object} params - Optional navigation parameters.
+ */
 async function renderProfiles(params = {}) {
     const app = document.getElementById('main-content');
 
     app.innerHTML = `
-        <section class="hero">
-            <h1>Rebel Alliance Profiles</h1>
+        <section class="profiles-hero">
+            <div class="hero-eyebrow">// REBEL ALLIANCE DATABASE</div>
+            <h1>Rebel Alliance <span>Profiles</span></h1>
+            <p>Manage galactic identities, nutrition goals and mission preferences.</p>
         </section>
 
-        <section class="profiles-controls">
-            <input 
-                type="text" 
-                id="profiles-search" 
-                placeholder="Search by name..."
-            />
-            <button class="btn btn--primary" onclick="navigate('profile', { new: true })">
-                + New Profile
+        <section class="profiles-toolbar">
+            <div class="profiles-search-wrap">
+                <svg class="profiles-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="M20 20l-4.5-4.5"></path>
+                </svg>
+
+                <input 
+                    type="text" 
+                    id="profiles-search" 
+                    class="search-input profiles-search"
+                    placeholder="Search by name..."
+                />
+            </div>
+
+            <button class="btn-cyan" id="new-profile-btn">
+                NEW PROFILE
             </button>
         </section>
 
-        <section id="profiles-list">
-            <p class="loading">Loading profiles...</p>
+        <section class="profiles-meta">
+            <div>
+                <span class="section-label">PROFILE STATUS</span>
+                <p id="profiles-count">Loading profiles...</p>
+            </div>
+
+            <div class="profiles-signal">
+                <span class="status-dot"></span>
+                <span>IDENTITY SYSTEM ONLINE</span>
+            </div>
+        </section>
+
+        <section id="profiles-list" class="profiles-list upgraded-profiles-list">
+            <div class="loading">
+                <p>LOADING PROFILES...</p>
+            </div>
         </section>
     `;
 
-    // inicializa a pesquisa
+    // Initializes search and action events.
     initProfiles();
 
-    // vai buscar os utilizadores ao backend
+    // Loads profiles from the backend.
     await loadProfiles();
 }
 
-// ── Inicialização dos eventos ─────────────────────────────────────────────────
-
+/**
+ * Initializes all interactive events on the profiles page.
+ *
+ * Events handled:
+ * - live profile search;
+ * - new profile button.
+ */
 function initProfiles() {
-    // pesquisa em tempo real ao escrever o nome
-    document.getElementById('profiles-search').addEventListener('input', (e) => {
+    const searchInput = document.getElementById('profiles-search');
+    const newProfileButton = document.getElementById('new-profile-btn');
+
+    // Live search by first name, last name or email.
+    searchInput?.addEventListener('input', (e) => {
         const search = e.target.value.toLowerCase().trim();
         filterProfiles(search);
     });
+
+    // Navigates to the profile creation screen.
+    newProfileButton?.addEventListener('click', () => {
+        navigate('profile', { new: true });
+    });
 }
 
-// ── Carrega os perfis do backend ──────────────────────────────────────────────
-
+/**
+ * Loads profiles from the backend.
+ * Stores users in App.users so filtering can happen without another API call.
+ */
 async function loadProfiles() {
     const list = document.getElementById('profiles-list');
 
     try {
         const users = await UserAPI.getAll();
 
-        // guarda os utilizadores para filtrar sem ir ao backend outra vez
+        // Stores users globally for local filtering.
         App.users = users;
 
         renderProfileCards(users);
 
     } catch (e) {
         console.warn('Could not load profiles from backend:', e.message);
+
         list.innerHTML = `
-            <p class="error">Could not load profiles. Please try again later.</p>
+            <div class="empty-state profiles-empty">
+                <div class="empty-icon">
+                    ${getProfileEmptyIcon()}
+                </div>
+                <h3>PROFILE DATABASE FAILED</h3>
+                <p>Could not load profiles. Please try again later.</p>
+            </div>
         `;
+
+        updateProfilesCount(0);
     }
 }
 
-// ── Filtra os perfis pelo nome pesquisado ─────────────────────────────────────
-
+/**
+ * Filters profiles by the current search term.
+ *
+ * @param {string} search - Search text typed by the user.
+ */
 function filterProfiles(search) {
     if (!App.users) return;
 
-    // se não há texto de pesquisa mostra todos
     if (!search) {
         renderProfileCards(App.users);
         return;
     }
 
-    // filtra por primeiro ou último nome
-    const filtered = App.users.filter(u =>
-        (u.firstName || '').toLowerCase().includes(search) ||
-        (u.lastName  || '').toLowerCase().includes(search)
-    );
+    const filtered = App.users.filter(user => {
+        const firstName = (user.firstName || '').toLowerCase();
+        const lastName = (user.lastName || '').toLowerCase();
+        const email = (user.email || '').toLowerCase();
+        const country = (user.country || '').toLowerCase();
+
+        return (
+            firstName.includes(search) ||
+            lastName.includes(search) ||
+            email.includes(search) ||
+            country.includes(search)
+        );
+    });
 
     renderProfileCards(filtered);
 }
 
-// ── Renderiza os cards de perfil ──────────────────────────────────────────────
-
+/**
+ * Renders all profile cards.
+ *
+ * @param {Array<Object>} users - List of users returned by the API.
+ */
 function renderProfileCards(users) {
     const list = document.getElementById('profiles-list');
-    const avatarImages = {
-    'Luke':   'js/assets/luke.jpg',
-    'Leia':   'js/assets/leia.jpg',
-    'Han':    'js/assets/han_solo.jpg',
-    'Ana':    'js/assets/ana_cardoso.jpg',
-    'Ines':    'js/assets/ines_azevedo.jpg',
-    'Pedro':    'js/assets/saldanha_pedro.jpg',
-    'Yasmin':    'js/assets/yasmin_natasha.jpeg',
-};
+
+    updateProfilesCount(users ? users.length : 0);
 
     if (!users || users.length === 0) {
-        list.innerHTML = `<p class="empty">No profiles found.</p>`;
+        list.innerHTML = `
+            <div class="empty-state profiles-empty">
+                <div class="empty-icon">
+                    ${getProfileEmptyIcon()}
+                </div>
+                <h3>NO PROFILES FOUND</h3>
+                <p>Try another search term or create a new profile.</p>
+            </div>
+        `;
         return;
     }
 
-    list.innerHTML = users.map(user => `
-        <div class="profile-card">
+    list.innerHTML = users.map(renderProfileCard).join('');
+}
 
-            <div class="profile-card__avatar" style="
-                border-color: ${getAvatarBorder(user.firstName)};
-                overflow: hidden; padding: 0;
-            ">
-                ${avatarImages[user.firstName] 
-                    ? `<img src="${avatarImages[user.firstName]}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`
-                    : (user.firstName?.[0] || '?') + (user.lastName?.[0] || '')
-                }
+/**
+ * Builds the HTML for one profile card.
+ *
+ * @param {Object} user - User object returned by the API.
+ * @returns {string} Profile card HTML.
+ */
+function renderProfileCard(user) {
+    const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Unknown User';
+    const initials = getInitials(user);
+    const avatar = getAvatarMarkup(user);
+    const nutrition = user.nutritionDTO || {};
+
+    return `
+        <article class="profile-card upgraded-profile-card">
+            <div class="profile-av upgraded-profile-avatar" style="border-color: ${getAvatarBorder(user.firstName)};">
+                ${avatar || initials}
             </div>
 
-            <div class="profile-card__info">
-                <div class="profile-card__header">
-                    <h3>${user.firstName} ${user.lastName}</h3>
-                    <span class="profile-card__id">ID #${user.id}</span>
+            <div class="profile-main">
+                <div class="profile-top">
+                    <div>
+                        <h3 class="profile-name">${fullName}</h3>
+                        <p class="profile-email">
+                            ${user.email || 'No email registered'}${user.country ? ` · ${user.country}` : ''}
+                        </p>
+                    </div>
+
+                    <span class="id-badge">ID #${user.id || '--'}</span>
                 </div>
 
-                <p class="profile-card__email">${user.email || ''} ${user.country ? '· ' + user.country : ''}</p>
-                
-
-
-                <div class="profile-card__tags">
-                    ${user.dietType ? `<span class="tag">${formatDiet(user.dietType)}</span>` : ''}
-                    ${user.goal     ? `<span class="tag tag--goal">${user.goal}</span>`        : ''}
+                <div class="profile-quote-row">
+                    ${user.bio ? `<p class="profile-bio">"${user.bio}"</p>` : `<p class="profile-bio muted">No mission quote available.</p>`}
                 </div>
 
-                <div class="profile-card__stats">
-                    ${user.nutritionDTO?.weight       ? `<span> ${user.nutritionDTO.weight} kg</span>`             : ''}
-                    ${user.nutritionDTO?.height        ? `<span>${user.nutritionDTO.height} cm</span>`        : ''}
-                    ${user.nutritionDTO?.activityLevel? `<span> ${user.nutritionDTO.activityLevel}</span>`          : ''}
-                    ${user.dailyCalories? `<span> ${user.dailyCalories} kcal/day</span>` : ''}
+                <div class="tags profile-tags">
+                    ${user.dietType ? `<span class="tag ${getDietTagClass(user.dietType)}">${formatDiet(user.dietType)}</span>` : ''}
+                    ${nutrition.goal ? `<span class="tag tag-goal">${nutrition.goal}</span>` : ''}
+                    ${nutrition.allergies ? `<span class="tag tag-gluten_free">Allergies</span>` : ''}
                 </div>
-                ${user.bio       ? `<p class="profile-card__bio"><em>"${user.bio}"</em></p>`           : ''}
-                ${user.nutritionDTO.goal      ? `<p class="profile-card__goal"><strong>Goal:</strong> ${user.nutritionDTO.goal}</p>` : ''}
-                ${user.nutritionDTO?.dietPreferences? `<p><strong>Diet:</strong> ${user.nutritionDTO.dietPreferences.join(', ')}</p>` : ''}
-                ${user.nutritionDTO.allergies ? `<p class="profile-card__allergies"><strong>Allergies:</strong> ${user.nutritionDTO.allergies}</p>` : ''}
+
+                <div class="stats-inline upgraded-profile-stats">
+                    ${nutrition.weight ? `<span><strong>${nutrition.weight}</strong> kg</span>` : ''}
+                    ${nutrition.height ? `<span><strong>${nutrition.height}</strong> cm</span>` : ''}
+                    ${nutrition.activityLevel ? `<span>${formatActivity(nutrition.activityLevel)}</span>` : ''}
+                    ${user.dailyCalories ? `<span><strong>${user.dailyCalories}</strong> kcal/day</span>` : ''}
+                </div>
+
+                <div class="profile-extra">
+                    ${nutrition.goal ? `<p><strong>Goal:</strong> ${nutrition.goal}</p>` : ''}
+                    ${nutrition.dietPreferences ? `<p><strong>Diet:</strong> ${formatList(nutrition.dietPreferences)}</p>` : ''}
+                    ${nutrition.allergies ? `<p><strong>Allergies:</strong> ${formatList(nutrition.allergies)}</p>` : ''}
+                </div>
             </div>
 
-            <button class="btn btn--outline" onclick="navigate('profile', { userId: ${user.id} })">
-                Edit
-            </button>
-            <button class="btn btn--primary" onclick="loadCurrentUser(${user.id})">
-                Switch
-            </button>
+            <div class="profile-actions">
+                <button class="btn-outline" onclick="navigate('profile', { userId: ${user.id} })">
+                    EDIT
+                </button>
 
-        </div>
-    `).join('');
+                <button class="btn-cyan" onclick="loadCurrentUser(${user.id})">
+                    SWITCH
+                </button>
+            </div>
+        </article>
+    `;
+}
+
+/**
+ * Updates the profile count text.
+ *
+ * @param {number} count - Number of currently displayed profiles.
+ */
+function updateProfilesCount(count) {
+    const countElement = document.getElementById('profiles-count');
+    if (!countElement) return;
+
+    const label = count === 1 ? 'profile located' : 'profiles located';
+    countElement.textContent = `${count} ${label}`;
+}
+
+/**
+ * Returns the avatar image markup if an image exists for the user.
+ *
+ * @param {Object} user - User object.
+ * @returns {string} Avatar image HTML or an empty string.
+ */
+function getAvatarMarkup(user) {
+    const avatarImages = {
+        Luke: '/frontend/js/assets/luke.jpg',
+        Leia: '/frontend/js/assets/leia.jpg',
+        Han: '/frontend/js/assets/han_solo.jpg',
+        Ana: '/frontend/js/assets/ana_cardoso.jpg',
+        Ines: '/frontend/js/assets/ines_azevedo.jpg',
+        Inês: '/frontend/js/assets/ines_azevedo.jpg',
+        Pedro: '/frontend/js/assets/saldanha_pedro.jpg',
+        Yasmin: '/frontend/js/assets/yasmin_natasha.jpeg'
+    };
+
+    const image = avatarImages[user.firstName];
+
+    if (!image) return '';
+
+    return `
+        <img 
+            src="${image}" 
+            alt="${user.firstName || 'User'} avatar"
+            class="profile-avatar-img"
+        />
+    `;
+}
+
+/**
+ * Creates initials from first and last name.
+ *
+ * @param {Object} user - User object.
+ * @returns {string} User initials.
+ */
+function getInitials(user) {
+    const first = user.firstName?.[0] || '';
+    const last = user.lastName?.[0] || '';
+
+    return `${first}${last}` || '?';
+}
+
+/**
+ * Returns a border color for the avatar based on the user's first name.
+ *
+ * @param {string} firstName - User first name.
+ * @returns {string} CSS color value.
+ */
+function getAvatarBorder(firstName = '') {
+    const colors = {
+        Luke: '#00D4FF',
+        Leia: '#FFD700',
+        Han: '#FF4444',
+        Ana: '#00FF88',
+        Ines: '#8B5CF6',
+        Inês: '#8B5CF6',
+        Pedro: '#00D4FF',
+        Yasmin: '#FFD700'
+    };
+
+    return colors[firstName] || '#00D4FF';
+}
+
+/**
+ * Converts a diet enum into readable text.
+ *
+ * @param {string} diet - Diet type.
+ * @returns {string} Formatted diet name.
+ */
+function formatDiet(diet) {
+    const map = {
+        OMNIVORE: 'Omnivore',
+        VEGAN: 'Vegan',
+        VEGETARIAN: 'Vegetarian',
+        KETO: 'Keto',
+        GLUTEN_FREE: 'Gluten free'
+    };
+
+    return map[diet] || diet;
+}
+
+/**
+ * Returns the CSS class used to style each diet tag.
+ *
+ * @param {string} diet - Diet type.
+ * @returns {string} CSS class for the tag.
+ */
+function getDietTagClass(diet) {
+    const map = {
+        OMNIVORE: 'tag-omnivore',
+        VEGAN: 'tag-vegan',
+        VEGETARIAN: 'tag-vegan',
+        KETO: 'tag-keto',
+        GLUTEN_FREE: 'tag-gluten_free'
+    };
+
+    return map[diet] || 'tag-diet';
+}
+
+/**
+ * Formats a value that might be an array or string.
+ *
+ * @param {Array|string} value - Value to format.
+ * @returns {string} Formatted value.
+ */
+function formatList(value) {
+    if (Array.isArray(value)) return value.join(', ');
+    return value || '';
+}
+
+/**
+ * Formats the activity level enum into readable text.
+ *
+ * @param {string} activity - Activity enum.
+ * @returns {string} Formatted activity.
+ */
+function formatActivity(activity = '') {
+    return activity
+        .toLowerCase()
+        .replaceAll('_', ' ')
+        .replace(/\b\w/g, char => char.toUpperCase());
+}
+
+/**
+ * SVG icon used for empty or error states.
+ *
+ * @returns {string} SVG as a string.
+ */
+function getProfileEmptyIcon() {
+    return `
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4 21c0-4 4-7 8-7s8 3 8 7"></path>
+            <path d="M8 3l8 18"></path>
+        </svg>
+    `;
 }
