@@ -16,7 +16,12 @@ public class UserFactory {
         return List.of(
                 createLuke(),
                 createLeia(),
-                createHan()
+                createHan(),
+                createAna(),
+                createInes(),
+                createPedro(),
+                createYasmin()
+
         );
     }
 
@@ -71,6 +76,74 @@ public class UserFactory {
                 85.0, 180.0, "Survive another day", "moderate",
                 Set.of(DietType.OMNIVORE), null));
         user.setBio("Never tell me the odds!");
+        return user;
+    }
+
+    // Utilizador 4 — Ana
+    //
+    private static UserProfile createAna() {
+        UserProfile user = new UserProfile();
+        user.setFirstName("Ana");
+        user.setLastName("Cardoso");
+        user.setEmail("anaptcardoso11@gmail.com");
+        user.setPhone("911164088");
+        user.setDateOfBirth(LocalDate.of(95,10 , 11));
+        user.setCountry("Portugal");
+        user.setNutritionProfile(new NutritionProfile(
+                60.0, 165.0, "Be a programmer", "moderate",
+                Set.of(DietType.OMNIVORE), null));
+        user.setBio("https://github.com/anaptcardoso");
+        return user;
+    }
+
+    // Utilizador 5 — Ines
+    //
+    private static UserProfile createInes() {
+        UserProfile user = new UserProfile();
+        user.setFirstName("Ines");
+        user.setLastName("Azevedo");
+        user.setEmail("ines@mail.com");//altera
+        user.setPhone("912097615");
+        user.setDateOfBirth(LocalDate.of(29, 7, 13));//altera
+        user.setCountry("Portugal");
+        user.setNutritionProfile(new NutritionProfile(
+                85.0, 180.0, "Survive another day", "moderate",//altera
+                Set.of(DietType.OMNIVORE), null));
+        user.setBio("https://github.com/inesazevedo23");
+        return user;
+    }
+
+    // Utilizador 6 — Pedro
+    //
+    private static UserProfile createPedro() {
+        UserProfile user = new UserProfile();
+        user.setFirstName("Pedro");
+        user.setLastName("Saldanha");
+        user.setEmail("pedro@mail.com");//altera
+        user.setPhone("920176304");
+        user.setDateOfBirth(LocalDate.of(29, 7, 13));//altera
+        user.setCountry("Netherlands");
+        user.setNutritionProfile(new NutritionProfile(
+                85.0, 180.0, "Survive another day", "moderate",//altera
+                Set.of(DietType.OMNIVORE), null));
+        user.setBio("https://github.com/SaldanhaIgor");
+        return user;
+    }
+
+    // Utilizador 7 — Yasmin
+    // Contrabandista — come o que aparecer!
+    private static UserProfile createYasmin() {
+        UserProfile user = new UserProfile();
+        user.setFirstName("Yasmin");
+        user.setLastName("Natasha");
+        user.setEmail("yasmin@email.com");//altera
+        user.setPhone("912566280");
+        user.setDateOfBirth(LocalDate.of(29, 7, 13));//altera
+        user.setCountry("Portugal");
+        user.setNutritionProfile(new NutritionProfile(
+                85.0, 180.0, "Survive another day", "moderate",//altera
+                Set.of(DietType.OMNIVORE), null));
+        user.setBio("https://github.com/yasminnatasha17-blip");
         return user;
     }
 }
