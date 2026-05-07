@@ -116,9 +116,9 @@ function renderProfileCards(users) {
                 </div>
 
                 <div class="profile-card__stats">
-                    ${user.weight       ? `<span>⚖️ ${user.weight} kg</span>`             : ''}
+                    ${user.weight       ? `<span> ${user.weight} kg</span>`             : ''}
                     ${user.activityLevel? `<span>⚡ ${user.activityLevel}</span>`          : ''}
-                    ${user.dailyCalories? `<span>🔥 ${user.dailyCalories} kcal/day</span>` : ''}
+                    ${user.dailyCalories? `<span> ${user.dailyCalories} kcal/day</span>` : ''}
                 </div>
             </div>
 

@@ -17,6 +17,10 @@
     <!-- Procura controllers no package org -->
     <context:component-scan base-package="org"/>
 
+    <context:property-placeholder
+            location="classpath:config.properties"
+            ignore-unresolvable="true"/>
+
     <!-- CORS — permite que o frontend (SPA) comunique com o backend -->
     <mvc:cors>
         <mvc:mapping path="/api/**"

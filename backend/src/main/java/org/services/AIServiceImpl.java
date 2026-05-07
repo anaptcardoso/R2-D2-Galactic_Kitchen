@@ -205,20 +205,40 @@ public class AIServiceImpl implements AIService {
     // choices[0].message.content
     private String extractText(String responseBody) {
         try {
-            int contentStart = responseBody.indexOf("\"content\":\"") + 11;
-            if (contentStart < 11) {
-                System.err.println("Groq response: " + responseBody);
-                return "Beep boop... R2-D2 short-circuited! Please try again.";
+            // Procura o padrão "content": seguido de valor
+            int marker = responseBody.indexOf("\"content\":");
+            if (marker < 0) {
+                System.err.println("Groq response sem content: " + responseBody);
+                return "I'm sorry, I was unable to process your request. Please try again.";
             }
-            int contentEnd = responseBody.indexOf("\",", contentStart);
-            if (contentEnd < 0) contentEnd = responseBody.indexOf("\"}", contentStart);
-            if (contentEnd < 0) return "Beep boop... R2-D2 short-circuited! Please try again.";
-            return responseBody.substring(contentStart, contentEnd)
-                    .replace("\\n", "\n")
-                    .replace("\\\"", "\"");
+
+            // Avança para depois de "content":
+            int start = marker + 10;
+            // Salta espaços
+            while (start < responseBody.length() && responseBody.charAt(start) == ' ') start++;
+            // Salta a aspa de abertura
+            if (responseBody.charAt(start) == '"') start++;
+
+            // Reconstrói o texto respeitando os escapes
+            StringBuilder sb = new StringBuilder();
+            while (start < responseBody.length()) {
+                char c = responseBody.charAt(start);
+                if (c == '\\' && start + 1 < responseBody.length()) {
+                    char next = responseBody.charAt(start + 1);
+                    if (next == '"') { sb.append('"'); start += 2; continue; }
+                    if (next == 'n') { sb.append('\n'); start += 2; continue; }
+                    if (next == '\\') { sb.append('\\'); start += 2; continue; }
+                    if (next == 't') { sb.append('\t'); start += 2; continue; }
+                } else if (c == '"') {
+                    break; // fim do conteúdo
+                }
+                sb.append(c);
+                start++;
+            }
+            return sb.toString();
         } catch (Exception e) {
             System.err.println("Erro a extrair texto: " + e.getMessage());
-            return "Beep boop... R2-D2 short-circuited! Please try again.";
+            return "I'm sorry, I was unable to process your request. Please try again.";
         }
     }
 }

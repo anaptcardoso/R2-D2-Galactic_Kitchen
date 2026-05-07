@@ -5,7 +5,7 @@
 
 // Gera o HTML da página e inicializa os eventos
 function renderPlan(params = {}) {
-  const app = document.getElementById('app');
+  const app = document.getElementById('main-content');
   app.innerHTML = `
         <div class="hero">
             <h1>R2-D2 Weekly Plan AI</h1>

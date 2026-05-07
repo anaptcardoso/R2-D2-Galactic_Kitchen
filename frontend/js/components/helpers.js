@@ -73,7 +73,7 @@ function calcIMC(w, h) {
 
 // Replaces the main content area with the given HTML
 function setContent(html) {
-    document.getElementById('app').innerHTML = html;
+    document.getElementById('main-content').innerHTML = html;
 }
 
 // Displays a loading state with an optional message
