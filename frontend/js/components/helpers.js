@@ -1,16 +1,5 @@
 // helpers.js — Shared utility functions
 
-// Returns a themed emoji based on the recipe name
-/*function getRecipeEmoji(name) {
-    if (!name) return '🍽️';
-    const n = name.toLowerCase();
-    if (n.includes('bantha') || n.includes('stew'))         return '🏜️';
-    if (n.includes('coruscant') || n.includes('noodle'))    return '🏙️';
-    if (n.includes('dagobah') || n.includes('soup'))        return '🌿';
-    if (n.includes('ewok') || n.includes('forest'))         return '🌲';
-    if (n.includes('mandalorian') || n.includes('brisket')) return '⚔️';
-    return '🍽️';
-}*/
 
 // Returns a background color for the recipe card banner
 function getRecipeBannerColor(name) {
@@ -20,15 +9,7 @@ function getRecipeBannerColor(name) {
     return '#00D4FF08';
 }
 
-// Returns the emoji for a given Star Wars planet
-/*function getPlanetEmoji(p) {
-    const map = {
-        Tatooine: '🏜️', Hoth: '❄️', Dagobah: '🌿',
-        Coruscant: '🏙️', Endor: '🌲', Naboo: '💧',
-        Mustafar: '🌋', Alderaan: '💫'
-    };
-    return map[p] || '🪐';
-}*/
+
 
 // Returns a background color for the avatar based on the user's first name
 function getAvatarBg(name) {

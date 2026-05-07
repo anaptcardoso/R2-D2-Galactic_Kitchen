@@ -86,6 +86,15 @@ function filterProfiles(search) {
 
 function renderProfileCards(users) {
     const list = document.getElementById('profiles-list');
+    const avatarImages = {
+    'Luke':   'js/assets/luke.jpg',
+    'Leia':   'js/assets/leia.jpg',
+    'Han':    'js/assets/han_solo.jpg',
+    'Ana':    'js/assets/ana_cardoso.jpg',
+    'Ines':    'js/assets/ines_azevedo.jpg',
+    'Pedro':    'js/assets/saldanha_pedro.jpg',
+    'Yasmin':    'js/assets/yasmin_natasha.jpeg',
+};
 
     if (!users || users.length === 0) {
         list.innerHTML = `<p class="empty">No profiles found.</p>`;
@@ -96,10 +105,13 @@ function renderProfileCards(users) {
         <div class="profile-card">
 
             <div class="profile-card__avatar" style="
-                background: ${getAvatarBg(user.firstName)};
                 border-color: ${getAvatarBorder(user.firstName)};
+                overflow: hidden; padding: 0;
             ">
-                ${(user.firstName?.[0] || '?') + (user.lastName?.[0] || '')}
+                ${avatarImages[user.firstName] 
+                    ? `<img src="${avatarImages[user.firstName]}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`
+                    : (user.firstName?.[0] || '?') + (user.lastName?.[0] || '')
+                }
             </div>
 
             <div class="profile-card__info">
@@ -117,7 +129,7 @@ function renderProfileCards(users) {
 
                 <div class="profile-card__stats">
                     ${user.weight       ? `<span> ${user.weight} kg</span>`             : ''}
-                    ${user.activityLevel? `<span>⚡ ${user.activityLevel}</span>`          : ''}
+                    ${user.activityLevel? `<span> ${user.activityLevel}</span>`          : ''}
                     ${user.dailyCalories? `<span> ${user.dailyCalories} kcal/day</span>` : ''}
                 </div>
             </div>
