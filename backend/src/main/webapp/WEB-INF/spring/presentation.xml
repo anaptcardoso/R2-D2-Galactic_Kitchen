@@ -3,25 +3,27 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/mvc
            http://www.springframework.org/schema/mvc/spring-mvc.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd">
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- Activa os @RestController, @GetMapping, etc. -->
     <mvc:annotation-driven/>
 
-    <!-- Procura controllers no package org -->
     <context:component-scan base-package="org"/>
 
     <context:property-placeholder
             location="classpath:config.properties"
             ignore-unresolvable="true"/>
 
-    <!-- CORS — permite que o frontend (SPA) comunique com o backend -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
     <mvc:cors>
         <mvc:mapping path="/api/**"
                      allowed-origins="http://127.0.0.1:5500,http://localhost:5500"

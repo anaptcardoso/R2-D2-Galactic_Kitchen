@@ -123,7 +123,10 @@ function renderProfileCards(users) {
             </div>
 
             <button class="btn btn--outline" onclick="navigate('profile', { userId: ${user.id} })">
-                Edit ↗
+                Edit
+            </button>
+            <button class="btn btn--primary" onclick="loadCurrentUser(${user.id})">
+                Switch
             </button>
 
         </div>
