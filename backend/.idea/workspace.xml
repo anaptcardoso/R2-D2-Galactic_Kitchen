@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4eb1314c-ce7e-40ca-8691-49992be22593" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/factories/UserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/factories/UserFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/r2d2_seeds.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/r2d2_seeds.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/js/pages/plan.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/pages/plan.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/js/pages/profiles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/pages/profiles.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

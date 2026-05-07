@@ -121,6 +121,8 @@ function renderProfileCards(users) {
                 </div>
 
                 <p class="profile-card__email">${user.email || ''} ${user.country ? '· ' + user.country : ''}</p>
+                
+
 
                 <div class="profile-card__tags">
                     ${user.dietType ? `<span class="tag">${formatDiet(user.dietType)}</span>` : ''}
@@ -128,10 +130,15 @@ function renderProfileCards(users) {
                 </div>
 
                 <div class="profile-card__stats">
-                    ${user.weight       ? `<span> ${user.weight} kg</span>`             : ''}
-                    ${user.activityLevel? `<span> ${user.activityLevel}</span>`          : ''}
+                    ${user.nutritionDTO?.weight       ? `<span> ${user.nutritionDTO.weight} kg</span>`             : ''}
+                    ${user.nutritionDTO?.height        ? `<span>${user.nutritionDTO.height} cm</span>`        : ''}
+                    ${user.nutritionDTO?.activityLevel? `<span> ${user.nutritionDTO.activityLevel}</span>`          : ''}
                     ${user.dailyCalories? `<span> ${user.dailyCalories} kcal/day</span>` : ''}
                 </div>
+                ${user.bio       ? `<p class="profile-card__bio"><em>"${user.bio}"</em></p>`           : ''}
+                ${user.nutritionDTO.goal      ? `<p class="profile-card__goal"><strong>Goal:</strong> ${user.nutritionDTO.goal}</p>` : ''}
+                ${user.nutritionDTO?.dietPreferences? `<p><strong>Diet:</strong> ${user.nutritionDTO.dietPreferences.join(', ')}</p>` : ''}
+                ${user.nutritionDTO.allergies ? `<p class="profile-card__allergies"><strong>Allergies:</strong> ${user.nutritionDTO.allergies}</p>` : ''}
             </div>
 
             <button class="btn btn--outline" onclick="navigate('profile', { userId: ${user.id} })">
