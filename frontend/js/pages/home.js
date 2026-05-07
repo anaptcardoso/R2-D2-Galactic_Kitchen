@@ -1,7 +1,4 @@
 // home.js — Renders the home page of the SPA
-console.log("NOVO HOME.JS CARREGADO");
-alert("NOVO HOME.JS CARREGADO");
-
 
 async function renderHome() {
     const app = document.getElementById('main-content');
