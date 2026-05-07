@@ -135,13 +135,13 @@ public class UserFactory {
     private static UserProfile createYasmin() {
         UserProfile user = new UserProfile();
         user.setFirstName("Yasmin");
-        user.setLastName("Natasha");
-        user.setEmail("yasmin@email.com");//altera
+        user.setLastName("Pires");
+        user.setEmail("yasmin17@email.com");//altera
         user.setPhone("912566280");
-        user.setDateOfBirth(LocalDate.of(29, 7, 13));//altera
+        user.setDateOfBirth(LocalDate.of(99, 6, 12));//altera
         user.setCountry("Portugal");
         user.setNutritionProfile(new NutritionProfile(
-                85.0, 180.0, "Survive another day", "moderate",//altera
+                65.0, 170.0, "Survive another day", "moderate",//altera
                 Set.of(DietType.OMNIVORE), null));
         user.setBio("https://github.com/yasminnatasha17-blip");
         return user;
