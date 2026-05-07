@@ -146,12 +146,12 @@ function initPlan() {
       return;
     }
 
-    result.textContent = 'Adding recipe to plan... ⏳';
+    result.textContent = 'Adding recipe to plan...';
     result.classList.remove('hidden');
 
     try {
       await PlanAPI.addRecipe(Number(planId), Number(recipeId));
-      result.textContent = '✅ Recipe added to plan successfully!';
+      result.textContent = 'Recipe added to plan successfully!';
     } catch (e) {
       result.textContent = `Error: ${e.message}`;
     }
