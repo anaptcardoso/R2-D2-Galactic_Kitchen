@@ -1,8 +1,8 @@
 // profile.js — Renderiza o perfil individual de um utilizador
 
 async function renderProfile(params = {}) {
-  
-  // se vier com new: true mostra formulário vazio
+
+    // se vier com new: true mostra formulário vazio
     if (params.new) {
         renderNewProfile();
         return;
@@ -92,11 +92,11 @@ async function renderProfile(params = {}) {
                 <div class="form-group">
                     <label>Activity level</label>
                     <select id="input-activity">
-                        <option value="sedentary"  ${user.activityLevel === 'sedentary'  ? 'selected' : ''}>Sedentary</option>
-                        <option value="light"      ${user.activityLevel === 'light'      ? 'selected' : ''}>Light</option>
-                        <option value="moderate"   ${user.activityLevel === 'moderate'   ? 'selected' : ''}>Moderate</option>
-                        <option value="active"     ${user.activityLevel === 'active'     ? 'selected' : ''}>Active</option>
-                        <option value="very active"${user.activityLevel === 'very active'? 'selected' : ''}>Very active</option>
+                        <option value="sedentary"   ${user.activityLevel === 'sedentary'   ? 'selected' : ''}>Sedentary</option>
+                        <option value="light"       ${user.activityLevel === 'light'       ? 'selected' : ''}>Light</option>
+                        <option value="moderate"    ${user.activityLevel === 'moderate'    ? 'selected' : ''}>Moderate</option>
+                        <option value="active"      ${user.activityLevel === 'active'      ? 'selected' : ''}>Active</option>
+                        <option value="very active" ${user.activityLevel === 'very active' ? 'selected' : ''}>Very active</option>
                     </select>
                 </div>
 
@@ -119,9 +119,10 @@ async function renderProfile(params = {}) {
                 <button onclick="navigate('profiles')">Back to profiles</button>
             </div>
         `;
-
     }
 }
+
+// ── Eventos do perfil existente ───────────────────────────────────────────────
 
 function initProfile(userId, originalUser) {
 
@@ -129,7 +130,6 @@ function initProfile(userId, originalUser) {
     document.getElementById('btn-save').addEventListener('click', async () => {
         const msg = document.getElementById('profile-msg');
 
-        // constrói o DTO com os valores do formulário
         const dto = {
             firstName:     document.getElementById('input-firstname').value,
             lastName:      document.getElementById('input-lastname').value,
@@ -143,7 +143,6 @@ function initProfile(userId, originalUser) {
             activityLevel: document.getElementById('input-activity').value,
         };
 
-        // valida os campos obrigatórios
         if (!dto.firstName || !dto.email) {
             msg.textContent = 'First name and email are required.';
             msg.classList.remove('hidden');
@@ -153,7 +152,6 @@ function initProfile(userId, originalUser) {
         try {
             await UserAPI.update(userId, dto);
 
-            // actualiza o utilizador activo se for o mesmo
             if (App.currentUser?.id === userId) {
                 await loadCurrentUser(userId);
             }
@@ -178,8 +176,10 @@ function initProfile(userId, originalUser) {
             alert(`Error deleting profile: ${e.message}`);
         }
     });
+}
 
-    // renderiza um formulário vazio para criar um novo utilizador
+// ── Novo perfil ───────────────────────────────────────────────────────────────
+
 function renderNewProfile() {
     const app = document.getElementById('main-content');
 
@@ -265,7 +265,6 @@ function renderNewProfile() {
         </section>
     `;
 
-    // inicializa o evento de criação
     initNewProfile();
 }
 
@@ -275,7 +274,6 @@ function initNewProfile() {
     document.getElementById('btn-save').addEventListener('click', async () => {
         const msg = document.getElementById('profile-msg');
 
-        // constrói o DTO com os valores do formulário
         const dto = {
             firstName:     document.getElementById('input-firstname').value,
             lastName:      document.getElementById('input-lastname').value,
@@ -289,7 +287,6 @@ function initNewProfile() {
             activityLevel: document.getElementById('input-activity').value,
         };
 
-        // valida os campos obrigatórios
         if (!dto.firstName || !dto.email) {
             msg.textContent = 'First name and email are required.';
             msg.classList.remove('hidden');
@@ -297,13 +294,11 @@ function initNewProfile() {
         }
 
         try {
-            // regista o novo utilizador no backend
             const newUser = await UserAPI.register(dto);
 
             msg.textContent = `Profile created successfully! Welcome, ${dto.firstName}!`;
             msg.classList.remove('hidden');
 
-            // após 1.5 segundos navega para o perfil criado
             setTimeout(() => navigate('profile', { userId: newUser.id }), 1500);
 
         } catch (e) {
@@ -311,5 +306,4 @@ function initNewProfile() {
             msg.classList.remove('hidden');
         }
     });
-}
 }
