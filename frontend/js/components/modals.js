@@ -70,7 +70,7 @@ function openPlanetModal() {
             <div class="planet-grid">
                 ${planets.map(planet =>
                     `<button class="planet-btn" onclick="generatePlanetRecipe('${planet}')">
-                        ${getPlanetEmoji(planet)} ${planet.toUpperCase()}
+                        ${planet.toUpperCase()}
                     </button>`
                 ).join('')}
             </div>
