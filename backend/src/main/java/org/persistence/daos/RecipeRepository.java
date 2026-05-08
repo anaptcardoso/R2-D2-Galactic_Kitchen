@@ -40,6 +40,7 @@ public class RecipeRepository {
  public Recipe save(Recipe recipe) {
   if (recipe.getId() == 0) {
    em.persist(recipe);
+   em.flush();
    return recipe;
   }
   return em.merge(recipe);

@@ -226,13 +226,12 @@ function filterAndRenderRecipes() {
  */
 function renderRecipeCard(recipe) {
     // Serializes the recipe so it can be safely used inside the onclick attribute.
-    const safeRecipe = JSON.stringify(recipe).replace(/"/g, '&quot;');
-
+    
     const difficulty = recipe.difficultyLevel || 'EASY';
     const diffClass = difficulty.toLowerCase();
 
     return `
-        <article class="recipe-card catalogue-recipe-card" onclick="openRecipeModal(${safeRecipe})">
+        <article class="recipe-card catalogue-recipe-card" onclick="openRecipeModal(${recipe.id})">
             <div class="recipe-banner catalogue-recipe-banner">
                 <div class="recipe-line-icon cyan-icon">
                     ${getRecipeIcon(recipe.name)}

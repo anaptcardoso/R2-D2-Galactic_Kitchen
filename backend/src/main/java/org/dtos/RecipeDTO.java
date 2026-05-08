@@ -110,7 +110,7 @@ public class RecipeDTO {
 
     public void setMealType(MealType mealType) { this.mealType = mealType; }
 
-    public void setIngredients(List<IngredientDTO> ingredients) { this.ingredient = ingredient; }
+    public void setIngredients(List<IngredientDTO> ingredients) { this.ingredient = ingredients; }
 
     public void setDietTypes(Set<DietType> dietTypes) { this.dietTypes = dietTypes; }
 

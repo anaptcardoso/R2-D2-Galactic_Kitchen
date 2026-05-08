@@ -1,14 +1,6 @@
 package org.model.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import org.model.enums.DietType;
 import org.model.enums.DifficultyLevel;
@@ -39,13 +31,13 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     private MealType mealType;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ingredient> ingredients = new ArrayList<>();
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<DietType> dietTypes = new HashSet<>();
-
+    @Column(columnDefinition = "TEXT")
     private String steps;
     private String tip;
 
