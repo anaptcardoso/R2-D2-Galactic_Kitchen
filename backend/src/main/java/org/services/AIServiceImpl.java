@@ -21,16 +21,16 @@ public class AIServiceImpl implements AIService {
     @Value("${groq.api.key}")
     private String apiKey;
 
-    // Groq API URL — compatível com o formato OpenAI
+    // Groq API URL — compatible with the OpenAI format
     private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
     // SWAPI URL
     private static final String SWAPI_URL = "https://swapi.dev/api";
 
-    // Modelo Groq — gratuito e rápido
+    // Groq model
     private static final String MODEL = "llama-3.1-8b-instant";
 
-    // System prompt do R2-D2
+    // R2-D2 system prompt
     private static final String R2D2_SYSTEM = """
             You are R2-D2, reimagined as a culinary chef droid from the Star Wars universe.
             You are helpful, friendly, and occasionally make Star Wars references.
@@ -40,7 +40,7 @@ public class AIServiceImpl implements AIService {
             Beep boop!
             """;
 
-    // Texto das receitas extraído do PDF — carregado uma vez ao arrancar
+    // Recipe text extracted from the PDF — loaded once when the app starts
     private String recipesContext;
 
     public AIServiceImpl() {
@@ -105,7 +105,7 @@ public class AIServiceImpl implements AIService {
         return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
     }
 
-    // ── Private methods ────────────────────────────────────────────────────────
+    // Private methods
 
     private String loadRecipesFromPDF() {
         try {
@@ -170,7 +170,7 @@ public class AIServiceImpl implements AIService {
         return response.body();
     }
 
-    // Chama a API do Groq — formato OpenAI Chat Completions
+    // Calls the Groq API — OpenAI Chat Completions format
     private String callGroq(String userMessage, String systemPrompt) throws Exception {
         String safeSystem = systemPrompt.replace("\"", "\\\"").replace("\n", "\\n");
         String safeMessage = userMessage.replace("\"", "\\\"").replace("\n", "\\n");
@@ -201,25 +201,25 @@ public class AIServiceImpl implements AIService {
         return extractText(response.body());
     }
 
-    // Extrai o texto da resposta JSON do Groq (formato OpenAI)
+    // Extracts the text from the Groq JSON response (OpenAI format)
     // choices[0].message.content
     private String extractText(String responseBody) {
         try {
-            // Procura o padrão "content": seguido de valor
+            // Searches for the "content": pattern followed by a value
             int marker = responseBody.indexOf("\"content\":");
             if (marker < 0) {
                 System.err.println("Groq response sem content: " + responseBody);
                 return "I'm sorry, I was unable to process your request. Please try again.";
             }
 
-            // Avança para depois de "content":
+            // Moves forward to after "content":
             int start = marker + 10;
-            // Salta espaços
+            // Skips spaces
             while (start < responseBody.length() && responseBody.charAt(start) == ' ') start++;
-            // Salta a aspa de abertura
+            // Skips the opening quotation mark
             if (responseBody.charAt(start) == '"') start++;
 
-            // Reconstrói o texto respeitando os escapes
+            // Rebuilds the text while respecting escape characters
             StringBuilder sb = new StringBuilder();
             while (start < responseBody.length()) {
                 char c = responseBody.charAt(start);
@@ -230,7 +230,7 @@ public class AIServiceImpl implements AIService {
                     if (next == '\\') { sb.append('\\'); start += 2; continue; }
                     if (next == 't') { sb.append('\t'); start += 2; continue; }
                 } else if (c == '"') {
-                    break; // fim do conteúdo
+                    break; // End of the content
                 }
                 sb.append(c);
                 start++;

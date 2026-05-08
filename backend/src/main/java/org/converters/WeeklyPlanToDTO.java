@@ -23,7 +23,7 @@ public class WeeklyPlanToDTO extends AbstractConverter<WeeklyPlan, WeeklyPlanDTO
                 plan.getWeekStart(),
                 plan.getWeekEnd(),
                 recipeDTOS,
-                null //shoppingList gerada separadamente pelo PlanService
+                null // Shopping list generated separately by PlanService
         );
     }
 }

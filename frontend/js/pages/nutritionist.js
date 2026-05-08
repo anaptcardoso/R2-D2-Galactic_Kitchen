@@ -25,7 +25,7 @@ async function renderNutritionist(params = {}) {
             <div class="nutritionist-layout">
                 <aside class="nutri-sidebar">
 
-                    <!-- Perfil nutricional do utilizador -->
+                    <!-- User nutritional profile -->
                     <div class="nutri-profile-card">
                         <p class="section-label">User Profile</p>
                         <div id="nutri-profile-data">
@@ -33,7 +33,7 @@ async function renderNutritionist(params = {}) {
                         </div>
                     </div>
 
-                    <!-- Botões de ação rápida -->
+                    <!-- Quick action buttons -->
                     <div class="quick-actions">
                         <p class="section-label">Quick actions</p>
                         <button class="quick-btn" data-quick="Analyze my food this week">
@@ -51,7 +51,7 @@ async function renderNutritionist(params = {}) {
                     </div>
                 </aside>
 
-                <!-- Área de chat com o nutricionista IA -->
+                <!-- Chat area with the AI nutritionist -->
                 <div class="nutri-chat">
                     <section class="chat-messages-area" id="chat-messages" aria-live="polite">
                         <article class="msg">
@@ -137,14 +137,14 @@ async function renderNutritionist(params = {}) {
         </section>
     `);
 
-    // carrega o perfil nutricional do utilizador na sidebar
+    // Loads the user's nutritional profile in the sidebar
     loadNutritionProfile(userId);
 
-    // inicializa todos os event listeners
+    // Initializes all event listeners
     initNutritionistEvents(userId);
 }
 
-// Busca o perfil nutricional do utilizador e popula a sidebar
+// Fetches the user's nutritional profile and fills the sidebar
 async function loadNutritionProfile(userId) {
     try {
         const nutrition = await UserAPI.getNutrition(userId);
@@ -172,25 +172,25 @@ async function loadNutritionProfile(userId) {
 
 // ── Event listeners ───────────────────────────────────────────────────────────
 
-// Configura todos os listeners de tabs, chat e formulários
+// Configures all tab, chat, and form listeners
 function initNutritionistEvents(userId) {
 
-    // ── Navegação entre tabs ──────────────────────────────────
+    // ── Tab navigation ────────────────────────────────────────
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            // desativa todas as tabs
+            // Deactivates all tabs
             document.querySelectorAll('.tab-btn')
                 .forEach(button => button.classList.remove('active'));
             document.querySelectorAll('.tab-content')
                 .forEach(content => content.classList.add('hidden'));
-            // ativa a tab clicada
+            // Activates the clicked tab
             btn.classList.add('active');
             document.getElementById(`tab-${btn.dataset.tab}`)
                 .classList.remove('hidden');
         });
     });
 
-    // ── Botões de ação rápida ─────────────────────────────────
+    // ── Quick action buttons ──────────────────────────────────
     document.querySelectorAll('.quick-btn[data-quick]').forEach(btn => {
         btn.addEventListener('click', () => {
             const input = document.getElementById('consult-input');
@@ -204,11 +204,11 @@ function initNutritionistEvents(userId) {
     // ── Tab 1: Consult ────────────────────────────────────────
     const consultInput = document.getElementById('consult-input');
 
-    // envia ao clicar no botão
+    // Sends when clicking the button
     document.getElementById('consult-send')
         .addEventListener('click', () => sendConsultMessage(userId));
 
-    // envia ao pressionar Enter (sem Shift)
+    // Sends when pressing Enter (without Shift)
     consultInput.addEventListener('keydown', event => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
@@ -226,7 +226,7 @@ function initNutritionistEvents(userId) {
         result.classList.remove('hidden');
 
         try {
-            // envia como ChatMessageDTO — formato esperado pelo backend
+            // Sends as ChatMessageDTO — format expected by the backend
             const response = await NutritionistAPI.analyseFood({
                 role:    'user',
                 message: food,
@@ -249,7 +249,7 @@ function initNutritionistEvents(userId) {
         result.classList.remove('hidden');
 
         try {
-            // constrói um NutritionDTO com os valores do formulário
+            // Builds a NutritionDTO with the form values
             const dietValue = document.getElementById('diet-select').value;
             const response  = await NutritionistAPI.suggestMealPlan({
                 weight:          null,
@@ -271,18 +271,18 @@ function initNutritionistEvents(userId) {
 
 // ── Chat Helpers ──────────────────────────────────────────────────────────────
 
-// Envia a mensagem de consulta à API do nutricionista e mostra a resposta
+// Sends the consult message to the nutritionist API and shows the response
 async function sendConsultMessage(userId) {
     const input    = document.getElementById('consult-input');
     const messages = document.getElementById('chat-messages');
     const message  = input.value.trim();
     if (!message) return;
 
-    // mostra a mensagem do utilizador
+    // Shows the user's message
     appendNutriMessage(messages, 'user', message);
     input.value = '';
 
-    // mostra indicador de loading enquanto aguarda resposta
+    // Shows a loading indicator while waiting for the response
     appendNutriMessage(messages, 'nutri', 'Processing transmission...', 'nutri-loading');
 
     try {
@@ -291,7 +291,7 @@ async function sendConsultMessage(userId) {
             message,
             context: 'nutrition'
         });
-        // remove o loading e mostra a resposta real
+        // Removes the loading message and shows the real response
         document.getElementById('nutri-loading')?.remove();
         appendNutriMessage(messages, 'nutri', response.message || JSON.stringify(response));
     } catch (error) {
@@ -300,7 +300,7 @@ async function sendConsultMessage(userId) {
     }
 }
 
-// Adiciona uma bolha de mensagem estilizada à área de chat
+// Adds a styled message bubble to the chat area
 function appendNutriMessage(container, type, text, id = '') {
     const isNutri      = type === 'nutri';
     const userInitials = getUserInitials();
@@ -319,8 +319,6 @@ function appendNutriMessage(container, type, text, id = '') {
     `;
     container.appendChild(article);
 
-    // scroll automático para a última mensagem
+    // Automatically scrolls to the latest message
     container.scrollTop = container.scrollHeight;
 }
-
-

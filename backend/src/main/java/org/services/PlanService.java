@@ -9,22 +9,22 @@ import java.util.List;
 
 public interface PlanService {
 
-    // Procura todos os planos de um utilizador
+    // Finds all plans for a user
     List<WeeklyPlanDTO> findByUser(int userId) throws PlanNotFoundException, UserNotFoundException;
 
-    // Procura o plano de uma semana específica
+    // Finds the plan for a specific week
     WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart) throws PlanNotFoundException, UserNotFoundException;
 
-    // Cria um plano novo
+    // Creates a new plan
     WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO) throws PlanNotFoundException, UserNotFoundException;
 
-    // Adiciona uma receita ao plano
+    // Adds a recipe to the plan
     WeeklyPlanDTO addRecipe(int planId, int recipeId) throws PlanNotFoundException, RecipeNotFoundException;
 
-    // Remove uma receita do plano
+    // Removes a recipe from the plan
     WeeklyPlanDTO removeRecipe(int planId, int recipeId) throws PlanNotFoundException;
 
-    // Apaga um plano
+    // Deletes a plan
     void delete(int planId) throws PlanNotFoundException;
 }
 

@@ -1,9 +1,9 @@
 // ============================================================
 // plan.js — Weekly Plan page
-// Usa PlanAPI e NutritionistAPI do api.js e App.currentUser
+// Uses PlanAPI and NutritionistAPI from api.js and App.currentUser
 // ============================================================
 
-// Gera o HTML da página e inicializa os eventos
+// Generates the page HTML and initializes the events
 function renderPlan(params = {}) {
   const app = document.getElementById('main-content');
   app.innerHTML = `
@@ -12,21 +12,21 @@ function renderPlan(params = {}) {
             <p>Your AI-powered weekly meal planner</p>
         </div>
 
-        <!-- Navegação entre tabs -->
+        <!-- Tab navigation -->
         <nav class="nutrition-tabs" role="tablist">
             <button class="tab-btn active" data-tab="current" role="tab">Current Plan</button>
             <button class="tab-btn" data-tab="generate" role="tab">Generate Plan</button>
             <button class="tab-btn" data-tab="add" role="tab">Add Recipe</button>
         </nav>
 
-        <!-- TAB: Plano atual do utilizador -->
+        <!-- TAB: User's current plan -->
         <section class="tab-content" id="tab-current" role="tabpanel">
             <ul class="plan-recipe-list" id="current-plan-result">
                 <li class="plan-loading-msg">Loading your plan...</li>
             </ul>
         </section>
 
-        <!-- TAB: Gerar plano semanal com IA -->
+        <!-- TAB: Generate weekly plan with AI -->
         <section class="tab-content hidden" id="tab-generate" role="tabpanel">
             <section class="chat-messages-area" id="plan-messages" aria-live="polite">
                 <article class="chat-msg bot">
@@ -41,7 +41,7 @@ function renderPlan(params = {}) {
             </div>
         </section>
 
-        <!-- TAB: Adicionar receita ao plano existente -->
+        <!-- TAB: Add recipe to existing plan -->
         <section class="tab-content hidden" id="tab-add" role="tabpanel">
             <form class="nutrition-form" onsubmit="return false;">
                 <input type="number" id="plan-id-input"
@@ -57,10 +57,10 @@ function renderPlan(params = {}) {
   initPlan();
 }
 
-// Inicializa eventos e chamadas à API
+// Initializes events and API calls
 function initPlan() {
 
-  // ── Navegação entre tabs ──────────────────────────────────
+  // ── Tab navigation ────────────────────────────────────────
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn')
@@ -73,7 +73,7 @@ function initPlan() {
     });
   });
 
-  // ── Tab 1: Carrega o plano atual do utilizador ────────────
+  // ── Tab 1: Loads the user's current plan ──────────────────
   loadCurrentPlan();
 
   async function loadCurrentPlan() {
@@ -82,7 +82,7 @@ function initPlan() {
       const userId = App.currentUser?.id || 1;
       const plans  = await PlanAPI.getByUser(userId);
 
-      // verifica se existem planos para o utilizador
+      // Checks if there are plans for the user
       if (!plans || plans.length === 0) {
         list.innerHTML = `
                     <li class="plan-empty-msg">
@@ -92,7 +92,7 @@ function initPlan() {
         return;
       }
 
-      // mostra o plano mais recente
+      // Shows the most recent plan
       const latest = plans[plans.length - 1];
       list.innerHTML = `
                 <li class="plan-week-header">
@@ -105,7 +105,7 @@ function initPlan() {
     }
   }
 
-  // ── Tab 2: Gerar plano semanal via IA ─────────────────────
+  // ── Tab 2: Generate weekly plan through AI ────────────────
   const planMessages = document.getElementById('plan-messages');
   const planInput    = document.getElementById('plan-input');
 
@@ -133,13 +133,13 @@ function initPlan() {
     if (e.key === 'Enter') sendPlanRequest();
   });
 
-  // ── Tab 3: Adicionar receita a um plano existente ─────────
+  // ── Tab 3: Add recipe to an existing plan ─────────────────
   document.getElementById('add-recipe-btn').addEventListener('click', async () => {
     const planId   = document.getElementById('plan-id-input').value;
     const recipeId = document.getElementById('recipe-id-input').value;
     const result   = document.getElementById('add-result');
 
-    // valida se os campos estão preenchidos
+    // Validates if the fields are filled in
     if (!planId || !recipeId) {
       result.textContent = 'Please fill in both Plan ID and Recipe ID.';
       result.classList.remove('hidden');
@@ -161,9 +161,9 @@ function initPlan() {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 /**
- * Renderiza a lista de receitas de um plano semanal
- * @param {Array} recipes - lista de receitas do plano
- * @returns {string} - HTML semântico com as receitas em lista
+ * Renders the list of recipes in a weekly plan
+ * @param {Array} recipes - list of recipes in the plan
+ * @returns {string} - semantic HTML with the recipes as a list
  */
 function renderPlanRecipes(recipes) {
   if (!recipes || recipes.length === 0) {
@@ -178,11 +178,11 @@ function renderPlanRecipes(recipes) {
 }
 
 /**
- * Adiciona uma mensagem ao chat do plano semanal
- * @param {HTMLElement} container - contentor das mensagens
+ * Adds a message to the weekly plan chat
+ * @param {HTMLElement} container - message container
  * @param {string}      type      - 'user' | 'bot'
- * @param {string}      text      - texto da mensagem
- * @param {string}      id        - id opcional para remoção posterior
+ * @param {string}      text      - message text
+ * @param {string}      id        - optional ID for later removal
  */
 function appendPlanMessage(container, type, text, id = '') {
   const article = document.createElement('article');

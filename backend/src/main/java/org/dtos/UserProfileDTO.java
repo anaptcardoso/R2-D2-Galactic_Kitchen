@@ -1,13 +1,10 @@
 package org.dtos;
 
-import org.model.enums.DietType;
-
 import java.time.LocalDate;
-import java.util.List;
 
 public class UserProfileDTO {
 
-    //personal data
+    // Personal data
     private int id;
     private String firstName;
     private String lastName;
@@ -16,10 +13,10 @@ public class UserProfileDTO {
     private LocalDate dateOfBirth;
     private String country;
 
-    // dados nutricionais
+    // Nutritional data
     private NutritionDTO nutritionDTO;
 
-    //personal note
+    // Personal note
     private String bio;
 
 

@@ -5,16 +5,16 @@ import org.dtos.NutritionDTO;
 
 public interface NutritionistService {
 
-    //Consulta geral com o nutricionista- resposta personaçizada com o perfil do utilizador
+    // General consultation with the nutritionist — personalized response using the user's profile
     ChatMessageDTO consult(ChatMessageDTO message, int userId) throws Exception;
 
-    //Analisa alimentos e devolve informação nutricional detalhada
+    // Analyses food items and returns detailed nutritional information
     ChatMessageDTO analyseFood(ChatMessageDTO message) throws Exception;
 
-    //Sugere um plano alimentar personalizado com base no perfil do utilizador
+    // Suggests a personalized meal plan based on the user's profile
     ChatMessageDTO suggestMealPlan(NutritionDTO nutritionProfile) throws Exception;
 
-    //Avalia se uma receita é adequada para o perfil nutricional do utilizador
+    // Evaluates whether a recipe is suitable for the user's nutritional profile
     ChatMessageDTO evaluateRecipe(int recipeId, int userId) throws Exception;
 
 }

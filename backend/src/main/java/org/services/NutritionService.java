@@ -9,21 +9,21 @@ import java.util.List;
 
 public interface NutritionService {
 
-    // Devolve a info nutricional de uma receita específica
+    // Returns the nutritional information of a specific recipe
     RecipeDTO getNutritionByRecipe(int recipeId);
 
-    // Calcula o total de calorias/macros de várias receitas
+    // Calculates the total calories/macros of several recipes
     RecipeDTO getTotalNutrition(List<Integer> recipeIds);
 
-    // Filtra receitas abaixo de X calorias
+    // Filters recipes below X calories
     List<RecipeDTO> getRecipesBelowCalories(int maxCalories);
 
-    // Analisa alimentos via AI — usado pelo NutritionController
+    // Analyses food items using AI — used by NutritionController
     ChatMessageDTO analyse(ChatMessageDTO message) throws Exception;
 
-    // Devolve perfil nutricional do utilizador — usado pelo NutritionController
+    // Returns the user's nutritional profile — used by NutritionController
     NutritionDTO findByUser(int userId) throws UserNotFoundException;
 
-    // Atualiza perfil nutricional do utilizador — usado pelo NutritionController
+    // Updates the user's nutritional profile — used by NutritionController
     NutritionDTO update(int userId, NutritionDTO nutritionDTO) throws UserNotFoundException;
 }

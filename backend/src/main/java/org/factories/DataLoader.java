@@ -11,17 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-// @Component — o Spring gere esta classe automaticamente
-// ApplicationListener<ContextRefreshedEvent> — este código corre
-// automaticamente quando a app arranca!
+// @Component — Spring manages this class automatically
+// ApplicationListener<ContextRefreshedEvent> — this code runs
+// automatically when the app starts!
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-    // Precisamos dos repositories para guardar os dados na BD
+    // We need the repositories to save the data in the database
     private final RecipeRepository recipeRepository;
     private final UserProfileRepository userProfileRepository;
 
-    // Constructor injection — o Spring injeta os repositories automaticamente
+    // Constructor injection — Spring injects the repositories automatically
     public DataLoader(RecipeRepository recipeRepository,
                       UserProfileRepository userProfileRepository) {
         this.recipeRepository = recipeRepository;
@@ -29,26 +29,26 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     }
 
 
-    // onApplicationEvent — corre quando a app arranca
+    // onApplicationEvent — runs when the app starts
     @Transactional
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        // Só carrega receitas se a BD estiver vazia
-        // Assim não duplica dados cada vez que a app reinicia!
+        // Only loads recipes if the database is empty
+        // This prevents duplicate data every time the app restarts!
         if (recipeRepository.count() == 0) {
             loadRecipes();
         }
 
-        // Só carrega utilizadores se não houver nenhum ainda
-        // Depois de te registares, os teus dados ficam ao lado
-        // do Luke, Leia e Han!
+        // Only loads users if there are none yet
+        // After you register, your data will be next to
+        // Luke, Leia and Han!
         if (userProfileRepository.count() == 0) {
             loadUsers();
         }
     }
 
 
-    // loadRecipes — guarda as receitas Star Wars na BD
+    // loadRecipes — saves the Star Wars recipes in the database
     private void loadRecipes() {
         List<Recipe> recipes = RecipeFactory.createSampleRecipes();
         recipeRepository.saveAll(recipes);
@@ -56,7 +56,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     }
 
 
-    // loadUsers — guarda os utilizadores de demonstração na BD
+    // loadUsers — saves the demo users in the database
     private void loadUsers() {
         List<UserProfile> users = UserFactory.createSampleUsers();
         userProfileRepository.saveAll(users);

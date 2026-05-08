@@ -4,16 +4,16 @@ import org.dtos.ChatMessageDTO;
 
 public interface AIService {
 
-    // Responde a uma mensagem geral do utilizador - chat normal com o R2-D2 ChefBot
+    // Responds to a general user message — normal chat with the R2-D2 ChefBot
     ChatMessageDTO chat(ChatMessageDTO message) throws Exception;
 
-    // Sugere receitas com base nos ingredientes ou preferências do utilizador
+    // Suggests recipes based on the user's ingredients or preferences
     ChatMessageDTO suggestRecipes(ChatMessageDTO message) throws Exception;
 
-    // Cria receita inspirada num planeta Star Wars
+    // Creates a recipe inspired by a Star Wars planet
     ChatMessageDTO recipeFromPlanet(String planetName) throws Exception;
 
-    // Analisa uma questão nutricional com o perfil do utilizador
+    // Analyses a nutritional question using the user's profile
     ChatMessageDTO analyse(ChatMessageDTO message, String userGoal, String userDiet,
                            String userAllergies, String userActivityLevel) throws Exception;
 }

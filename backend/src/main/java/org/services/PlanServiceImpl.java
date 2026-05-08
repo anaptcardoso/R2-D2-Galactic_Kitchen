@@ -37,7 +37,7 @@ public class PlanServiceImpl implements PlanService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    // findByUser — todos os planos de um utilizador
+    // findByUser — all plans for a user
     @Override
     public List<WeeklyPlanDTO> findByUser(int userId) throws PlanNotFoundException, UserNotFoundException {
         UserProfile user = userProfileRepository.findById(userId)
@@ -48,7 +48,7 @@ public class PlanServiceImpl implements PlanService {
                 .toList();
     }
 
-    // findByUserAndWeek — plano de uma semana específica
+    // findByUserAndWeek — plan for a specific week
     @Override
     public WeeklyPlanDTO findByUserAndWeek(int userId, String weekStart) throws PlanNotFoundException, UserNotFoundException {
         UserProfile user = userProfileRepository.findById(userId)
@@ -59,7 +59,7 @@ public class PlanServiceImpl implements PlanService {
         return toDTO(plan);
     }
 
-    // create — cria um plano novo
+    // create — creates a new plan
     @Transactional
     @Override
     public WeeklyPlanDTO create(WeeklyPlanDTO weeklyPlanDTO) throws PlanNotFoundException, UserNotFoundException {
@@ -76,7 +76,7 @@ public class PlanServiceImpl implements PlanService {
         return toDTO(saved);
     }
 
-    // addRecipe — adiciona uma receita ao plano
+    // addRecipe — adds a recipe to the plan
     @Transactional
     @Override
     public WeeklyPlanDTO addRecipe(int planId, int recipeId) throws PlanNotFoundException, RecipeNotFoundException {
@@ -91,7 +91,7 @@ public class PlanServiceImpl implements PlanService {
         return toDTO(updated);
     }
 
-    // removeRecipe — remove uma receita do plano
+    // removeRecipe — removes a recipe from the plan
     @Transactional
     @Override
     public WeeklyPlanDTO removeRecipe(int planId, int recipeId) throws PlanNotFoundException {
@@ -103,7 +103,7 @@ public class PlanServiceImpl implements PlanService {
         return toDTO(updated);
     }
 
-    // delete — apaga um plano
+    // delete — deletes a plan
     @Transactional
     @Override
     public void delete(int planId) throws PlanNotFoundException {
@@ -113,7 +113,7 @@ public class PlanServiceImpl implements PlanService {
         weeklyPlanRepository.deleteById(planId);
     }
 
-    // ── Métodos privados ──────────────────────────────────────────────────────
+    // ── Private methods ──────────────────────────────────────────────────────
 
     private WeeklyPlanDTO toDTO(WeeklyPlan plan) {
         WeeklyPlanDTO dto = new WeeklyPlanDTO();
@@ -128,7 +128,7 @@ public class PlanServiceImpl implements PlanService {
         return dto;
     }
 
-    // Gera a lista de compras a partir das receitas do plano
+    // Generates the shopping list from the plan's recipes
     private List<String> generateShoppingList(List<Recipe> recipes) {
         Map<String, Double> aggregated = new LinkedHashMap<>();
 
@@ -139,13 +139,13 @@ public class PlanServiceImpl implements PlanService {
             });
         }
 
-        // converte o Map para List<String> — ex: "Farinha (g): 350.0"
+        // Converts the Map to List<String> — e.g. "Flour (g): 350.0"
         return aggregated.entrySet().stream()
                 .map(e -> e.getKey() + ": " + e.getValue())
                 .toList();
     }
 
-    // Converte Recipe → RecipeDTO
+    // Converts Recipe → RecipeDTO
     private RecipeDTO recipeToDTO(Recipe recipe) {
         RecipeDTO dto = new RecipeDTO();
         dto.setId(recipe.getId());
@@ -163,7 +163,7 @@ public class PlanServiceImpl implements PlanService {
         dto.setDietTypes(recipe.getDietTypes());
         dto.setTip(recipe.getTip());
 
-        // steps — converte String para List<String> se necessário
+        // steps — converts String to List<String> if needed
         if (recipe.getSteps() != null) {
             dto.setSteps(Arrays.asList(recipe.getSteps().split("\n")));
         }

@@ -3,9 +3,9 @@ package org.dtos;
 import java.time.LocalDateTime;
 
 public class ChatMessageDTO {
-    private String role;//user or assistant
-    private String message;// Conteudo da mensagem
-    private String context; //Contexo opcional , nutrition, recipe, plan
+    private String role;             // user or assistant
+    private String message;          // Message content
+    private String context;          // Optional context: nutrition, recipe, plan
     private LocalDateTime timestamp;
 
     public ChatMessageDTO(){}
@@ -16,12 +16,12 @@ public class ChatMessageDTO {
         this.timestamp = timestamp;
     }
 
-    // Construtor de conveniência — mensagem do utilizador sem timestamp
+    // Convenience constructor — user message without timestamp
     public ChatMessageDTO(String role, String message, String context) {
         this(role, message, context, LocalDateTime.now());
     }
 
-    // Construtor mínimo — só a mensagem
+    // Minimal constructor — only the message
     public ChatMessageDTO(String message) {
         this("user", message, null, LocalDateTime.now());
     }

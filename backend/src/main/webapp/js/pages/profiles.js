@@ -1,4 +1,4 @@
-// profiles.js — Renderiza a lista de perfis de utilizadores
+// profiles.js — Renders the list of user profiles
 
 async function renderProfiles(params = {}) {
     const app = document.getElementById('main-content');
@@ -24,24 +24,24 @@ async function renderProfiles(params = {}) {
         </section>
     `;
 
-    // inicializa a pesquisa
+    // Initializes the search
     initProfiles();
 
-    // vai buscar os utilizadores ao backend
+    // Fetches users from the backend
     await loadProfiles();
 }
 
-// ── Inicialização dos eventos ─────────────────────────────────────────────────
+// ── Event initialization ──────────────────────────────────────────────────────
 
 function initProfiles() {
-    // pesquisa em tempo real ao escrever o nome
+    // Real-time search while typing the name
     document.getElementById('profiles-search').addEventListener('input', (e) => {
         const search = e.target.value.toLowerCase().trim();
         filterProfiles(search);
     });
 }
 
-// ── Carrega os perfis do backend ──────────────────────────────────────────────
+// ── Loads profiles from the backend ───────────────────────────────────────────
 
 async function loadProfiles() {
     const list = document.getElementById('profiles-list');
@@ -49,7 +49,7 @@ async function loadProfiles() {
     try {
         const users = await UserAPI.getAll();
 
-        // guarda os utilizadores para filtrar sem ir ao backend outra vez
+        // Saves users to filter without calling the backend again
         App.users = users;
 
         renderProfileCards(users);
@@ -62,18 +62,18 @@ async function loadProfiles() {
     }
 }
 
-// ── Filtra os perfis pelo nome pesquisado ─────────────────────────────────────
+// ── Filters profiles by the searched name ─────────────────────────────────────
 
 function filterProfiles(search) {
     if (!App.users) return;
 
-    // se não há texto de pesquisa mostra todos
+    // If there is no search text, shows all profiles
     if (!search) {
         renderProfileCards(App.users);
         return;
     }
 
-    // filtra por primeiro ou último nome
+    // Filters by first or last name
     const filtered = App.users.filter(u =>
         (u.firstName || '').toLowerCase().includes(search) ||
         (u.lastName  || '').toLowerCase().includes(search)
@@ -82,19 +82,19 @@ function filterProfiles(search) {
     renderProfileCards(filtered);
 }
 
-// ── Renderiza os cards de perfil ──────────────────────────────────────────────
+// ── Renders the profile cards ─────────────────────────────────────────────────
 
 function renderProfileCards(users) {
     const list = document.getElementById('profiles-list');
     const avatarImages = {
-    'Luke':   'js/assets/luke.jpg',
-    'Leia':   'js/assets/leia.jpg',
-    'Han':    'js/assets/han_solo.jpg',
-    'Ana':    'js/assets/ana_cardoso.jpg',
-    'Ines':    'js/assets/ines_azevedo.jpg',
-    'Pedro':    'js/assets/saldanha_pedro.jpg',
-    'Yasmin':    'js/assets/yasmin_natasha.jpeg',
-};
+        'Luke':   'js/assets/luke.jpg',
+        'Leia':   'js/assets/leia.jpg',
+        'Han':    'js/assets/han_solo.jpg',
+        'Ana':    'js/assets/ana_cardoso.jpg',
+        'Ines':    'js/assets/ines_azevedo.jpg',
+        'Pedro':    'js/assets/saldanha_pedro.jpg',
+        'Yasmin':    'js/assets/yasmin_natasha.jpeg',
+    };
 
     if (!users || users.length === 0) {
         list.innerHTML = `<p class="empty">No profiles found.</p>`;
@@ -108,10 +108,10 @@ function renderProfileCards(users) {
                 border-color: ${getAvatarBorder(user.firstName)};
                 overflow: hidden; padding: 0;
             ">
-                ${avatarImages[user.firstName] 
-                    ? `<img src="${avatarImages[user.firstName]}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`
-                    : (user.firstName?.[0] || '?') + (user.lastName?.[0] || '')
-                }
+                ${avatarImages[user.firstName]
+        ? `<img src="${avatarImages[user.firstName]}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`
+        : (user.firstName?.[0] || '?') + (user.lastName?.[0] || '')
+    }
             </div>
 
             <div class="profile-card__info">
