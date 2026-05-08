@@ -175,8 +175,8 @@ public class UserServiceImpl implements UserService {
                     dto.getNutritionDTO().getHeight(),
                     dto.getNutritionDTO().getGoal(),
                     dto.getNutritionDTO().getActivityLevel(),
-                    dto.getNutritionDTO().getDietPreferences(), // dietPreferences — not available in the current DTO
-                    dto.getNutritionDTO().getAllergies()  // allergies — saved separately
+                    dto.getNutritionDTO().getDietPreferences(),
+                    dto.getNutritionDTO().getAllergies()
             );
             user.setNutritionProfile(nutrition);
         }

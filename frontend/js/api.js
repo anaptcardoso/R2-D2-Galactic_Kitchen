@@ -1,19 +1,10 @@
-// ============================================================
 // api.js — REST API calls to the R2-D2 Galactic Kitchen backend
-// Points to the Spring MVC backend running on Tomcat
-// ============================================================
 
 const API_BASE = 'http://127.0.0.1:8080/R2-D2-Galactic_Kitchen/api';
 
-// ── Generic request helper ────────────────────────────────────────────────────
+// Generic request helper
+// Sends an HTTP request to the backend API
 
-/**
- * Sends an HTTP request to the backend API
- * @param {string} method - HTTP method (GET, POST, PUT, DELETE)
- * @param {string} path   - API path (e.g. '/recipes')
- * @param {object} body   - optional request body for POST/PUT
- * @returns {Promise}     - parsed JSON response or null for 204
- */
 async function request(method, path, body = null) {
     const options = {
         method,
@@ -34,7 +25,7 @@ async function request(method, path, body = null) {
     return response.json();
 }
 
-// ── Recipe endpoints ──────────────────────────────────────────────────────────
+// Recipe endpoints 
 
 const RecipeAPI = {
     // Fetch all recipes
@@ -57,8 +48,7 @@ const RecipeAPI = {
     delete:          (id)             => request('DELETE', `/recipes/${id}`)
 };
 
-// ── User endpoints ────────────────────────────────────────────────────────────
-
+// User endpoints 
 const UserAPI = {
     // Fetch all users
     getAll:          ()               => request('GET',    '/users'),
@@ -78,7 +68,7 @@ const UserAPI = {
     updateNutrition: (id, dto)        => request('PUT',    `/users/${id}/nutrition`, dto)
 };
 
-// ── Weekly plan endpoints ─────────────────────────────────────────────────────
+// Weekly plan endpoints 
 
 const PlanAPI = {
     // Fetch all plans for a given user
@@ -95,7 +85,7 @@ const PlanAPI = {
     delete:       (planId)            => request('DELETE', `/plan/${planId}`)
 };
 
-// ── Nutrition endpoints ───────────────────────────────────────────────────────
+//  Nutrition endpoints 
 
 const NutritionAPI = {
     // Fetch a user's nutritional profile
@@ -112,7 +102,7 @@ const NutritionAPI = {
     getTotal:         (ids)           => request('POST', '/nutrition/total',      ids)
 };
 
-// ── Chat endpoints (R2-D2 ChefBot) ───────────────────────────────────────────
+// Chat endpoints (R2-D2 ChefBot) 
 
 const ChatAPI = {
     // Send a general chat message to R2-D2
@@ -123,7 +113,7 @@ const ChatAPI = {
     nutrition: (dto) => request('POST', '/chat/nutrition', dto)
 };
 
-// ── Nutritionist endpoints ────────────────────────────────────────────────────
+//  Nutritionist endpoints 
 
 const NutritionistAPI = {
     // Send a personalised consultation message (includes user profile context)

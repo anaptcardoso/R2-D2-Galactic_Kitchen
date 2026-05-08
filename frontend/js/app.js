@@ -1,8 +1,7 @@
-// ============================================================
-// app.js — Main routing with History API + dynamic avatar
-// ============================================================
 
-// ── Global state ──────────────────────────────────────────────────────────────
+// app.js — Main routing with History API + dynamic avatar
+
+// Global state 
 const App = {
     currentUser:  null,   // currently active user (UserProfileDTO)
     params:       {},     // current route params (e.g. {userId: 1, edit: true})
@@ -11,7 +10,7 @@ const App = {
     recipeSearch: ''      // active search query
 };
 
-// ── Route map ─────────────────────────────────────────────────────────────────
+//  Route map 
 const routes = {
     'home':         (p) => renderHome(p),
     'recipes':      (p) => renderRecipes(p),
@@ -21,15 +20,10 @@ const routes = {
     'profile':      (p) => renderProfile(p),
 };
 
-// ── navigate() ────────────────────────────────────────────────────────────────
+//  navigate()
+// Navigates to a page using the History API
+// Updates the URL, the active nav link and renders the page
 
-/**
- * Navigates to a page using the History API
- * Updates the URL, the active nav link and renders the page
- * @param {string}  page   - route name (e.g. 'recipes')
- * @param {object}  params - optional route params (e.g. {userId: 1, edit: true})
- * @param {boolean} push   - whether to push a new history entry (default: true)
- */
 function navigate(page, params = {}, push = true) {
     App.params = params;
 
@@ -56,7 +50,7 @@ function navigate(page, params = {}, push = true) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── Initialisation ────────────────────────────────────────────────────────────
+// Initialisation 
 
 document.addEventListener('DOMContentLoaded', async () => {
     setupNav();
@@ -78,7 +72,7 @@ window.addEventListener('popstate', (e) => {
     navigate(state.page || 'home', state.params || {}, false);
 });
 
-// ── Nav setup ─────────────────────────────────────────────────────────────────
+// Nav setup 
 
 // Intercepts nav link clicks to prevent full page reloads
 function setupNav() {
@@ -90,12 +84,10 @@ function setupNav() {
     });
 }
 
-// ── Dynamic avatar ────────────────────────────────────────────────────────────
+// Dynamic avatar
 
-/**
- * Fetches a user by ID, sets them as the active user and updates the avatar
- * @param {number} userId
- */
+// Fetches a user by ID, sets them as the active user and updates the avatar
+
 async function loadCurrentUser(userId) {
     try {
         const user = await UserAPI.getById(userId);
@@ -105,19 +97,15 @@ async function loadCurrentUser(userId) {
     }
 }
 
-/**
- * Sets the active user and updates the topbar avatar
- * @param {object} user - UserProfileDTO
- */
+// Sets the active user and updates the topbar avatar
+
 function setCurrentUser(user) {
     App.currentUser = user;
     updateAvatar(user);
 }
 
-/**
- * Updates the topbar avatar with the user's initials, colour and profile link
- * @param {object} user - UserProfileDTO
- */
+// Updates the topbar avatar with the user's initials, colour and profile link
+
 function updateAvatar(user) {
     const avatar = document.querySelector('.avatar');
     if (!avatar) return;

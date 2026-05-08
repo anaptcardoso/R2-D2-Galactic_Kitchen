@@ -2,7 +2,7 @@
 
 async function renderProfile(params = {}) {
 
-    // if `new: true` is passed, show an empty form
+    // if new: true is passed, show an empty form
     if (params.new) {
         renderNewProfile();
         return;
@@ -122,7 +122,7 @@ async function renderProfile(params = {}) {
     }
 }
 
-// ── Existing profile events ───────────────────────────────────────────────
+// Existing profile events 
 
 function initProfile(userId, originalUser) {
 
@@ -178,7 +178,7 @@ function initProfile(userId, originalUser) {
     });
 }
 
-// ── New profile ─────────────────────────────────────────────────────────────
+//  New profile 
 
 function renderNewProfile() {
     const app = document.getElementById('main-content');
@@ -269,7 +269,7 @@ function renderNewProfile() {
     initNewProfile();
 }
 
-// ── New profile events ────────────────────────────────────────────────────
+//  New profile events 
 
 function initNewProfile() {
     document.getElementById('btn-save').addEventListener('click', async () => {

@@ -113,7 +113,7 @@ public class PlanServiceImpl implements PlanService {
         weeklyPlanRepository.deleteById(planId);
     }
 
-    // ── Private methods ──────────────────────────────────────────────────────
+    // Private methods
 
     private WeeklyPlanDTO toDTO(WeeklyPlan plan) {
         WeeklyPlanDTO dto = new WeeklyPlanDTO();

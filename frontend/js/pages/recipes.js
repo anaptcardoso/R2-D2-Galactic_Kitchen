@@ -1,12 +1,8 @@
 // recipes.js — Renders the recipes page of the SPA
 
-/**
- * Renders the main recipe catalogue page.
- * This function is called by the router when the user navigates to "recipes".
- *
- * @param {Object} params - Optional navigation parameters.
- * @param {number|string} [params.recipeId] - Recipe ID to open directly in the modal.
- */
+// Renders the main recipe catalogue page.
+// This function is called by the router when the user navigates to "recipes".
+
 async function renderRecipes(params = {}) {
     const app = document.getElementById('main-content');
 
@@ -72,15 +68,8 @@ async function renderRecipes(params = {}) {
     await loadRecipes(params);
 }
 
-/**
- * Initializes all interactive events on the recipes page.
- *
- * Events handled:
- * - live search;
- * - "Planet Recipe" button;
- * - filter buttons;
- * - active filter state.
- */
+// Initializes all interactive events on the recipes page.
+
 function initRecipes() {
     const searchInput = document.getElementById('recipe-search');
     
@@ -108,15 +97,9 @@ function initRecipes() {
     });
 }
 
-/**
- * Loads recipes from the backend.
- *
- * If recipes are already stored in App.recipes, this avoids
- * making another API request.
- *
- * @param {Object} params - Optional navigation parameters.
- * @param {number|string} [params.recipeId] - Recipe ID to open directly.
- */
+// Loads recipes from the backend.
+// If recipes are already stored in App.recipes, this avoids making another API request.
+
 async function loadRecipes(params = {}) {
     const grid = document.getElementById('recipes-grid');
 
@@ -155,15 +138,10 @@ async function loadRecipes(params = {}) {
     }
 }
 
-/**
- * Filters recipes based on the active filter and search text.
- * Then renders the matching recipe cards in the grid.
- *
- * Supported filters:
- * - difficulty: EASY, MEDIUM, HARD;
- * - diet: OMNIVORE, VEGAN, KETO, GLUTEN_FREE;
- * - search by name or description.
- */
+// Filters recipes based on the active filter and search text.
+// Then renders the matching recipe cards in the grid.
+// search by name or description.
+
 function filterAndRenderRecipes() {
     const grid = document.getElementById('recipes-grid');
     if (!grid) return;
@@ -212,12 +190,8 @@ function filterAndRenderRecipes() {
     grid.innerHTML = filtered.map(renderRecipeCard).join('');
 }
 
-/**
- * Creates the HTML for one recipe card.
- *
- * @param {Object} recipe - Recipe object returned by the API.
- * @returns {string} Recipe card HTML.
- */
+// Creates the HTML for one recipe card.
+
 function renderRecipeCard(recipe) {
     // Serializes the recipe so it can be safely used inside the onclick attribute.
     
@@ -263,11 +237,8 @@ function renderRecipeCard(recipe) {
     `;
 }
 
-/**
- * Updates the text showing how many recipes were found.
- *
- * @param {number} count - Number of filtered recipes.
- */
+// Updates the text showing how many recipes were found.
+
 function updateRecipesCount(count) {
     const countElement = document.getElementById('recipes-count');
     if (!countElement) return;
@@ -276,12 +247,8 @@ function updateRecipesCount(count) {
     countElement.textContent = `${count} ${label}`;
 }
 
-/**
- * Converts a diet enum from the API into readable text.
- *
- * @param {string} diet - Diet type.
- * @returns {string} Formatted diet name.
- */
+// Converts a diet enum from the API into readable text.
+
 function formatDiet(diet) {
     const map = {
         OMNIVORE: 'Omnivore',
@@ -294,12 +261,8 @@ function formatDiet(diet) {
     return map[diet] || diet;
 }
 
-/**
- * Returns the CSS class used to style each diet tag.
- *
- * @param {string} diet - Diet type.
- * @returns {string} CSS class for the tag.
- */
+// Returns the CSS class used to style each diet tag.
+
 function getDietTagClass(diet) {
     const map = {
         OMNIVORE: 'tag-omnivore',
@@ -312,12 +275,8 @@ function getDietTagClass(diet) {
     return map[diet] || 'tag-diet';
 }
 
-/**
- * Converts a difficulty enum into readable text.
- *
- * @param {string} difficulty - EASY, MEDIUM or HARD.
- * @returns {string} Formatted difficulty.
- */
+// Converts a difficulty enum into readable text.
+
 function formatDifficulty(difficulty) {
     const map = {
         EASY: 'Easy',
@@ -328,25 +287,15 @@ function formatDifficulty(difficulty) {
     return map[difficulty] || difficulty || 'Easy';
 }
 
-/**
- * Truncates a text to a maximum number of characters.
- *
- * @param {string} text - Original text.
- * @param {number} max - Maximum number of characters.
- * @returns {string} Truncated text.
- */
+// Truncates a text to a maximum number of characters.
+
 function truncate(text, max) {
     if (!text) return '';
     return text.length > max ? text.slice(0, max).trim() + '...' : text;
 }
 
-/**
- * Chooses a line-style SVG icon based on the recipe name.
- * This keeps the interface emoji-free and consistent with the sci-fi style.
- *
- * @param {string} name - Recipe name.
- * @returns {string} SVG as a string.
- */
+// Chooses a line-style SVG icon based on the recipe name.
+
 function getRecipeIcon(recipe = {}) {    
     const text = `
         ${recipe.name || ''}
@@ -387,11 +336,8 @@ function getRecipeIcon(recipe = {}) {
     return defaultIcon();
 }
 
-/**
- * SVG icon used for empty or error states.
- *
- * @returns {string} SVG as a string.
- */
+// SVG icon used for empty or error states.
+
 function getEmptyIcon() {
     return `
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">

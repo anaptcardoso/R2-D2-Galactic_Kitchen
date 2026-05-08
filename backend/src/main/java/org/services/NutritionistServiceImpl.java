@@ -213,7 +213,7 @@ public class NutritionistServiceImpl implements NutritionistService {
             // Searches for the "content": pattern followed by a value
             int marker = responseBody.indexOf("\"content\":");
             if (marker < 0) {
-                System.err.println("Groq response sem content: " + responseBody);
+                System.err.println("Groq response without content: " + responseBody);
                 return "I'm sorry, I was unable to process your request. Please try again.";
             }
 
@@ -242,7 +242,7 @@ public class NutritionistServiceImpl implements NutritionistService {
             }
             return sb.toString();
         } catch (Exception e) {
-            System.err.println("Erro a extrair texto: " + e.getMessage());
+            System.err.println("Error extract text: " + e.getMessage());
             return "I'm sorry, I was unable to process your request. Please try again.";
         }
     }

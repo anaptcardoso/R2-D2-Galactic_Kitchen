@@ -113,7 +113,7 @@ public class AIServiceImpl implements AIService {
                     .getResourceAsStream("ai/r2d2_galactic_recipes.pdf");
 
             if (pdfStream == null) {
-                System.err.println("PDF de receitas não encontrado!");
+                System.err.println("PDF with recipes not found!");
                 return "No recipes available.";
             }
 
@@ -124,7 +124,7 @@ public class AIServiceImpl implements AIService {
             return text;
 
         } catch (Exception e) {
-            System.err.println("Erro ao carregar PDF: " + e.getMessage());
+            System.err.println("Error to upload PDF: " + e.getMessage());
             return "No recipes available.";
         }
     }
@@ -135,14 +135,14 @@ public class AIServiceImpl implements AIService {
                     .getResourceAsStream("ai/templates/" + templateName);
 
             if (stream == null) {
-                System.err.println("Template não encontrado: " + templateName);
+                System.err.println("Not found template: " + templateName);
                 return "{message}";
             }
 
             return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
 
         } catch (Exception e) {
-            System.err.println("Erro ao carregar template: " + e.getMessage());
+            System.err.println("Error to upload template: " + e.getMessage());
             return "{message}";
         }
     }
@@ -208,7 +208,7 @@ public class AIServiceImpl implements AIService {
             // Searches for the "content": pattern followed by a value
             int marker = responseBody.indexOf("\"content\":");
             if (marker < 0) {
-                System.err.println("Groq response sem content: " + responseBody);
+                System.err.println("Groq response without content: " + responseBody);
                 return "I'm sorry, I was unable to process your request. Please try again.";
             }
 
@@ -237,7 +237,7 @@ public class AIServiceImpl implements AIService {
             }
             return sb.toString();
         } catch (Exception e) {
-            System.err.println("Erro a extrair texto: " + e.getMessage());
+            System.err.println("Error extract text: " + e.getMessage());
             return "I'm sorry, I was unable to process your request. Please try again.";
         }
     }

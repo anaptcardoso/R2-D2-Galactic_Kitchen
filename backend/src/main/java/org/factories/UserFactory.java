@@ -26,8 +26,7 @@ public class UserFactory {
     }
 
 
-    // Utilizador 1 — Luke Skywalker
-    // Jedi em treino — dieta equilibrada
+    // User 1 — Luke Skywalker
     private static UserProfile createLuke() {
         UserProfile user = new UserProfile();
         user.setFirstName("Luke");
@@ -44,8 +43,7 @@ public class UserFactory {
     }
 
 
-    // Utilizador 2 — Leia Organa
-    // Princesa e líder da Rebelião — dieta saudável
+    // User 2 — Leia Organa
     private static UserProfile createLeia() {
         UserProfile user = new UserProfile();
         user.setFirstName("Leia");
@@ -62,8 +60,7 @@ public class UserFactory {
     }
 
 
-    // Utilizador 3 — Han Solo
-    // Contrabandista — come o que aparecer!
+    // User 3 — Han Solo
     private static UserProfile createHan() {
         UserProfile user = new UserProfile();
         user.setFirstName("Han");
@@ -79,7 +76,7 @@ public class UserFactory {
         return user;
     }
 
-    // Utilizador 4 — Ana
+    // User 4 — Ana
     private static UserProfile createAna() {
         UserProfile user = new UserProfile();
         user.setFirstName("Ana");
@@ -95,7 +92,7 @@ public class UserFactory {
         return user;
     }
 
-    // Utilizador 5 — Ines
+    // User 5 — Ines
     private static UserProfile createInes() {
         UserProfile user = new UserProfile();
         user.setFirstName("Inês");
@@ -111,7 +108,7 @@ public class UserFactory {
         return user;
     }
 
-    // Utilizador 6 — Pedro
+    // User 6 — Pedro
     private static UserProfile createPedro() {
         UserProfile user = new UserProfile();
         user.setFirstName("Pedro");
@@ -127,7 +124,7 @@ public class UserFactory {
         return user;
     }
 
-    // Utilizador 7 — Yasmin
+    // User 7 — Yasmin
     private static UserProfile createYasmin() {
         UserProfile user = new UserProfile();
         user.setFirstName("Yasmin");

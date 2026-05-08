@@ -12,10 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repository for WeeklyPlan entity using EntityManager directly.
- * Replaces Spring Data JPA JpaRepository to avoid spring-hateoas dependency conflicts.
- */
+
 @Repository
 public class WeeklyPlanRepository {
 

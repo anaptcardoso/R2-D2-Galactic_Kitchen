@@ -1,11 +1,7 @@
 // profiles.js — Renders the user profiles page of the SPA
 
-/**
- * Renders the profiles list page.
- * This function is called by the router when the user navigates to "profiles".
- *
- * @param {Object} params - Optional navigation parameters.
- */
+// Renders the profiles list page.
+
 async function renderProfiles(params = {}) {
     const app = document.getElementById('main-content');
 
@@ -62,13 +58,8 @@ async function renderProfiles(params = {}) {
     await loadProfiles();
 }
 
-/**
- * Initializes all interactive events on the profiles page.
- *
- * Events handled:
- * - live profile search;
- * - new profile button.
- */
+//Initializes all interactive events on the profiles page.
+
 function initProfiles() {
     const searchInput = document.getElementById('profiles-search');
     const newProfileButton = document.getElementById('new-profile-btn');
@@ -118,11 +109,8 @@ async function loadProfiles() {
     }
 }
 
-/**
- * Filters profiles by the current search term.
- *
- * @param {string} search - Search text typed by the user.
- */
+// Filters profiles by the current search term.
+
 function filterProfiles(search) {
     if (!App.users) return;
 
@@ -149,11 +137,8 @@ function filterProfiles(search) {
     renderProfileCards(filtered);
 }
 
-/**
- * Renders all profile cards.
- *
- * @param {Array<Object>} users - List of users returned by the API.
- */
+// Renders all profile cards.
+
 function renderProfileCards(users) {
     const list = document.getElementById('profiles-list');
 
@@ -175,12 +160,8 @@ function renderProfileCards(users) {
     list.innerHTML = users.map(renderProfileCard).join('');
 }
 
-/**
- * Builds the HTML for one profile card.
- *
- * @param {Object} user - User object returned by the API.
- * @returns {string} Profile card HTML.
- */
+//Builds the HTML for one profile card.
+
 function renderProfileCard(user) {
     const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Unknown User';
     const initials = getInitials(user);
@@ -242,11 +223,8 @@ function renderProfileCard(user) {
     `;
 }
 
-/**
- * Updates the profile count text.
- *
- * @param {number} count - Number of currently displayed profiles.
- */
+// Updates the profile count text.
+
 function updateProfilesCount(count) {
     const countElement = document.getElementById('profiles-count');
     if (!countElement) return;
@@ -255,12 +233,8 @@ function updateProfilesCount(count) {
     countElement.textContent = `${count} ${label}`;
 }
 
-/**
- * Returns the avatar image markup if an image exists for the user.
- *
- * @param {Object} user - User object.
- * @returns {string} Avatar image HTML or an empty string.
- */
+// Returns the avatar image markup if an image exists for the user.
+
 function getAvatarMarkup(user) {
     const avatarImages = {
         Luke: './js/assets/luke.jpg',
@@ -286,12 +260,8 @@ function getAvatarMarkup(user) {
     `;
 }
 
-/**
- * Creates initials from first and last name.
- *
- * @param {Object} user - User object.
- * @returns {string} User initials.
- */
+// Creates initials from first and last name.
+ 
 function getInitials(user) {
     const first = user.firstName?.[0] || '';
     const last = user.lastName?.[0] || '';
@@ -299,12 +269,8 @@ function getInitials(user) {
     return `${first}${last}` || '?';
 }
 
-/**
- * Returns a border color for the avatar based on the user's first name.
- *
- * @param {string} firstName - User first name.
- * @returns {string} CSS color value.
- */
+// Returns a border color for the avatar based on the user's first name.
+
 function getAvatarBorder(firstName = '') {
     const colors = {
         Luke: '#00D4FF',
@@ -320,12 +286,8 @@ function getAvatarBorder(firstName = '') {
     return colors[firstName] || '#00D4FF';
 }
 
-/**
- * Converts a diet enum into readable text.
- *
- * @param {string} diet - Diet type.
- * @returns {string} Formatted diet name.
- */
+// Converts a diet enum into readable text.
+
 function formatDiet(diet) {
     const map = {
         OMNIVORE: 'Omnivore',
@@ -338,12 +300,8 @@ function formatDiet(diet) {
     return map[diet] || diet;
 }
 
-/**
- * Returns the CSS class used to style each diet tag.
- *
- * @param {string} diet - Diet type.
- * @returns {string} CSS class for the tag.
- */
+// Returns the CSS class used to style each diet tag.
+
 function getDietTagClass(diet) {
     const map = {
         OMNIVORE: 'tag-omnivore',
@@ -356,23 +314,15 @@ function getDietTagClass(diet) {
     return map[diet] || 'tag-diet';
 }
 
-/**
- * Formats a value that might be an array or string.
- *
- * @param {Array|string} value - Value to format.
- * @returns {string} Formatted value.
- */
+// Formats a value that might be an array or string.
+
 function formatList(value) {
     if (Array.isArray(value)) return value.join(', ');
     return value || '';
 }
 
-/**
- * Formats the activity level enum into readable text.
- *
- * @param {string} activity - Activity enum.
- * @returns {string} Formatted activity.
- */
+// Formats the activity level enum into readable text.
+
 function formatActivity(activity = '') {
     return activity
         .toLowerCase()
@@ -380,11 +330,8 @@ function formatActivity(activity = '') {
         .replace(/\b\w/g, char => char.toUpperCase());
 }
 
-/**
- * SVG icon used for empty or error states.
- *
- * @returns {string} SVG as a string.
- */
+// SVG icon used for empty or error states.
+
 function getProfileEmptyIcon() {
     return `
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">

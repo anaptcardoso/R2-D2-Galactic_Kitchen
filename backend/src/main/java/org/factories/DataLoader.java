@@ -40,8 +40,6 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         }
 
         // Only loads users if there are none yet
-        // After you register, your data will be next to
-        // Luke, Leia and Han!
         if (userProfileRepository.count() == 0) {
             loadUsers();
         }
