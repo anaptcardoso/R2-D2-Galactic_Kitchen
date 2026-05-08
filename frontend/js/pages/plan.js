@@ -1,7 +1,3 @@
-// ============================================================
-// plan.js — Weekly Plan page
-// Uses PlanAPI and NutritionistAPI from api.js and App.currentUser
-// ============================================================
 
 // Generates the page HTML and initializes the events
 function renderPlan(params = {}) {
@@ -60,7 +56,7 @@ function renderPlan(params = {}) {
 // Initializes events and API calls
 function initPlan() {
 
-  // ── Tab navigation ────────────────────────────────────────
+  // Tab navigation 
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn')
@@ -73,7 +69,7 @@ function initPlan() {
     });
   });
 
-  // ── Tab 1: Loads the user's current plan ──────────────────
+  // Tab 1: Loads the user's current plan 
   loadCurrentPlan();
 
   async function loadCurrentPlan() {
@@ -105,7 +101,7 @@ function initPlan() {
     }
   }
 
-  // ── Tab 2: Generate weekly plan through AI ────────────────
+  // Tab 2: Generate weekly plan through AI 
   const planMessages = document.getElementById('plan-messages');
   const planInput    = document.getElementById('plan-input');
 
@@ -133,7 +129,7 @@ function initPlan() {
     if (e.key === 'Enter') sendPlanRequest();
   });
 
-  // ── Tab 3: Add recipe to an existing plan ─────────────────
+  //  Tab 3: Add recipe to an existing plan
   document.getElementById('add-recipe-btn').addEventListener('click', async () => {
     const planId   = document.getElementById('plan-id-input').value;
     const recipeId = document.getElementById('recipe-id-input').value;
@@ -158,13 +154,10 @@ function initPlan() {
   });
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+//  Helpers 
 
-/**
- * Renders the list of recipes in a weekly plan
- * @param {Array} recipes - list of recipes in the plan
- * @returns {string} - semantic HTML with the recipes as a list
- */
+// Renders the list of recipes in a weekly plan
+
 function renderPlanRecipes(recipes) {
   if (!recipes || recipes.length === 0) {
     return '<li class="plan-empty-msg">No recipes in this plan yet. Add some!</li>';
@@ -177,13 +170,8 @@ function renderPlanRecipes(recipes) {
     `).join('');
 }
 
-/**
- * Adds a message to the weekly plan chat
- * @param {HTMLElement} container - message container
- * @param {string}      type      - 'user' | 'bot'
- * @param {string}      text      - message text
- * @param {string}      id        - optional ID for later removal
- */
+// Adds a message to the weekly plan chat
+
 function appendPlanMessage(container, type, text, id = '') {
   const article = document.createElement('article');
   article.className = `chat-msg ${type}`;

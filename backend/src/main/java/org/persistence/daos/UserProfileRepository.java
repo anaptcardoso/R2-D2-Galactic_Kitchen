@@ -10,10 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repository for UserProfile entity using EntityManager directly.
- * Replaces Spring Data JPA JpaRepository to avoid spring-hateoas dependency conflicts.
- */
+
 @Repository
 public class UserProfileRepository {
 

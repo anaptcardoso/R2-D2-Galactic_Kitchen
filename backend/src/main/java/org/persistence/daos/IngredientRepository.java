@@ -8,10 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repository for Ingredient entity using EntityManager directly.
- * Replaces Spring Data JPA JpaRepository to avoid spring-hateoas dependency conflicts.
- */
 @Repository
 public class IngredientRepository {
 

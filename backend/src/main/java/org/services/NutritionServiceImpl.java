@@ -57,7 +57,7 @@ public class NutritionServiceImpl implements NutritionService {
         double totalFat = 0;
 
         for (Recipe recipe : recipes) {
-            totalCalories += recipe.getCalories(); // Directly, without getNutrition()
+            totalCalories += recipe.getCalories();
             totalProtein  += recipe.getProtein();
             totalCarbs    += recipe.getCarbs();
             totalFat      += recipe.getFat();

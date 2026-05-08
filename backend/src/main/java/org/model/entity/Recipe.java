@@ -18,7 +18,7 @@ public class Recipe {
     private String name;
     private String description;
     private String category;
-    private int preparationTime; // em minutos
+    private int preparationTime; // in min
     private int servings;
     private int calories;
     private double protein;

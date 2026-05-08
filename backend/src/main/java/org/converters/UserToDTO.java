@@ -27,7 +27,7 @@ public class UserToDTO extends AbstractConverter<UserProfile, UserProfileDTO> {
             );
         }
 
-        // converte UserProfile → UserProfileDTO com dados pessoais + NutritionDTO
+        // converte UserProfile → UserProfileDTO with personal data + NutritionDTO
         return new UserProfileDTO(
                 user.getId(),
                 user.getFirstName(),

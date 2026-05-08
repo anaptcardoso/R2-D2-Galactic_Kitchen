@@ -77,8 +77,8 @@ public class RecipeFactory {
     }
 
 
-    // Receita 1 — Bantha Stew (Tatooine)
-    // Inspirada no planeta desértico com dois sóis
+    // Recipe 1 — Bantha Stew (Tatooine)
+    // Inspired by the desert planet with two suns
     private static Recipe createBanthaStew() {
         Recipe recipe = new Recipe();
         recipe.setName("Bantha Stew");
@@ -110,8 +110,8 @@ public class RecipeFactory {
     }
 
 
-    // Receita 2 — Coruscant Noodles
-    // Inspirada no planeta cidade, cosmopolita e agitado
+    // Recipe 2 — Coruscant Noodles
+    // Inspired by the cosmopolitan and bustling city planet
     private static Recipe createCoruscantNoodles() {
         Recipe recipe = new Recipe();
         recipe.setName("Coruscant Noodles");
@@ -142,8 +142,8 @@ public class RecipeFactory {
     }
 
 
-    // Receita 3 — Dagobah Swamp Soup
-    // Inspirada no planeta pântano onde Yoda vivia
+    // Recipe 3 — Dagobah Swamp Soup
+    // Inspired by the swamp planet where Yoda lived.
     private static Recipe createDagobahSoup() {
         Recipe recipe = new Recipe();
         recipe.setName("Dagobah Swamp Soup");
@@ -174,8 +174,8 @@ public class RecipeFactory {
     }
 
 
-    // Receita 4 — Ewok Forest Roast
-    // Inspirada nas celebrações dos Ewoks em Endor
+    // Recipe 4 — Ewok Forest Roast
+    // Inspired by the Ewok celebrations on Endor
     private static Recipe createEwokRoast() {
         Recipe recipe = new Recipe();
         recipe.setName("Ewok Forest Roast");
@@ -207,8 +207,8 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 5 — Mandalorian Brisket
-    // Inspirada na culinária robusta dos Mandalorianos
+    // Recipe 5 — Mandalorian Brisket
+    // Inspired by the hearty cuisine of the Mandalorians
     private static Recipe createMandalorianBrisket() {
         Recipe recipe = new Recipe();
         recipe.setName("Mandalorian Brisket");
@@ -239,7 +239,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 6 — Mediterranean Chicken Bowl
+    // Recipe 6 — Mediterranean Chicken Bowl
     private static Recipe createMediterraneanChickenBowl() {
         Recipe recipe = new Recipe();
         recipe.setName("Mediterranean Chicken Bowl");
@@ -269,7 +269,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 7 — Classic Pancakes
+    // Recipe 7 — Classic Pancakes
     private static Recipe createClassicPancakes() {
         Recipe recipe = new Recipe();
         recipe.setName("Classic Pancakes");
@@ -298,7 +298,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 8 — Avocado Toast
+    // Recipe 8 — Avocado Toast
     private static Recipe createAvocadoToast() {
         Recipe recipe = new Recipe();
         recipe.setName("Avocado Toast");
@@ -326,7 +326,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 9 — Beef Tacos
+    // Recipe 9 — Beef Tacos
     private static Recipe createBeefTacos() {
         Recipe recipe = new Recipe();
         recipe.setName("Beef Tacos");
@@ -355,7 +355,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 10 — Veggie Omelette
+    // Recipe 10 — Veggie Omelette
     private static Recipe createVeggieOmelette() {
         Recipe recipe = new Recipe();
         recipe.setName("Veggie Omelette");
@@ -384,7 +384,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 11 — Salmon with Vegetables
+    // Recipe 11 — Salmon with Vegetables
     private static Recipe createSalmonWithVegetables() {
         Recipe recipe = new Recipe();
         recipe.setName("Salmon with Vegetables");
@@ -413,7 +413,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 12 — Creamy Mushroom Pasta
+    // Recipe 12 — Creamy Mushroom Pasta
     private static Recipe createCreamyMushroomPasta() {
         Recipe recipe = new Recipe();
         recipe.setName("Creamy Mushroom Pasta");
@@ -442,7 +442,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 13 — Chicken Caesar Salad
+    // Recipe 13 — Chicken Caesar Salad
     private static Recipe createChickenCaesarSalad() {
         Recipe recipe = new Recipe();
         recipe.setName("Chicken Caesar Salad");
@@ -470,7 +470,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 14 — Lentil Curry
+    // Recipe 14 — Lentil Curry
     private static Recipe createLentilCurry() {
         Recipe recipe = new Recipe();
         recipe.setName("Lentil Curry");
@@ -500,7 +500,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 15 — Banana Smoothie
+    // Recipe 15 — Banana Smoothie
     private static Recipe createBananaSmoothie() {
         Recipe recipe = new Recipe();
         recipe.setName("Banana Smoothie");
@@ -526,7 +526,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 16 — Grilled Turkey Burger
+    // Recipe 16 — Grilled Turkey Burger
     private static Recipe createGrilledTurkeyBurger() {
         Recipe recipe = new Recipe();
         recipe.setName("Grilled Turkey Burger");
@@ -556,7 +556,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 17 — Greek Yogurt Parfait
+    // Recipe 17 — Greek Yogurt Parfait
     private static Recipe createGreekYogurtParfait() {
         Recipe recipe = new Recipe();
         recipe.setName("Greek Yogurt Parfait");
@@ -582,7 +582,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 18 — Shrimp Stir Fry
+    // Recipe 18 — Shrimp Stir Fry
     private static Recipe createShrimpStirFry() {
         Recipe recipe = new Recipe();
         recipe.setName("Shrimp Stir Fry");
@@ -611,7 +611,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 19 — Tomato Basil Soup
+    // Recipe 19 — Tomato Basil Soup
     private static Recipe createTomatoBasilSoup() {
         Recipe recipe = new Recipe();
         recipe.setName("Tomato Basil Soup");
@@ -640,7 +640,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 20 — Chicken Alfredo
+    // Recipe 20 — Chicken Alfredo
     private static Recipe createChickenAlfredo() {
         Recipe recipe = new Recipe();
         recipe.setName("Chicken Alfredo");
@@ -669,7 +669,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 21 — Quinoa Salad
+    // Recipe 21 — Quinoa Salad
     private static Recipe createQuinoaSalad() {
         Recipe recipe = new Recipe();
         recipe.setName("Quinoa Salad");
@@ -698,7 +698,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 22 — BBQ Chicken Pizza
+    // Recipe 22 — BBQ Chicken Pizza
     private static Recipe createBBQChickenPizza() {
         Recipe recipe = new Recipe();
         recipe.setName("BBQ Chicken Pizza");
@@ -726,7 +726,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 23 — Spinach Risotto
+    // Recipe 23 — Spinach Risotto
     private static Recipe createSpinachRisotto() {
         Recipe recipe = new Recipe();
         recipe.setName("Spinach Risotto");
@@ -755,7 +755,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 24 — Baked Sweet Potatoes
+    // Recipe 24 — Baked Sweet Potatoes
     private static Recipe createBakedSweetPotatoes() {
         Recipe recipe = new Recipe();
         recipe.setName("Baked Sweet Potatoes");
@@ -782,7 +782,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 25 — Tuna Sandwich
+    // Recipe 25 — Tuna Sandwich
     private static Recipe createTunaSandwich() {
         Recipe recipe = new Recipe();
         recipe.setName("Tuna Sandwich");
@@ -811,7 +811,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 26 — Chocolate Brownie
+    // Recipe 26 — Chocolate Brownie
     private static Recipe createChocolateBrownie() {
         Recipe recipe = new Recipe();
         recipe.setName("Chocolate Brownie");
@@ -840,7 +840,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 26 — Strawberry Cheesecake
+    // Recipe 26 — Strawberry Cheesecake
     private static Recipe createStrawberryCheesecake() {
         Recipe recipe = new Recipe();
         recipe.setName("Strawberry Cheesecake");
@@ -869,7 +869,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 27 — Banana Muffins
+    // Recipe 27 — Banana Muffins
     private static Recipe createBananaMuffins() {
         Recipe recipe = new Recipe();
         recipe.setName("Banana Muffins");
@@ -898,7 +898,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 28 — Protein Energy Balls
+    // Recipe 28 — Protein Energy Balls
     private static Recipe createProteinEnergyBalls() {
         Recipe recipe = new Recipe();
         recipe.setName("Protein Energy Balls");
@@ -925,7 +925,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 29 — Yogurt Fruit Bowl
+    // Recipe 29 — Yogurt Fruit Bowl
     private static Recipe createYogurtFruitBowl() {
         Recipe recipe = new Recipe();
         recipe.setName("Yogurt Fruit Bowl");
@@ -951,7 +951,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 30 — Vanilla Ice Cream Sundae
+    // Recipe 30 — Vanilla Ice Cream Sundae
     private static Recipe createIceCreamSundae() {
         Recipe recipe = new Recipe();
         recipe.setName("Vanilla Ice Cream Sundae");
@@ -978,7 +978,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 31 — Hummus with Veggies
+    // Recipe 31 — Hummus with Veggies
     private static Recipe createHummusWithVeggies() {
         Recipe recipe = new Recipe();
         recipe.setName("Hummus with Veggies");
@@ -1007,7 +1007,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 32 — Apple Pie
+    // Recipe 32 — Apple Pie
     private static Recipe createApplePie() {
         Recipe recipe = new Recipe();
         recipe.setName("Apple Pie");
@@ -1035,7 +1035,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 33 — Roasted Chickpeas
+    // Recipe 33 — Roasted Chickpeas
     private static Recipe createRoastedChickpeas() {
         Recipe recipe = new Recipe();
         recipe.setName("Roasted Chickpeas");
@@ -1063,7 +1063,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 34 — Chocolate Chip Cookies
+    // Recipe 34 — Chocolate Chip Cookies
     private static Recipe createChocolateChipCookies() {
         Recipe recipe = new Recipe();
         recipe.setName("Chocolate Chip Cookies");
@@ -1092,7 +1092,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 35 — Peanut Butter Toast
+    // Recipe 35 — Peanut Butter Toast
     private static Recipe createPeanutButterToast() {
         Recipe recipe = new Recipe();
         recipe.setName("Peanut Butter Toast");
@@ -1118,7 +1118,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 36 — Lemon Tart
+    // Recipe 36 — Lemon Tart
     private static Recipe createLemonTart() {
         Recipe recipe = new Recipe();
         recipe.setName("Lemon Tart");
@@ -1146,7 +1146,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 37 — Mixed Nuts Bowl
+    // Recipe 37 — Mixed Nuts Bowl
     private static Recipe createMixedNutsBowl() {
         Recipe recipe = new Recipe();
         recipe.setName("Mixed Nuts Bowl");
@@ -1172,7 +1172,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 38 — Rice Pudding
+    // Recipe 38 — Rice Pudding
     private static Recipe createRicePudding() {
         Recipe recipe = new Recipe();
         recipe.setName("Rice Pudding");
@@ -1200,7 +1200,7 @@ public class RecipeFactory {
         return recipe;
     }
 
-    // Receita 39 — Cheese Crackers Plate
+    // Recipe 39 — Cheese Crackers Plate
     private static Recipe createCheeseCrackersPlate() {
         Recipe recipe = new Recipe();
         recipe.setName("Cheese Crackers Plate");

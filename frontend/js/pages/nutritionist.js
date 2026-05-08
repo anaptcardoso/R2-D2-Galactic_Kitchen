@@ -1,7 +1,3 @@
-// ============================================================
-// nutritionist.js — Nutritionist page
-// Uses NutritionistAPI from api.js and App.currentUser
-// ============================================================
 
 // Renders the nutritionist page with three tabs: Consult, Analyse Food, Meal Plan
 async function renderNutritionist(params = {}) {
@@ -170,12 +166,12 @@ async function loadNutritionProfile(userId) {
     }
 }
 
-// ── Event listeners ───────────────────────────────────────────────────────────
+//  Event listeners
 
 // Configures all tab, chat, and form listeners
 function initNutritionistEvents(userId) {
 
-    // ── Tab navigation ────────────────────────────────────────
+    //  Tab navigation 
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             // Deactivates all tabs
@@ -190,7 +186,7 @@ function initNutritionistEvents(userId) {
         });
     });
 
-    // ── Quick action buttons ──────────────────────────────────
+    // Quick action buttons 
     document.querySelectorAll('.quick-btn[data-quick]').forEach(btn => {
         btn.addEventListener('click', () => {
             const input = document.getElementById('consult-input');
@@ -201,7 +197,7 @@ function initNutritionistEvents(userId) {
         });
     });
 
-    // ── Tab 1: Consult ────────────────────────────────────────
+    //  Tab 1: Consult 
     const consultInput = document.getElementById('consult-input');
 
     // Sends when clicking the button
@@ -216,7 +212,7 @@ function initNutritionistEvents(userId) {
         }
     });
 
-    // ── Tab 2: Analyze Food ───────────────────────────────────
+    // Tab 2: Analyze Food 
     document.getElementById('food-send').addEventListener('click', async () => {
         const food   = document.getElementById('food-input').value.trim();
         const result = document.getElementById('food-result');
@@ -241,7 +237,7 @@ function initNutritionistEvents(userId) {
         }
     });
 
-    // ── Tab 3: Meal Plan ──────────────────────────────────────
+    // Tab 3: Meal Plan 
     document.getElementById('mealplan-send').addEventListener('click', async () => {
         const result = document.getElementById('mealplan-result');
 
@@ -269,7 +265,7 @@ function initNutritionistEvents(userId) {
     });
 }
 
-// ── Chat Helpers ──────────────────────────────────────────────────────────────
+//  Chat Helpers 
 
 // Sends the consult message to the nutritionist API and shows the response
 async function sendConsultMessage(userId) {
