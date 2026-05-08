@@ -18,38 +18,38 @@ function closeModal() {
 }
 
 // Fetches a recipe by ID and renders it inside the modal
-async function openRecipeModal(recipeId) {
+async function openRecipeModal(recipeId) {        
     try {
         const recipe = await RecipeAPI.getById(recipeId);
 
         document.getElementById('modal-body').innerHTML = `
             <div class="modal-recipe">
-                <div style="height:100px;display:flex;align-items:center;justify-content:center;
-                    font-size:60px;border-bottom:1px solid var(--border-bright);margin-bottom:16px;
-                    filter:drop-shadow(0 0 12px rgba(0,212,255,.3))">
-                    ${getRecipeEmoji(recipe.name)}
-                </div>
                 <h2>${recipe.name}</h2>
                 <p class="modal-desc">${recipe.description || ''}</p>
                 <div class="modal-meta">
-                    <span> ${recipe.preparationTime} Min</span>
-                    <span> ${recipe.servings} People</span>
-                    <span> ${recipe.calories} Kcal</span>
-                    <span> P: ${recipe.protein}Grams</span>
-                    <span> H: ${recipe.carbs}Grams</span>
-                    <span> G: ${recipe.fat}Grams</span>
+                    <span>${recipe.preparationTime} Min</span>
+                    <span>${recipe.servings} People</span>
+                    <span>${recipe.calories} Kcal</span>
+                    <span>P: ${recipe.protein}g</span>
+                    <span>H: ${recipe.carbs}g</span>
+                    <span>G: ${recipe.fat}g</span>
                 </div>
-                ${recipe.ingredients?.length ? `
-                    <h3> Ingredients</h3>
+                ${recipe.ingredients && recipe.ingredients.length > 0 ? `
+                    <h3>Ingredients</h3>
                     <ul class="ingredients-list">
-                        ${recipe.ingredients.map(ingredient => `<li>${ingredient.quantity} ${ingredient.unit} ${ingredient.name}</li>`).join('')}
+                        ${recipe.ingredients.map(i => `<li>${i.quantity} ${i.unit} ${i.name}</li>`).join('')}
                     </ul>` : ''}
-                ${recipe.steps?.length ? `
-                    <h3> Preparation</h3>
+
+                ${recipe.steps ? `
+                    <h3>Preparation</h3>
                     <ol class="steps-list">
-                        ${recipe.steps.map(step => `<li>${step}</li>`).join('')}
+                        ${(Array.isArray(recipe.steps) 
+                            ? recipe.steps 
+                            : recipe.steps.split('\n').filter(s => s.trim())
+                        ).map(s => `<li>${s.replace(/^\d+\.\s*/, '')}</li>`).join('')}
                     </ol>` : ''}
-                ${recipe.tip ? `<div class="recipe-tip"> ${recipe.tip}</div>` : ''}
+
+                ${recipe.tip ? `<div class="recipe-tip">${recipe.tip}</div>` : ''}
             </div>
         `;
 

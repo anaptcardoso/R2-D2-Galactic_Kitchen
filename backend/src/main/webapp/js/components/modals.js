@@ -55,6 +55,7 @@ async function openRecipeModal(recipeId) {
 
         openModal();
     } catch (error) {
+        console.error('Recipe modal error:', error);
         alert('Fail upload recipe');
     }
 }
