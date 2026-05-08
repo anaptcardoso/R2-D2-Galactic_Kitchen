@@ -17,12 +17,10 @@ If neither the recipes nor the context contain the answer, use your professional
 Do not mention that you are using any database or context — just answer naturally.
 
 User profile (if available):
-
-    Goal: {user_goal}
-    Diet type: {user_diet}
-    Allergies: {user_allergies}
-    Activity level: {user_activity_level}
-
+- Goal: {user_goal}
+- Diet type: {user_diet}
+- Allergies: {user_allergies}
+- Activity level: {user_activity_level}
 
 User question: {query}
 
