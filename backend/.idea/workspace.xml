@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4eb1314c-ce7e-40ca-8691-49992be22593" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/dtos/RecipeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/dtos/RecipeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/factories/RecipeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/factories/RecipeFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/entity/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/model/entity/Recipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/components/modals.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/components/modals.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/js/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/components/modals.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/components/modals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/pages/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/js/pages/profiles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/pages/profiles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/js/pages/recipes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/js/pages/recipes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +89,7 @@
       <workItem from="1778001793035" duration="10114000" />
       <workItem from="1778027666452" duration="1992000" />
       <workItem from="1778077796280" duration="16455000" />
-      <workItem from="1778245192302" duration="6817000" />
+      <workItem from="1778245192302" duration="10247000" />
     </task>
     <servers />
   </component>

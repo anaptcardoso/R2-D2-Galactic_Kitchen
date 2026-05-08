@@ -13,11 +13,6 @@ async function renderHome() {
                 Recipes from distant galaxies, weekly plans and nutritionist
                 consultations — all in one place.
             </p>
-
-            <div class="hero-actions">
-                <button class="btn-cyan" id="hero-recipes">EXPLORE RECIPES</button>
-                <button class="btn-gold" id="hero-plan">BUILD WEEKLY PLAN</button>
-            </div>
         </section>
 
         <section class="menu-grid home-menu-grid">
@@ -29,17 +24,6 @@ async function renderHome() {
                 </div>
                 <h3>Recipes</h3>
                 <p>Explore the galactic catalogue and discover meals from distant planets.</p>
-            </article>
-
-            <article class="menu-card" id="card-plan">
-                <div class="menu-icon gold-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <rect x="3" y="5" width="18" height="16" rx="2"/>
-                        <path d="M3 9h18M8 3v4M16 3v4"/>
-                    </svg>
-                </div>
-                <h3>Weekly Plan</h3>
-                <p>Organise your meals for 7 days with a balanced galactic food mission.</p>
             </article>
 
             <article class="menu-card" id="card-chat">
@@ -85,50 +69,6 @@ async function renderHome() {
             <span class="arrow">→</span>
         </section>
 
-        <section class="spotlight-section">
-            <div class="section-label">QUICK ACCESS</div>
-
-            <div class="spotlight-grid">
-                <article class="spot-card" id="spot-favorites">
-                    <div class="spot-emoji gold-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4>Favorites</h4>
-                        <p>Saved recipes</p>
-                    </div>
-                </article>
-
-                <article class="spot-card" id="spot-shopping">
-                    <div class="spot-emoji cyan-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M3 4h2l2 12h12l2-8H7"/>
-                            <circle cx="9" cy="20" r="1.5"/>
-                            <circle cx="17" cy="20" r="1.5"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4>Shopping List</h4>
-                        <p>This week</p>
-                    </div>
-                </article>
-
-                <article class="spot-card" id="spot-stats">
-                    <div class="spot-emoji green-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M3 21h18M6 17v-6M11 17V7M16 17v-9"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4>Today's Stats</h4>
-                        <p>Daily intake</p>
-                    </div>
-                </article>
-            </div>
-        </section>
-
         <section class="featured-section">
             <div class="page-header">
                 <h2>FEATURED RECIPES</h2>
@@ -141,26 +81,6 @@ async function renderHome() {
                 </div>
             </div>
         </section>
-
-        <section class="planet-banner" id="banner-planet">
-            <div class="planet-left">
-                <div class="planet-emoji purple-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                        <circle cx="12" cy="12" r="9"/>
-                        <ellipse cx="12" cy="12" rx="9" ry="3.5"/>
-                    </svg>
-                </div>
-
-                <div>
-                    <div class="planet-title">BROWSE BY PLANET</div>
-                    <div class="planet-sub">
-                        Discover recipes inspired by planets across the galaxy.
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn-outline">CHOOSE PLANET</button>
-        </section>
     `;
 
     initHome();
@@ -168,9 +88,6 @@ async function renderHome() {
 }
 
 function initHome() {
-    document.getElementById('hero-recipes')?.addEventListener('click', () => navigate('recipes'));
-    document.getElementById('hero-plan')?.addEventListener('click', () => navigate('plan'));
-
     document.getElementById('card-recipes')?.addEventListener('click', () => navigate('recipes'));
     document.getElementById('card-plan')?.addEventListener('click', () => navigate('plan'));
 
@@ -261,7 +178,7 @@ function renderFeaturedCard(recipe) {
         <article class="recipe-card" onclick="${onclick}">
             <div class="recipe-banner">
                 <div class="recipe-line-icon cyan-icon">
-                    ${getRecipeIcon(recipe.name)}
+                    ${getRecipeIcon(recipe)}
                 </div>
                 <span class="diff-badge diff-${diffClass}">
                     ${formatDifficulty(difficulty)}
@@ -299,33 +216,18 @@ function formatDifficulty(difficulty) {
     return map[difficulty] || difficulty || 'Easy';
 }
 
-function getRecipeIcon(name = '') {
-    const lower = name.toLowerCase();
+function getRecipeIcon(recipe = {}) {
+    const text = `
+        ${recipe.name || ''}
+        ${recipe.description || ''}
+        ${(recipe.dietTypes || []).join(' ')}
+    `.toLowerCase();
 
-    if (lower.includes('noodle') || lower.includes('pasta')) {
-        return `
-            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M4 10h16"/>
-                <path d="M6 10c0 5 3 9 6 9s6-4 6-9"/>
-                <path d="M8 6v4M12 6v4M16 6v4"/>
-            </svg>
-        `;
-    }
+    if (text.includes('omnivore'))   return beefIcon();
+    if (text.includes('vegan'))      return veganIcon();
+    if (text.includes('keto'))       return eggIcon();
+    if (text.includes('gluten_free') || text.includes('gluten')) return wheatOffIcon();
+    if (text.includes('vegetarian')) return vegetarianIcon();
 
-    if (lower.includes('soup') || lower.includes('stew')) {
-        return `
-            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M4 11h16"/>
-                <path d="M6 11c0 5 3 8 6 8s6-3 6-8"/>
-                <path d="M8 7c1-2 3-2 4 0M13 7c1-2 3-2 4 0"/>
-            </svg>
-        `;
-    }
-
-    return `
-        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <circle cx="12" cy="12" r="8"/>
-            <path d="M8 12h8M12 8v8"/>
-        </svg>
-    `;
+    return defaultIcon();
 }

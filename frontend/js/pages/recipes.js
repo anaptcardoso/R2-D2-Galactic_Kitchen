@@ -32,10 +32,7 @@ async function renderRecipes(params = {}) {
                     value="${App.recipeSearch || ''}"
                 />
             </div>
-
-            <button class="btn-gold" id="planet-recipe-btn">
-                PLANET RECIPE
-            </button>
+            
         </section>
 
         <section class="filter-row catalogue-filters" id="recipes-filters">
@@ -86,7 +83,7 @@ async function renderRecipes(params = {}) {
  */
 function initRecipes() {
     const searchInput = document.getElementById('recipe-search');
-    const planetButton = document.getElementById('planet-recipe-btn');
+    
 
     // Live search.
     // Whenever the user types, we save the search term in the global state
@@ -96,10 +93,7 @@ function initRecipes() {
         filterAndRenderRecipes();
     });
 
-    // Opens the modal for generating/browsing recipes by planet.
-    planetButton?.addEventListener('click', () => {
-        openPlanetModal();
-    });
+    
 
     // Adds behavior to all filter buttons.
     // Only one filter can be active at a time.
@@ -234,7 +228,7 @@ function renderRecipeCard(recipe) {
         <article class="recipe-card catalogue-recipe-card" onclick="openRecipeModal(${recipe.id})">
             <div class="recipe-banner catalogue-recipe-banner">
                 <div class="recipe-line-icon cyan-icon">
-                    ${getRecipeIcon(recipe.name)}
+                    ${getRecipeIcon(recipe)}
                 </div>
 
                 <span class="diff-badge diff-${diffClass}">
@@ -353,45 +347,44 @@ function truncate(text, max) {
  * @param {string} name - Recipe name.
  * @returns {string} SVG as a string.
  */
-function getRecipeIcon(name = '') {
-    const lower = name.toLowerCase();
+function getRecipeIcon(recipe = {}) {    
+    const text = `
+        ${recipe.name || ''}
+        ${recipe.description || ''}
+        ${(recipe.dietTypes || []).join(' ')}
+    `.toLowerCase();
 
-    if (lower.includes('noodle') || lower.includes('pasta')) {
-        return `
-            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M4 10h16"/>
-                <path d="M6 10c0 5 3 9 6 9s6-4 6-9"/>
-                <path d="M8 6v4M12 6v4M16 6v4"/>
-            </svg>
-        `;
+    if (
+        text.includes('omnivore')
+    ) {
+        return beefIcon();
     }
 
-    if (lower.includes('soup') || lower.includes('stew')) {
-        return `
-            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M4 11h16"/>
-                <path d="M6 11c0 5 3 8 6 8s6-3 6-8"/>
-                <path d="M8 7c1-2 3-2 4 0M13 7c1-2 3-2 4 0"/>
-            </svg>
-        `;
+    if (
+        text.includes('vegan')
+    ) {
+        return veganIcon();
     }
 
-    if (lower.includes('roast') || lower.includes('brisket')) {
-        return `
-            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 8h10c2 0 4 2 4 4s-2 4-4 4H7c-2 0-4-2-4-4s2-4 4-4z"/>
-                <path d="M8 8c1-2 3-3 5-3"/>
-                <path d="M9 16c1 2 3 3 5 3"/>
-            </svg>
-        `;
+    if (
+        text.includes('keto') 
+    ) {
+        return eggIcon();
     }
 
-    return `
-        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <circle cx="12" cy="12" r="8"/>
-            <path d="M8 12h8M12 8v8"/>
-        </svg>
-    `;
+    if (
+        text.includes('gluten_free') || text.includes('gluten')
+    ) {
+        return wheatOffIcon();
+    }
+    
+    if (
+        text.includes('vegetarian')
+    ) {
+        return vegetarianIcon();
+    }
+
+    return defaultIcon();
 }
 
 /**
@@ -405,6 +398,111 @@ function getEmptyIcon() {
             <circle cx="11" cy="11" r="7"></circle>
             <path d="M20 20l-4.5-4.5"></path>
             <path d="M8 11h6"></path>
+        </svg>
+    `;
+}
+
+function beefIcon() {
+    return `
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-beef-icon lucide-beef">
+        <path d="M16.4 13.7A6.5 6.5 0 1 0 6.28 6.6c-1.1 3.13-.78 3.9-3.18 6.08A3 3 0 0 0 5 18c4 0 8.4-1.8 11.4-4.3"/>
+        <path d="m18.5 6 2.19 4.5a6.48 6.48 0 0 1-2.29 7.2C15.4 20.2 11 22 7 22a3 3 0 0 1-2.68-1.66L2.4 16.5"/>
+        <circle cx="12.5" cy="8.5" r="2.5"/></svg>
+    `;
+}
+
+function veganIcon() {
+    return `
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-vegan-icon lucide-vegan">
+        <path d="M16 8q6 0 6-6-6 0-6 6"/><path d="M17.41 3.59a10 10 0 1 0 3 3"/>
+        <path d="M2 2a26.6 26.6 0 0 1 10 20c.9-6.82 1.5-9.5 4-14"/></svg>
+    `;
+}
+
+function eggIcon() {
+    return `
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-egg-icon lucide-egg">
+        <path d="M12 2C8 2 4 8 4 14a8 8 0 0 0 16 0c0-6-4-12-8-12"/></svg>
+    `;
+}
+
+function wheatOffIcon() {
+    return `
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-wheat-off-icon lucide-wheat-off">
+        <path d="m2 22 10-10"/><path d="m16 8-1.17 1.17"/>
+        <path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/>
+        <path d="m8 8-.53.53a3.5 3.5 0 0 0 0 4.94L9 15l1.53-1.53c.55-.55.88-1.25.98-1.97"/>
+        <path d="M10.91 5.26c.15-.26.34-.51.56-.73L13 3l1.53 1.53a3.5 3.5 0 0 1 .28 4.62"/>
+        <path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/>
+        <path d="M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/>
+        <path d="m16 16-.53.53a3.5 3.5 0 0 1-4.94 0L9 15l1.53-1.53a3.49 3.49 0 0 1 1.97-.98"/>
+        <path d="M18.74 13.09c.26-.15.51-.34.73-.56L21 11l-1.53-1.53a3.5 3.5 0 0 0-4.62-.28"/>
+        <line x1="2" x2="22" y1="2" y2="22"/></svg>
+    `;
+}
+
+function vegetarianIcon() {
+    return `
+<svg xmlns="http://www.w3.org/2000/svg"
+width="24"
+height="24"
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2"
+stroke-linecap="round"
+stroke-linejoin="round"
+class="lucide lucide-beef-off-icon lucide-beef-off">
+<path d="M11.771 6.109a2.5 2.5 0 0 1 3.12 3.12"/>
+<path d="M17.852 12.185a6.5 6.5 0 0 0-9.035-9.04"/>
+<path d="M18.013 18.013C15.029 20.349 10.831 22 7 22a3 3 0 0 1-2.68-1.66L2.4 16.5"/>
+<path d="m18.5 6 2.19 4.5a6.48 6.48 0 0 1-.139 4.393"/><path d="m2 2 20 20"/>
+<path d="M6.355 6.37a7 7 0 0 0-.075.23c-1.1 3.13-.78 3.9-3.18 6.08A3 3 0 0 0 5 18c3.356 0 6.993-1.267 9.85-3.151"/></svg>
+`;
+}
+
+function defaultIcon() {
+    return `
+        <svg width="46" height="46" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M8 12h8"/>
         </svg>
     `;
 }

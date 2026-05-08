@@ -261,14 +261,14 @@ function updateProfilesCount(count) {
  */
 function getAvatarMarkup(user) {
     const avatarImages = {
-        Luke: '/frontend/js/assets/luke.jpg',
-        Leia: '/frontend/js/assets/leia.jpg',
-        Han: '/frontend/js/assets/han_solo.jpg',
-        Ana: '/frontend/js/assets/ana_cardoso.jpg',
-        Ines: '/frontend/js/assets/ines_azevedo.jpg',
-        Inês: '/frontend/js/assets/ines_azevedo.jpg',
-        Pedro: '/frontend/js/assets/saldanha_pedro.jpg',
-        Yasmin: '/frontend/js/assets/yasmin_natasha.jpeg'
+        Luke: './js/assets/luke.jpg',
+        Leia: './js/assets/leia.jpg',
+        Han: './js/assets/han_solo.jpg',
+        Ana: './js/assets/ana_cardoso.jpg',
+        Ines: './js/assets/ines_azevedo.jpg',
+        Inês: './js/assets/ines_azevedo.jpg',
+        Pedro: './js/assets/saldanha_pedro.jpg',
+        Yasmin: './js/assets/yasmin_natasha.jpeg'
     };
 
     const image = avatarImages[user.firstName];
