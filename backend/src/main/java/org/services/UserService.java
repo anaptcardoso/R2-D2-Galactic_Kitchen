@@ -8,27 +8,27 @@ import java.util.List;
 
 public interface UserService {
 
-    // Procura todos os utilizadores
+    // Finds all users
     List<UserProfileDTO> findAll();
 
-    // Procura por ID
+    // Finds by ID
     UserProfileDTO findById(int id) throws UserNotFoundException;
 
-    // Procura por primeiro e último nome
+    // Finds by first and last name
     List<UserProfileDTO> searchByName(String firstName, String lastName) throws UserNotFoundException;
 
-    // Cria um utilizador novo
+    // Creates a new user
     UserProfileDTO save(UserProfileDTO dto) throws UserNotFoundException;
 
-    // Atualiza um utilizador existente
+    // Updates an existing user
     UserProfileDTO update(int id, UserProfileDTO dto) throws UserNotFoundException;
 
-    // Apaga um utilizador
+    // Deletes a user
     void delete(int id) throws UserNotFoundException;
 
-    // Devolve os dados nutricionais do utilizador
+    // Returns the user's nutritional data
     NutritionDTO getNutrition(int id) throws UserNotFoundException;
 
-    // Atualiza os dados nutricionais do utilizador
+    // Updates the user's nutritional data
     NutritionDTO updateNutrition(int id, NutritionDTO nutritionDTO) throws UserNotFoundException;
 }

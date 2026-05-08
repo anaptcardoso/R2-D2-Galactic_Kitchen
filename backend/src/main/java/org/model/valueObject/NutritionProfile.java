@@ -10,21 +10,21 @@ import java.util.Set;
 @Embeddable
 public class NutritionProfile { //cliente
 
-    // dados nutricionais
+    // Nutritional data
     private Double weight;
     private Double height;
     private String goal;
     private String activityLevel;
 
-    // preferências alimentares
+    // Food preferences
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<DietType> dietPreferences;
 
-    // alergias
+    // Allergies
     private String allergies;
 
-    //Constructor
+    // Constructor
 
     public NutritionProfile() {}
 

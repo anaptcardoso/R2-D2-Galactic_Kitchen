@@ -1,8 +1,8 @@
-// profile.js — Renderiza o perfil individual de um utilizador
+// profile.js — Renders the individual user profile
 
 async function renderProfile(params = {}) {
 
-    // se vier com new: true mostra formulário vazio
+    // if `new: true` is passed, show an empty form
     if (params.new) {
         renderNewProfile();
         return;
@@ -11,11 +11,11 @@ async function renderProfile(params = {}) {
     const app = document.getElementById('main-content');
     const userId = params.userId || App.currentUser?.id || 1;
 
-    // mostra loading enquanto vai buscar os dados
+    // show loading while fetching data
     app.innerHTML = `<p class="loading">Loading profile...</p>`;
 
     try {
-        // vai buscar o utilizador ao backend
+        // fetch the user from the backend
         const user = await UserAPI.getById(userId);
 
         app.innerHTML = `
@@ -109,7 +109,7 @@ async function renderProfile(params = {}) {
             </section>
         `;
 
-        // inicializa os eventos depois do HTML estar no DOM
+        // initialize event listeners after the HTML is in the DOM
         initProfile(userId, user);
 
     } catch (e) {
@@ -122,11 +122,11 @@ async function renderProfile(params = {}) {
     }
 }
 
-// ── Eventos do perfil existente ───────────────────────────────────────────────
+// ── Existing profile events ───────────────────────────────────────────────
 
 function initProfile(userId, originalUser) {
 
-    // guarda as alterações ao clicar em Save
+    // saves changes when clicking the Save button
     document.getElementById('btn-save').addEventListener('click', async () => {
         const msg = document.getElementById('profile-msg');
 
@@ -165,7 +165,7 @@ function initProfile(userId, originalUser) {
         }
     });
 
-    // apaga o perfil ao clicar em Delete
+    // deletes the profile when clicking Delete
     document.getElementById('btn-delete').addEventListener('click', async () => {
         if (!confirm(`Are you sure you want to delete ${originalUser.firstName}'s profile?`)) return;
 
@@ -178,7 +178,7 @@ function initProfile(userId, originalUser) {
     });
 }
 
-// ── Novo perfil ───────────────────────────────────────────────────────────────
+// ── New profile ─────────────────────────────────────────────────────────────
 
 function renderNewProfile() {
     const app = document.getElementById('main-content');
@@ -265,10 +265,11 @@ function renderNewProfile() {
         </section>
     `;
 
+    // initialize events for new profile form
     initNewProfile();
 }
 
-// ── Eventos do novo perfil ────────────────────────────────────────────────────
+// ── New profile events ────────────────────────────────────────────────────
 
 function initNewProfile() {
     document.getElementById('btn-save').addEventListener('click', async () => {
@@ -287,6 +288,7 @@ function initNewProfile() {
             activityLevel: document.getElementById('input-activity').value,
         };
 
+        // validate required fields
         if (!dto.firstName || !dto.email) {
             msg.textContent = 'First name and email are required.';
             msg.classList.remove('hidden');
@@ -294,11 +296,13 @@ function initNewProfile() {
         }
 
         try {
+            // register the new user
             const newUser = await UserAPI.register(dto);
 
             msg.textContent = `Profile created successfully! Welcome, ${dto.firstName}!`;
             msg.classList.remove('hidden');
 
+            // navigate to the newly created profile
             setTimeout(() => navigate('profile', { userId: newUser.id }), 1500);
 
         } catch (e) {

@@ -48,7 +48,7 @@ public class UserController {
     }
 
     // PUT /api/users/{id}
-    // Atualiza dados pessoais do perfil
+    // Updates personal profile data
     @PutMapping("/{id}")
     public ResponseEntity<UserProfileDTO> update(
             @PathVariable int id,
@@ -57,14 +57,14 @@ public class UserController {
     }
 
     // GET /api/users/{id}/nutrition
-    // Devolve apenas os dados nutricionais
+    // Returns only the nutritional data
     @GetMapping("/{id}/nutrition")
     public ResponseEntity<NutritionDTO> getNutrition(@PathVariable int id) throws UserNotFoundException {
         return ResponseEntity.ok(userService.getNutrition(id));
     }
 
     // PUT /api/users/{id}/nutrition
-    // Atualiza apenas os dados nutricionais
+    // Updates only the nutritional data
     @PutMapping("/{id}/nutrition")
     public ResponseEntity<NutritionDTO> updateNutrition(
             @PathVariable int id,

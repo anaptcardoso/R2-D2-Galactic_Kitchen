@@ -1,9 +1,9 @@
-// recipes.js — Renderiza a página de receitas
+// recipes.js — Renders the recipes page
 
 async function renderRecipes(params = {}) {
 
     const app = document.getElementById('main-content');
-    
+
     app.innerHTML = `
         <section class="recipes-header">
             <h1>Galactic Catalogue</h1>
@@ -33,55 +33,55 @@ async function renderRecipes(params = {}) {
         </section>
     `;
 
-    // inicializa a pesquisa e os filtros
+    // Initializes search and filters
     initRecipes();
 
-    // vai buscar as receitas ao backend
+    // Fetches recipes from the backend
     await loadRecipes(params);
 }
 
-// ── Inicialização dos eventos ─────────────────────────────────────────────────
+// ── Event initialization ──────────────────────────────────────────────────────
 
 function initRecipes() {
-    // evento de pesquisa — dispara quando o utilizador escreve
+    // Search event — triggers when the user types
     document.getElementById('recipe-search').addEventListener('input', (e) => {
         App.recipeSearch = e.target.value;
         filterAndRenderRecipes();
     });
 
-    // eventos dos botões de filtro
+    // Filter button events
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            // remove a classe active de todos os botões
+            // Removes the active class from all buttons
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            // adiciona a classe active ao botão clicado
+            // Adds the active class to the clicked button
             btn.classList.add('active');
-            // guarda o filtro activo
+            // Saves the active filter
             App.recipeFilter = btn.dataset.filter;
             filterAndRenderRecipes();
         });
     });
 }
 
-// Carrega as receitas do backend
+// Loads recipes from the backend
 
 async function loadRecipes(params = {}) {
     try {
-        // se já temos receitas em cache não vai ao backend outra vez
+        // If recipes are already cached, do not call the backend again
         if (!App.recipes || App.recipes.length === 0) {
             App.recipes = await RecipeAPI.getAll();
         }
 
         filterAndRenderRecipes();
 
-        // se chegou com um recipeId nos params, abre esse modal directamente
+        // If a recipeId was passed in the params, opens that modal directly
         if (params.recipeId) {
             const recipe = App.recipes.find(r => r.id === params.recipeId);
             if (recipe) openRecipeModal(recipe);
         }
 
     } catch (e) {
-        // se o backend não estiver disponível mostra mensagem de erro
+        // If the backend is not available, shows an error message
         console.warn('Could not load recipes from backend:', e.message);
         document.getElementById('recipes-grid').innerHTML = `
             <p class="error">Could not load recipes. Please try again later.</p>
@@ -89,7 +89,7 @@ async function loadRecipes(params = {}) {
     }
 }
 
-// Filtra e renderiza as receitas 
+// Filters and renders recipes
 
 function filterAndRenderRecipes() {
     const grid = document.getElementById('recipes-grid');
@@ -97,30 +97,30 @@ function filterAndRenderRecipes() {
 
     let filtered = App.recipes || [];
 
-    // aplica o filtro de dieta ou dificuldade
+    // Applies the diet or difficulty filter
     if (App.recipeFilter && App.recipeFilter !== 'all') {
         if (App.recipeFilter === 'EASY' || App.recipeFilter === 'HARD') {
-            // filtra por dificuldade
+            // Filters by difficulty
             filtered = filtered.filter(r => r.difficultyLevel === App.recipeFilter);
         } else {
-            // filtra por tipo de dieta
+            // Filters by diet type
             filtered = filtered.filter(r => r.dietTypes && r.dietTypes.includes(App.recipeFilter));
         }
     }
 
-    // aplica a pesquisa por nome
+    // Applies the name search
     if (App.recipeSearch && App.recipeSearch.trim() !== '') {
         const search = App.recipeSearch.toLowerCase();
         filtered = filtered.filter(r => r.name.toLowerCase().includes(search));
     }
 
-    // se não há receitas para mostrar
+    // If there are no recipes to show
     if (filtered.length === 0) {
         grid.innerHTML = `<p class="empty">No recipes found.</p>`;
         return;
     }
 
-    // renderiza os cards das receitas
+    // Renders the recipe cards
     grid.innerHTML = filtered.map(recipe => `
         <div class="recipe-card" onclick="openRecipeModal(${JSON.stringify(recipe).replace(/"/g, '&quot;')})">
             <div class="recipe-card__header">
@@ -145,10 +145,10 @@ function filterAndRenderRecipes() {
     `).join('');
 }
 
-// ── Funções auxiliares ────────────────────────────────────────────────────────
+// ── Helper functions ──────────────────────────────────────────────────────────
 
 /**
- * Formata o tipo de dieta em inglês legível
+ * Formats the diet type in readable English
  * @param {string} diet
  */
 function formatDiet(diet) {
@@ -163,7 +163,7 @@ function formatDiet(diet) {
 }
 
 /**
- * Devolve a classe CSS com base na dificuldade para colorir o badge
+ * Returns the CSS class based on the difficulty to color the badge
  * @param {string} difficulty
  */
 function getDifficultyClass(difficulty) {
@@ -176,7 +176,7 @@ function getDifficultyClass(difficulty) {
 }
 
 /**
- * Corta um texto para um número máximo de caracteres
+ * Truncates text to a maximum number of characters
  * @param {string} text
  * @param {number} max
  */

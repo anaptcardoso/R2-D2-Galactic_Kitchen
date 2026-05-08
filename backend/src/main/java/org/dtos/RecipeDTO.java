@@ -27,8 +27,8 @@ public class RecipeDTO {
 
     // Constructors
 
-    public RecipeDTO() {} //cria o objeto sem preencher nenhum campo para JSON e JPA é preenchido com setters
-    public RecipeDTO(int id, String name,String description, //Usado por nos no convertor
+    public RecipeDTO() {} // Creates the object without filling any field; for JSON and JPA, it is filled using setters
+    public RecipeDTO(int id, String name,String description, // Used by us in the converter
                      String category, int preparationTime,
                      int servings, int calories,
                      double protein, double carbs, double fat,
@@ -128,8 +128,8 @@ public class RecipeDTO {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) return true; // comparação se o objeto éigual a si proprio
-        if(!(obj instanceof  RecipeDTO other)) return false;  //other outros tipos sem ser object
+        if(this == obj) return true; // Checks whether the object is equal to itself
+        if(!(obj instanceof  RecipeDTO other)) return false;  // Other types that are not RecipeDTO
         return id == other.id;
     }
 

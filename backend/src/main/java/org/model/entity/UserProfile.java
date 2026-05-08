@@ -16,7 +16,7 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    // dados pessoais
+    // Personal Data
     private String firstName;
     private String lastName;
     private String email;
@@ -27,7 +27,7 @@ public class UserProfile {
     @Embedded
     private NutritionProfile nutritionProfile;
 
-    // nota pessoal
+    // Personal Data
     private String bio;
 
     // GETTERS / SETTERS

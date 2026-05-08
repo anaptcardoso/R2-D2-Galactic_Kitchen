@@ -21,14 +21,14 @@ public class NutritionController {
     }
 
     // GET /api/nutrition/{userId}
-    // Devolve perfil nutricional do utilizador
+    // Returns the user's nutritional profile
     @GetMapping("/{userId}")
     public ResponseEntity<NutritionDTO> getProfile(@PathVariable int userId) throws UserNotFoundException {
         return ResponseEntity.ok(nutritionService.findByUser(userId));
     }
 
     // PUT /api/nutrition/{userId}
-    // Atualiza objetivos nutricionais
+    // Updates nutritional goals
     @PutMapping("/{userId}")
     public ResponseEntity<NutritionDTO> update(
             @PathVariable int userId,
@@ -37,28 +37,28 @@ public class NutritionController {
     }
 
     // POST /api/nutrition/analyse
-    // Analisa os alimentos via AI e devolve valores nutricionais
+    // Analyses the food items using AI and returns nutritional values
     @PostMapping("/analyse")
     public ResponseEntity<ChatMessageDTO> analyse(@RequestBody ChatMessageDTO message) throws Exception {
         return ResponseEntity.ok(nutritionService.analyse(message));
     }
 
     // GET /api/nutrition/recipe/{recipeId}
-    // Devolve a info nutricional de uma receita
+    // Returns the nutritional information of a recipe
     @GetMapping("/recipe/{recipeId}")
     public ResponseEntity<RecipeDTO> getByRecipe(@PathVariable int recipeId) {
         return ResponseEntity.ok(nutritionService.getNutritionByRecipe(recipeId));
     }
 
     // GET /api/nutrition/below/{maxCalories}
-    // Devolve receitas abaixo de X calorias
+    // Returns recipes below X calories
     @GetMapping("/below/{maxCalories}")
     public ResponseEntity<List<RecipeDTO>> getBelowCalories(@PathVariable int maxCalories) {
         return ResponseEntity.ok(nutritionService.getRecipesBelowCalories(maxCalories));
     }
 
     // POST /api/nutrition/total
-    // Calcula o total de macros de várias receitas
+    // Calculates the total macros of several recipes
     @PostMapping("/total")
     public ResponseEntity<RecipeDTO> getTotal(@RequestBody List<Integer> recipeIds) {
         return ResponseEntity.ok(nutritionService.getTotalNutrition(recipeIds));

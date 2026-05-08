@@ -1,4 +1,4 @@
-// home.js — Renderiza a página inicial
+// home.js — Renders the home page
 
 async function renderHome() {
     const app = document.getElementById('main-content');
@@ -36,14 +36,14 @@ async function renderHome() {
         </section>
     `;
 
-    // adiciona eventos de navegação aos cards
+    // Adds navigation events to the cards
     initHome();
 
-    // vai buscar as receitas ao backend
+    // Fetches recipes from the backend
     await loadFeaturedRecipes();
 }
 
-// Inicialização dos eventos 
+// Event initialization
 
 function initHome() {
     document.getElementById('card-recipes').addEventListener('click', () => navigate('recipes'));
@@ -54,20 +54,20 @@ function initHome() {
     document.getElementById('card-profile').addEventListener('click', () => navigate('profile'));
 }
 
-//  Receitas em destaque 
+// Featured recipes
 
 async function loadFeaturedRecipes() {
     const container = document.getElementById('featured-list');
     if (!container) return;
 
     try {
-        // vai buscar todas as receitas ao backend
+        // Fetches all recipes from the backend
         const recipes = await RecipeAPI.getAll();
 
-        // guarda em cache para outras páginas usarem
+        // Saves them in cache so other pages can use them
         App.recipes = recipes;
 
-        // mostra só as primeiras 3
+        // Shows only the first 3
         const featured = recipes.slice(0, 3);
 
         container.innerHTML = featured.map(recipe => `
@@ -80,7 +80,7 @@ async function loadFeaturedRecipes() {
         `).join('');
 
     } catch (e) {
-        // se o backend não estiver disponível usa dados estáticos como fallback
+        // If the backend is not available, uses static data as fallback
         console.warn('Could not load recipes from backend, using fallback:', e.message);
         container.innerHTML = `
             <div class="featured-card" onclick="navigate('recipes')">
@@ -97,7 +97,7 @@ async function loadFeaturedRecipes() {
 }
 
 /**
- * Formata o nível de dificuldade em inglês
+ * Formats the difficulty level in English
  * @param {string} difficulty
  */
 function formatDifficulty(difficulty) {

@@ -12,8 +12,8 @@ import java.util.Set;
 
 public class RecipeFactory {
 
-    // Cria uma lista de receitas Star Wars de exemplo
-    // Estas receitas são usadas para popular a base de dados quando a app arranca
+    // Creates a list of sample Star Wars recipes
+    // These recipes are used to populate the database when the app starts
     public static List<Recipe> createSampleRecipes() {
         return List.of(
                 createBanthaStew(),

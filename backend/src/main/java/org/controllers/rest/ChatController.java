@@ -26,7 +26,7 @@ public class ChatController {
     }
 
     //POST /api/chat/suggest
-    //sugestao de receitas com base nos ingredientes que temos
+    // Recipe suggestions based on the ingredients we have
     @PostMapping("/suggest")
     public ResponseEntity<ChatMessageDTO> suggest(@RequestBody ChatMessageDTO message) throws Exception{
         ChatMessageDTO response = aiService.suggestRecipes(message);//service

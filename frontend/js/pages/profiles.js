@@ -55,10 +55,10 @@ async function renderProfiles(params = {}) {
         </section>
     `;
 
-    // Initializes search and action events.
+    // Initialize search and action events
     initProfiles();
 
-    // Loads profiles from the backend.
+    // Load profiles from the backend
     await loadProfiles();
 }
 
@@ -73,13 +73,13 @@ function initProfiles() {
     const searchInput = document.getElementById('profiles-search');
     const newProfileButton = document.getElementById('new-profile-btn');
 
-    // Live search by first name, last name or email.
+    // Live search by first name, last name, email or country
     searchInput?.addEventListener('input', (e) => {
         const search = e.target.value.toLowerCase().trim();
         filterProfiles(search);
     });
 
-    // Navigates to the profile creation screen.
+    // Navigate to the profile creation screen
     newProfileButton?.addEventListener('click', () => {
         navigate('profile', { new: true });
     });
@@ -95,7 +95,7 @@ async function loadProfiles() {
     try {
         const users = await UserAPI.getAll();
 
-        // Stores users globally for local filtering.
+        // Store users globally for local filtering
         App.users = users;
 
         renderProfileCards(users);
@@ -103,6 +103,7 @@ async function loadProfiles() {
     } catch (e) {
         console.warn('Could not load profiles from backend:', e.message);
 
+        // Display empty/error state if API fails
         list.innerHTML = `
             <div class="empty-state profiles-empty">
                 <div class="empty-icon">
@@ -130,6 +131,7 @@ function filterProfiles(search) {
         return;
     }
 
+    // Filter users by first name, last name, email, or country
     const filtered = App.users.filter(user => {
         const firstName = (user.firstName || '').toLowerCase();
         const lastName = (user.lastName || '').toLowerCase();

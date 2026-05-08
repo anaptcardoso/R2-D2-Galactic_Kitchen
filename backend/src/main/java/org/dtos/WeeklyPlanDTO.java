@@ -9,10 +9,10 @@ public class WeeklyPlanDTO {
     private LocalDate weekStart;
     private LocalDate weekEnd;
 
-    // lista de receitas do plano semanal
+    // List of recipes in the weekly plan
     private List<RecipeDTO> recipes;
 
-    // lista de compras gerada automaticamente
+    // Automatically generated shopping list
     private List<String> shoppingList;
 
 

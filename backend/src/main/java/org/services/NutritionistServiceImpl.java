@@ -27,11 +27,11 @@ public class NutritionistServiceImpl implements NutritionistService {
     private final UserProfileRepository userProfileRepository;
     private final RecipeRepository recipeRepository;
 
-    // Groq API URL — formato OpenAI
+    // Groq API URL — OpenAI format
     private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
     private static final String MODEL = "llama-3.1-8b-instant";
 
-    // Personalidade do nutricionista
+    // Nutritionist personality
     private static final String SYSTEM_PROMPT = """
             You are a professional nutritionist and dietitian with expertise in personalised nutrition.
             You are empathetic, evidence-based, and always prioritise the user's health and wellbeing.
@@ -136,7 +136,7 @@ public class NutritionistServiceImpl implements NutritionistService {
         return new ChatMessageDTO("assistant", responseText, "nutrition", LocalDateTime.now());
     }
 
-    // ── Private methods ────────────────────────────────────────────────────────
+    // Private methods
 
     private String buildUserContext(int userId) {
         try {
@@ -174,7 +174,7 @@ public class NutritionistServiceImpl implements NutritionistService {
         }
     }
 
-    // Chama a API do Groq — formato OpenAI Chat Completions
+    // Calls the Groq API — OpenAI Chat Completions format
     private String callGroq(String userMessage) throws Exception {
         System.out.println("API KEY: [" + apiKey + "]");
         String safeSystem = SYSTEM_PROMPT.replace("\"", "\\\"").replace("\n", "\\n");
@@ -207,24 +207,24 @@ public class NutritionistServiceImpl implements NutritionistService {
         return extractText(response.body());
     }
 
-    // Extrai o texto da resposta JSON do Groq (formato OpenAI)
+    // Extracts the text from the Groq JSON response (OpenAI format)
     private String extractText(String responseBody) {
         try {
-            // Procura o padrão "content": seguido de valor
+            // Searches for the "content": pattern followed by a value
             int marker = responseBody.indexOf("\"content\":");
             if (marker < 0) {
                 System.err.println("Groq response sem content: " + responseBody);
                 return "I'm sorry, I was unable to process your request. Please try again.";
             }
 
-            // Avança para depois de "content":
+            // Moves forward to after "content":
             int start = marker + 10;
-            // Salta espaços
+            // Skips spaces
             while (start < responseBody.length() && responseBody.charAt(start) == ' ') start++;
-            // Salta a aspa de abertura
+            // Skips the opening quotation mark
             if (responseBody.charAt(start) == '"') start++;
 
-            // Reconstrói o texto respeitando os escapes
+            // Rebuilds the text while respecting escape characters
             StringBuilder sb = new StringBuilder();
             while (start < responseBody.length()) {
                 char c = responseBody.charAt(start);
@@ -235,7 +235,7 @@ public class NutritionistServiceImpl implements NutritionistService {
                     if (next == '\\') { sb.append('\\'); start += 2; continue; }
                     if (next == 't') { sb.append('\t'); start += 2; continue; }
                 } else if (c == '"') {
-                    break; // fim do conteúdo
+                    break; // end of the Content
                 }
                 sb.append(c);
                 start++;

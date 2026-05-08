@@ -14,26 +14,26 @@ import java.util.List;
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
-    // O repository dá-nos acesso à base de dados
+    // The repository gives us access to the database
     private final RecipeRepository recipeRepository;
 
-    // Constructor injection — o Spring injeta o repository automaticamente
+    // Constructor injection — Spring injects the repository automatically
     public RecipeServiceImpl(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 
 
-    // findById — procura uma receita por ID
+    // findById — searches for a recipe by ID
     @Override
     public RecipeDTO findById(int id) {
-        // Se não existir, lança excepção com mensagem clara
+        // If it does not exist, throws an exception with a clear message
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recipe not found with id: " + id));
         return toDTO(recipe);
     }
 
 
-    // findAll — devolve todas as receitas
+    // findAll — returns all recipes
     @Override
     public List<RecipeDTO> findAll() {
         return recipeRepository.findAll()
@@ -43,7 +43,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
 
-    // findByCategory — filtra por categoria, massa, arroz, ...
+    // findByCategory — filters by category, pasta, rice, etc.
     @Override
     public List<RecipeDTO> findByCategory(String category) {
         return recipeRepository.findByCategory(category)
@@ -53,10 +53,10 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
 
-    // searchByName — pesquisa pelo nome (parcial)
+    // searchByName — searches by name (partial)
     @Override
     public List<RecipeDTO> searchByName(String name) {
-        // findByNameContainingIgnoreCase encontra "Pasta Carbonara", "pasta e feijão", etc.
+        // findByNameContainingIgnoreCase finds "Pasta Carbonara", "pasta and beans", etc.
         return recipeRepository.findByNameContainingIgnoreCase(name)
                 .stream()
                 .map(this::toDTO)
@@ -64,28 +64,28 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
 
-    // save — cria uma receita nova
+    // save — creates a new recipe
     @Transactional
     @Override
     public RecipeDTO save(RecipeDTO recipeDTO) {
-        // Converte o DTO para entidade para guardar na BD
+        // Converts the DTO to an entity to save it in the database
         Recipe recipe = toEntity(recipeDTO);
-        // Guarda na BD — o ID é gerado automaticamente
+        // Saves it in the database — the ID is generated automatically
         Recipe saved = recipeRepository.save(recipe);
-        // Converte de volta para DTO para devolver ao frontend
+        // Converts it back to a DTO to return it to the frontend
         return toDTO(saved);
     }
 
 
-    // update — atualiza uma receita existente
+    // update — updates an existing recipe
     @Transactional
     @Override
     public RecipeDTO update(int id, RecipeDTO recipeDTO) {
-        // Verificamos se a receita existe antes de atualizar
+        // We check if the recipe exists before updating it
         Recipe existing = recipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recipe not found with id: " + id));
 
-        // Atualizamos todos os campos com os valores do DTO
+        // We update all fields with the DTO values
         existing.setName(recipeDTO.getName());
         existing.setDescription(recipeDTO.getDescription());
         existing.setCategory(recipeDTO.getCategory());
@@ -100,27 +100,26 @@ public class RecipeServiceImpl implements RecipeService {
         existing.setDietTypes(recipeDTO.getDietTypes());
         existing.setTip(recipeDTO.getTip());
 
-        // Guardamos as alterações na BD
+        // Saves the changes in the database
         Recipe updated = recipeRepository.save(existing);
         return toDTO(updated);
     }
 
 
-    // delete — apaga uma receita
+    // delete — deletes a recipe
     @Transactional
     @Override
     public void delete(int id) {
-        // Verificamos se existe antes de apagar
+        // We check if it exists before deleting it
         if (!recipeRepository.existsById(id)) {
             throw new RuntimeException("Recipe not found with id: " + id);
         }
         recipeRepository.deleteById(id);
     }
 
+    // PRIVATE CONVERSION METHODS
 
-    // MÉTODOS PRIVADOS DE CONVERSÃO
-
-    // Converte entidade Recipe → RecipeDTO (para enviar ao frontend)
+    // Converts Recipe entity → RecipeDTO (to send to the frontend)
     private RecipeDTO toDTO(Recipe recipe) {
         RecipeDTO dto = new RecipeDTO();
         dto.setId(recipe.getId());
@@ -129,21 +128,21 @@ public class RecipeServiceImpl implements RecipeService {
         dto.setCategory(recipe.getCategory());
         dto.setPreparationTime(recipe.getPreparationTime());
         dto.setServings(recipe.getServings());
-        dto.setCalories(recipe.getCalories());     // ← directo do model
-        dto.setProtein(recipe.getProtein());       // ← directo do model
-        dto.setCarbs(recipe.getCarbs());           // ← directo do model
-        dto.setFat(recipe.getFat());               // ← directo do model
+        dto.setCalories(recipe.getCalories());     // Directly from the model
+        dto.setProtein(recipe.getProtein());       // Directly from the model
+        dto.setCarbs(recipe.getCarbs());           // Directly from the model
+        dto.setFat(recipe.getFat());               // Directly from the model
         dto.setDifficultyLevel(recipe.getDifficultyLevel());
         dto.setMealType(recipe.getMealType());
         dto.setDietTypes(recipe.getDietTypes());
         dto.setTip(recipe.getTip());
 
-        // steps — converte String para List<String> dividindo por linhas
+        // steps — converts String to List<String> by splitting by lines
         if (recipe.getSteps() != null) {
             dto.setSteps(Arrays.asList(recipe.getSteps().split("\n")));
         }
 
-        // ingredientes — converte cada Ingredient para IngredientDTO
+        // Ingredients — converts each Ingredient to IngredientDTO
         dto.setIngredients(
                 recipe.getIngredients()
                         .stream()
@@ -153,7 +152,7 @@ public class RecipeServiceImpl implements RecipeService {
         return dto;
     }
 
-    // Converte RecipeDTO → entidade Recipe (para guardar na BD)
+    // Converts RecipeDTO → Recipe entity (to save in the database)
     private Recipe toEntity(RecipeDTO dto) {
         Recipe recipe = new Recipe();
         recipe.setName(dto.getName());

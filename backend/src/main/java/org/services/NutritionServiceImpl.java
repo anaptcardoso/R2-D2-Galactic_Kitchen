@@ -18,8 +18,8 @@ import java.util.List;
 @Service
 public class NutritionServiceImpl implements NutritionService {
 
-    // Precisamos do RecipeRepository para Procurar receitas
-    // e do UserProfileRepository para Procurar utilizadores
+    // We need the RecipeRepository to search for recipes
+    // and the UserProfileRepository to search for users
     private final RecipeRepository recipeRepository;
     private final UserProfileRepository userProfileRepository;
     private final AIService aiService;
@@ -33,37 +33,37 @@ public class NutritionServiceImpl implements NutritionService {
     }
 
 
-    // getNutritionByRecipe — info nutricional de uma receita
+    // getNutritionByRecipe — nutritional information of a recipe
     @Override
     public RecipeDTO getNutritionByRecipe(int recipeId) {
-        // Procuramos a receita pelo ID
+        // We search for the recipe by ID
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new RuntimeException("Recipe not found: " + recipeId));
-        // Devolvemos o RecipeDTO completo — já tem calories, protein, carbs, fat
+        // We return the full RecipeDTO — it already has calories, protein, carbs, and fat
         return toDTO(recipe);
     }
 
 
-    // getTotalNutrition — soma os macros de várias receitas
+    // getTotalNutrition — sums the macros of several recipes
     @Override
     public RecipeDTO getTotalNutrition(List<Integer> recipeIds) {
-        // Procuramos todas as receitas de uma vez — 1 query à BD
+        // We search for all recipes at once — 1 database query
         List<Recipe> recipes = recipeRepository.findAllById(recipeIds);
 
-        // Somamos os valores nutricionais de todas as receitas
+        // We sum the nutritional values of all recipes
         int totalCalories = 0;
         double totalProtein = 0;
         double totalCarbs = 0;
         double totalFat = 0;
 
         for (Recipe recipe : recipes) {
-            totalCalories += recipe.getCalories(); // ← directo, sem getNutrition()
+            totalCalories += recipe.getCalories(); // Directly, without getNutrition()
             totalProtein  += recipe.getProtein();
             totalCarbs    += recipe.getCarbs();
             totalFat      += recipe.getFat();
         }
 
-        // Devolvemos um RecipeDTO com os totais
+        // We return a RecipeDTO with the totals
         RecipeDTO total = new RecipeDTO();
         total.setName("Weekly Total");
         total.setCalories(totalCalories);
@@ -74,27 +74,27 @@ public class NutritionServiceImpl implements NutritionService {
     }
 
 
-    // getRecipesBelowCalories — filtra por limite de calorias
+    // getRecipesBelowCalories — filters by calorie limit
     @Override
     public List<RecipeDTO> getRecipesBelowCalories(int maxCalories) {
         return recipeRepository.findAll()
                 .stream()
-                // filtra só as receitas com calorias abaixo do limite
+                // Filters only the recipes with calories below the limit
                 .filter(r -> r.getCalories() <= maxCalories)
                 .map(this::toDTO)
                 .toList();
     }
 
 
-    // analyse — analisa alimentos via AI
-    // Usa o AIService para perguntar ao Claude informações nutricionais
+    // analyse — analyses food items using AI
+    // Uses AIService to ask Claude for nutritional information
     @Override
     public ChatMessageDTO analyse(ChatMessageDTO message) throws Exception {
-        // Construímos um prompt específico para análise nutricional
+        // We build a specific prompt for nutritional analysis
         String prompt = "Analyse the nutritional value of: " + message.getMessage()
                 + ". Include calories, protein, carbs and fat per serving.";
 
-        // Criamos uma nova mensagem com contexto "nutrition" e enviamos ao Claude
+        // We create a new message with the "nutrition" context and send it to Claude
         ChatMessageDTO nutritionMessage = new ChatMessageDTO(
                 message.getRole(),
                 prompt,
@@ -104,7 +104,7 @@ public class NutritionServiceImpl implements NutritionService {
     }
 
 
-    // findByUser — devolve o perfil nutricional do utilizador
+    // findByUser — returns the user's nutritional profile
     @Override
     public NutritionDTO findByUser(int userId) throws UserNotFoundException {
         UserProfile user = userProfileRepository.findById(userId)
@@ -127,7 +127,7 @@ public class NutritionServiceImpl implements NutritionService {
     }
 
 
-    // update — actualiza o perfil nutricional do utilizador
+    // update — updates the user's nutritional profile
 
     @Override
     public NutritionDTO update(int userId, NutritionDTO nutritionDTO) throws UserNotFoundException {
@@ -153,7 +153,7 @@ public class NutritionServiceImpl implements NutritionService {
     }
 
 
-    // Converte entidade Recipe → RecipeDTO
+    // Converts Recipe entity → RecipeDTO
     private RecipeDTO toDTO(Recipe recipe) {
         RecipeDTO dto = new RecipeDTO();
         dto.setId(recipe.getId());
@@ -171,12 +171,12 @@ public class NutritionServiceImpl implements NutritionService {
         dto.setDietTypes(recipe.getDietTypes());
         dto.setTip(recipe.getTip());
 
-        // steps — converte String para List<String>
+        // steps — converts String to List<String>
         if (recipe.getSteps() != null) {
             dto.setSteps(Arrays.asList(recipe.getSteps().split("\n")));
         }
 
-        // ingredientes
+        // Ingredients
         dto.setIngredients(
                 recipe.getIngredients()
                         .stream()

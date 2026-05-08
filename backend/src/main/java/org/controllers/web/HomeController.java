@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    // Serve o index.html do SPA para qualquer rota não-API
-    // O JavaScript (frontend) trata do routing a partir daqui
+    // Serves the SPA's index.html for any non-API route
+    // The JavaScript frontend handles routing from here
     @GetMapping("/")
     public String home() {
         return "index";
     }
 
-    // Redireciona rotas do SPA para o index.html
-    // Evita 404 quando o utilizador acede diretamente a /recipes, /plan, etc.
+    // Redirects SPA routes to index.html
+    // Prevents 404 errors when the user directly accesses /recipes, /plan, etc.
     @GetMapping(value = "/{path:[^\\.]*}")
     public String redirect() {
         return "forward:/";

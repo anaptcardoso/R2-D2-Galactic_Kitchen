@@ -10,8 +10,8 @@ import java.util.Set;
 
 public class UserFactory {
 
-    // Cria uma lista de utilizadores de exemplo
-    // Estes utilizadores são usados para popular a base de dados quando a app arranca
+    // Creates a list of sample users
+    // These users are used to populate the database when the app starts
     public static List<UserProfile> createSampleUsers() {
         return List.of(
                 createLuke(),
@@ -80,7 +80,6 @@ public class UserFactory {
     }
 
     // Utilizador 4 — Ana
-    //
     private static UserProfile createAna() {
         UserProfile user = new UserProfile();
         user.setFirstName("Ana");
@@ -97,31 +96,29 @@ public class UserFactory {
     }
 
     // Utilizador 5 — Ines
-    //
     private static UserProfile createInes() {
         UserProfile user = new UserProfile();
-        user.setFirstName("Ines");
+        user.setFirstName("Inês");
         user.setLastName("Azevedo");
-        user.setEmail("ines@mail.com");//altera
+        user.setEmail("ines_azevedo_98@hotmail.com");//altera
         user.setPhone("912097615");
-        user.setDateOfBirth(LocalDate.of(29, 7, 13));//altera
+        user.setDateOfBirth(LocalDate.of(98, 8, 23));//altera
         user.setCountry("Portugal");
         user.setNutritionProfile(new NutritionProfile(
-                85.0, 180.0, "Survive another day", "moderate",//altera
+                75.0, 168.0, "Become the next Tony Stark", "moderate",
                 Set.of(DietType.OMNIVORE), null));
         user.setBio("https://github.com/inesazevedo23");
         return user;
     }
 
     // Utilizador 6 — Pedro
-    //
     private static UserProfile createPedro() {
         UserProfile user = new UserProfile();
         user.setFirstName("Pedro");
         user.setLastName("Saldanha");
-        user.setEmail("pedro@mail.com");//altera
+        user.setEmail("saldanhaigor250213@gmail.com");
         user.setPhone("920176304");
-        user.setDateOfBirth(LocalDate.of(29, 7, 13));//altera
+        user.setDateOfBirth(LocalDate.of(29, 2, 25));//altera
         user.setCountry("Netherlands");
         user.setNutritionProfile(new NutritionProfile(
                 85.0, 180.0, "Survive another day", "moderate",//altera
@@ -131,7 +128,6 @@ public class UserFactory {
     }
 
     // Utilizador 7 — Yasmin
-    // Contrabandista — come o que aparecer!
     private static UserProfile createYasmin() {
         UserProfile user = new UserProfile();
         user.setFirstName("Yasmin");

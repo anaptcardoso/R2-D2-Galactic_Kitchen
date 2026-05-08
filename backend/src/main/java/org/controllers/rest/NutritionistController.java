@@ -17,7 +17,7 @@ public class NutritionistController  {
     }
 
     // POST /api/nutritionist/consult/{userId}
-    // Consulta personalizada com o perfil do utilizador
+    // Personalized consultation using the user's profile
     @PostMapping("/consult/{userId}")
     public ResponseEntity<ChatMessageDTO> consult(
             @PathVariable int userId,
@@ -26,7 +26,7 @@ public class NutritionistController  {
     }
 
     // POST /api/nutritionist/analyse
-    // Analisa valores nutricionais de alimentos
+    // Analyses nutritional values of food items
     @PostMapping("/analyse")
     public ResponseEntity<ChatMessageDTO> analyseFood(
             @RequestBody ChatMessageDTO message) throws Exception {
@@ -34,7 +34,7 @@ public class NutritionistController  {
     }
 
     // POST /api/nutritionist/meal-plan
-    // Gera plano alimentar personalizado
+    // Generates a personalized meal plan
     @PostMapping("/meal-plan")
     public ResponseEntity<ChatMessageDTO> suggestMealPlan(
             @RequestBody NutritionDTO nutritionProfile) throws Exception {
@@ -42,7 +42,7 @@ public class NutritionistController  {
     }
 
     // POST /api/nutritionist/evaluate/{recipeId}/{userId}
-    // Avalia se uma receita é adequada para o utilizador
+    // Evaluates whether a recipe is suitable for the user
     @PostMapping("/evaluate/{recipeId}/{userId}")
     public ResponseEntity<ChatMessageDTO> evaluateRecipe(
             @PathVariable int recipeId,
