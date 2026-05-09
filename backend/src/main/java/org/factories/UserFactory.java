@@ -88,7 +88,7 @@ public class UserFactory {
         user.setNutritionProfile(new NutritionProfile(
                 60.0, 165.0, "Be a programmer", "moderate",
                 Set.of(DietType.OMNIVORE), null));
-        user.setBio("https://github.com/anaptcardoso");
+        user.setBio("https://github.com/anaptcardoso" +" *** "+"https://www.linkedin.com/in/ana-cardoso-063595151");
         return user;
     }
 
@@ -97,9 +97,9 @@ public class UserFactory {
         UserProfile user = new UserProfile();
         user.setFirstName("Inês");
         user.setLastName("Azevedo");
-        user.setEmail("ines_azevedo_98@hotmail.com");//altera
+        user.setEmail("ines_azevedo_98@hotmail.com");
         user.setPhone("912097615");
-        user.setDateOfBirth(LocalDate.of(98, 8, 23));//altera
+        user.setDateOfBirth(LocalDate.of(98, 8, 23));
         user.setCountry("Portugal");
         user.setNutritionProfile(new NutritionProfile(
                 75.0, 168.0, "Become the next Tony Stark", "moderate",
@@ -115,10 +115,10 @@ public class UserFactory {
         user.setLastName("Saldanha");
         user.setEmail("saldanhaigor250213@gmail.com");
         user.setPhone("920176304");
-        user.setDateOfBirth(LocalDate.of(29, 2, 25));//altera
+        user.setDateOfBirth(LocalDate.of(29, 2, 25));
         user.setCountry("Netherlands");
         user.setNutritionProfile(new NutritionProfile(
-                85.0, 180.0, "Survive another day", "moderate",//altera
+                85.0, 180.0, "Survive another day", "moderate",
                 Set.of(DietType.OMNIVORE), null));
         user.setBio("https://github.com/SaldanhaIgor");
         return user;
@@ -129,12 +129,12 @@ public class UserFactory {
         UserProfile user = new UserProfile();
         user.setFirstName("Yasmin");
         user.setLastName("Pires");
-        user.setEmail("yasmin17@email.com");//altera
+        user.setEmail("yasmin17@email.com");
         user.setPhone("912566280");
-        user.setDateOfBirth(LocalDate.of(99, 6, 12));//altera
+        user.setDateOfBirth(LocalDate.of(99, 6, 12));
         user.setCountry("Portugal");
         user.setNutritionProfile(new NutritionProfile(
-                65.0, 170.0, "Survive another day", "moderate",//altera
+                65.0, 170.0, "Survive another day", "moderate",
                 Set.of(DietType.OMNIVORE), null));
         user.setBio("https://github.com/yasminnatasha17-blip");
         return user;

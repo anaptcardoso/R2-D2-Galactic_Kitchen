@@ -6,24 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4eb1314c-ce7e-40ca-8691-49992be22593" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/converters/UserToDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/converters/UserToDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/errors/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/errors/ErrorMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/factories/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/factories/DataLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/factories/RecipeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/factories/RecipeFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/factories/UserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/factories/UserFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/model/entity/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/model/entity/Recipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/IngredientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/IngredientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/RecipeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/UserProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/UserProfileRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/persistence/daos/WeeklyPlanRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/persistence/daos/WeeklyPlanRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/services/AIServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/AIServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/services/NutritionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/NutritionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/services/NutritionistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/NutritionistServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/services/PlanServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/PlanServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/services/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/nutritionist-promp-template.st" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ai/nutritionist-promp-template.st" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/ai.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/ai.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +85,7 @@
       <workItem from="1778027666452" duration="1992000" />
       <workItem from="1778077796280" duration="16455000" />
       <workItem from="1778245192302" duration="13237000" />
+      <workItem from="1778284245853" duration="946000" />
     </task>
     <servers />
   </component>
