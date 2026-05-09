@@ -88,7 +88,7 @@ public class UserFactory {
         user.setNutritionProfile(new NutritionProfile(
                 60.0, 165.0, "Be a programmer", "moderate",
                 Set.of(DietType.OMNIVORE), null));
-        user.setBio("https://github.com/anaptcardoso");
+        user.setBio("https://github.com/anaptcardoso" + "https://www.linkedin.com/in/ana-cardoso-063595151");
         return user;
     }
 
