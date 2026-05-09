@@ -187,7 +187,7 @@ function renderProfileCard(user) {
                 </div>
 
                 <div class="profile-quote-row">
-                    ${user.bio ? `<p class="profile-bio">"${user.bio}"</p>` : `<p class="profile-bio muted">No mission quote available.</p>`}
+                    ${user.bio ? `<p class="profile-card__bio"><em>"${user.bio.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>')}"</em></p>` : ''}
                 </div>
 
                 <div class="tags profile-tags">
