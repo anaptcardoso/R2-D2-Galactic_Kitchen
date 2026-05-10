@@ -20,9 +20,7 @@ public class UserFactory {
         createAna(),
         createInes(),
         createPedro(),
-        createYasmin()
-
-    );
+        createYasmin());
   }
 
   // User 1 — Luke Skywalker
@@ -101,15 +99,15 @@ public class UserFactory {
     user.setNutritionProfile(new NutritionProfile(
         75.0, 168.0, "Become the next Tony Stark", "moderate",
         Set.of(DietType.OMNIVORE), null));
-    user.setBio("https://github.com/inesazevedo23");
+    user.setBio("https://github.com/inesazevedo23" + " *** " + "https://www.linkedin.com/in/inês-azevedo-19b45131b?");
     return user;
   }
 
   // User 6 — Pedro
   private static UserProfile createPedro() {
     UserProfile user = new UserProfile();
-    user.setFirstName("Saldanha");
-    user.setLastName("Pedro");
+    user.setFirstName("Pedro");
+    user.setLastName("Saldanha");
     user.setEmail("saldanhaigor250213@gmail.com");
     user.setPhone("920176304");
     user.setDateOfBirth(LocalDate.of(94, 2, 25));
@@ -117,7 +115,7 @@ public class UserFactory {
     user.setNutritionProfile(new NutritionProfile(
         100.0, 183.0, "Survive another day", "moderate",
         Set.of(DietType.OMNIVORE), null));
-    user.setBio("https://github.com/SaldanhaIgor" + "***" + "https://www.linkedin.com/in/saldanha-pedro-2641511b3/");
+    user.setBio("https://github.com/SaldanhaIgor" + " *** " + "https://www.linkedin.com/in/saldanha-pedro-2641511b3/");
     return user;
   }
 
@@ -128,12 +126,13 @@ public class UserFactory {
     user.setLastName("Pires");
     user.setEmail("yasmin17@email.com");
     user.setPhone("912566280");
-    user.setDateOfBirth(LocalDate.of(99, 6, 12));
+    user.setDateOfBirth(LocalDate.of(2001, 6, 7));
     user.setCountry("Portugal");
     user.setNutritionProfile(new NutritionProfile(
-        65.0, 170.0, "Survive another day", "moderate",
+        67.0, 170.0, "Be a programmer", "moderate",
         Set.of(DietType.OMNIVORE), null));
-    user.setBio("https://github.com/yasminnatasha17-blip");
+    user.setBio(
+        "https://github.com/yasminnatasha17-blip" + " *** " + "https://www.linkedin.com/in/yasmin-pires-a9b62a182");
     return user;
   }
 }
