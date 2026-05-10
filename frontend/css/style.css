@@ -2261,6 +2261,18 @@ a {
 .recipe-line-icon svg { width: 52px; height: 52px; }
 .diff-badge { top: 10px; right: 10px; padding: 3px 10px; }
 
+.recipe-story {
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-mid);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    margin: 14px 0 18px;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.6;
+    box-shadow: var(--glow);
+}
+
 /* Empty/error states */
 .catalogue-empty {
     grid-column: 1 / -1;
