@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4eb1314c-ce7e-40ca-8691-49992be22593" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/factories/RecipeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/factories/RecipeFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ai/r2d2_galactic_recipes.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +87,7 @@
       <workItem from="1778284245853" duration="946000" />
       <workItem from="1778350327972" duration="1886000" />
       <workItem from="1778443051428" duration="3210000" />
-      <workItem from="1778504779041" duration="1769000" />
+      <workItem from="1778504779041" duration="4734000" />
     </task>
     <servers />
   </component>

@@ -237,14 +237,14 @@ function updateProfilesCount(count) {
 
 function getAvatarMarkup(user) {
     const avatarImages = {
-        Luke: './js/assets/luke.jpg',
-        Leia: './js/assets/leia.jpg',
-        Han: './js/assets/han_solo.jpg',
-        Ana: './js/assets/ana_cardoso.jpg',
-        Ines: './js/assets/ines_azevedo.jpg',
-        Inês: './js/assets/ines_azevedo.jpg',
-        Pedro: './js/assets/saldanha_pedro.jpg',
-        Yasmin: './js/assets/yasmin_natasha.jpeg'
+        Luke: '/js/assets/luke.jpg',
+        Leia: '/js/assets/leia.jpg',
+        Han: '/js/assets/han_solo.jpg',
+        Ana: '/js/assets/ana_cardoso.jpg',
+        Ines: '/js/assets/ines_azevedo.jpg',
+        Inês: '/js/assets/ines_azevedo.jpg',
+        Pedro: '/js/assets/saldanha_pedro.jpg',
+        Yasmin: '/js/assets/yasmin_natasha.jpeg'
     };
 
     const image = avatarImages[user.firstName];
@@ -261,7 +261,7 @@ function getAvatarMarkup(user) {
 }
 
 // Creates initials from first and last name.
- 
+
 function getInitials(user) {
     const first = user.firstName?.[0] || '';
     const last = user.lastName?.[0] || '';
