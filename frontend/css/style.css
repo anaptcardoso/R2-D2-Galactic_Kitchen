@@ -9,6 +9,9 @@
     --red: #FF4444;
     --green: #00FF88;
     --green-dim: #00FF8822;
+    --green-mid:#7CFFB211;
+    --green-light: #7CFFB2;
+    --green-mid-dim: #7CFFB233;
     --purple: #8B5CF6;
     --purple-dim: #8B5CF622;
 
@@ -953,8 +956,14 @@ a {
 
 .tag-vegan {
     background: #00FF8811;
-    color: var(--green);
+    color: var(--green-light);
     border: 1px solid #00FF8833;
+}
+
+.tag-vegetarian {
+    background: #7CFFB211;
+    color: var(--green);
+    border: 1px solid #7CFFB233;
 }
 
 .tag-keto {
