@@ -35,6 +35,7 @@ async function renderRecipes(params = {}) {
             <button class="f-btn active" data-filter="all">ALL</button>
             <button class="f-btn" data-filter="OMNIVORE">OMNIVORE</button>
             <button class="f-btn" data-filter="VEGAN">VEGAN</button>
+            <button class="f-btn" data-filter="VEGETARIAN">VEGATARIAN</button>
             <button class="f-btn" data-filter="KETO">KETO</button>
             <button class="f-btn" data-filter="GLUTEN_FREE">GLUTEN FREE</button>
             <button class="f-btn" data-filter="EASY">EASY</button>
