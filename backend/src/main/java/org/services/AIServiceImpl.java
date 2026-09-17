@@ -28,7 +28,7 @@ public class AIServiceImpl implements AIService {
     private static final String SWAPI_URL = "https://swapi.dev/api";
 
     // Groq model
-    private static final String MODEL = "llama-3.1-8b-instant";
+    private static final String MODEL = "openai/gpt-oss-20b";
 
     // R2-D2 system prompt
     private static final String R2D2_SYSTEM = """

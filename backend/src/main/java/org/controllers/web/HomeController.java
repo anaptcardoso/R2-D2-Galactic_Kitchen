@@ -10,7 +10,7 @@ public class HomeController {
     // The JavaScript frontend handles routing from here
     @GetMapping("/")
     public String home() {
-        return "index";
+        return "forward:/index.html";
     }
 
     // Redirects SPA routes to index.html

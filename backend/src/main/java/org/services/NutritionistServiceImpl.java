@@ -29,7 +29,7 @@ public class NutritionistServiceImpl implements NutritionistService {
 
     // Groq API URL — OpenAI format
     private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-    private static final String MODEL = "llama-3.1-8b-instant";
+    private static final String MODEL = "openai/gpt-oss-20b";
 
     // Nutritionist personality
     private static final String SYSTEM_PROMPT = """
