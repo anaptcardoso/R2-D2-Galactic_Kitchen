@@ -34,7 +34,7 @@ function navigate(page, params = {}, push = true) {
     App.params = params;
 
     // build a readable URL for the browser address bar
-    let url = '/' + page;
+    let url = '/R2-D2-Galactic_Kitchen/' + page;
     if (params.userId) url += '/' + params.userId;
 
     // push a new history entry so the back/forward buttons work

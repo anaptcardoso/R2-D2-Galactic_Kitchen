@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/R2-D2-Galactic_Kitchen/">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>R2-D2 Galactic Kitchen</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/style.css"/>
+</head>
+
+<body>
+  <div class="scanlines"></div>
+  <div class="grid-bg"></div>
+
+  <header class="topbar">
+    <div class="logo" onclick="navigate('home')">
+      <div class="logo-icon">
+        <img src="./js/assets/r2d2.jpg" alt="R2-D2 Chef" style="width:36px; height:36px; border-radius:50%; object-fit:cover;"/>
+      </div>
+
+      <div class="logo-text">
+        <span class="logo-name">R2-D2</span>
+        <span class="logo-sub">GALACTIC KITCHEN</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a data-page="home" href="#" onclick="navigate('home'); return false;">HOME</a>
+      <a data-page="recipes" href="#" onclick="navigate('recipes'); return false;">RECIPES</a>      
+      <a data-page="nutritionist" href="#" onclick="navigate('nutritionist'); return false;">NUTRITIONIST</a>
+      <a data-page="profiles" href="#" onclick="navigate('profiles'); return false;">PROFILES</a>
+    </nav>
+
+    <div class="topbar-right">
+      <div class="status-dot"></div>
+      <span class="status-text">ONLINE</span>
+      <div class="avatar"></div>
+    </div>
+  </header>
+
+  <main id="main-content"></main>
+
+  <div id="chat-widget">
+    <div id="chat-window">
+      <div class="chat-header">
+        <div class="chat-av">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C8 2 5 6 5 10c0 3 1.5 5.5 4 7v3h6v-3c2.5-1.5 4-4 4-7 0-4-3-8-7-8z" fill="#00D4FF"/>
+          </svg>
+        </div>
+
+        <div>
+          <p class="chat-title">R2-D2 CHEFBOT</p>
+          <p class="chat-sub">Active System</p>
+        </div>
+
+        <button id="chat-close">X</button>
+      </div>
+
+      <div id="chat-messages">
+        <div class="chat-msg assistant">
+          <div class="chat-msg-av">R2</div>
+          <div class="chat-msg-bubble">
+            BEEP BOOP! I'm R2-D2 ChefBot. Active galactic culinary system. Recipes, plans, nutrition — transmit your coordinates!
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-bottom">
+        <input type="text" id="chat-input" placeholder="Convey Message...">
+        <button class="chat-send-btn" id="chat-send"></button>
+      </div>
+    </div>
+
+    <button id="chat-fab">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" fill="white"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="modal">
+    <div id="modal-inner">
+      <button id="modal-close" onclick="closeModal()">X Close</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/components/helpers.js"></script>
+  <script src="./js/components/chat.js"></script>
+  <script src="./js/components/modals.js"></script>
+  <script src="./js/pages/home.js"></script>
+  <script src="./js/pages/recipes.js"></script>
+  <script src="./js/pages/plan.js"></script>
+  <script src="./js/pages/nutritionist.js"></script>
+  <script src="./js/pages/profiles.js"></script>
+  <script src="./js/pages/profile.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
